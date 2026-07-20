@@ -184,7 +184,30 @@ Tile as above. Vertical bar x=10, y=9–23, width 2.5. Three furrows y={12,16,20
 
 ---
 
-## 7. Implementation map (this repo)
+## 6b. Image prompt audit + V2 (2026-07-20)
+
+### V1 audit (Direction A)
+
+| Check | Verdict |
+|---|---|
+| Product fit (finance + market + expert) | **Weak** — says the category once, then becomes generic “fintech-agtech hybrid.” Three modules are not visible in the mark story. |
+| Name meaning (acre + viva) | **Missed** — never encodes “living productive land / keep the farm operating.” Only letter A geometry. |
+| Audience resonance (grower · bank · buyer) | **Narrow** — B2B SaaS shelf only. No quiet dignity of land-as-ledger; bank partners see “another startup icon,” growers see nothing of themselves. |
+| Tone vs landing (Linear/Agent CRM) | **OK** — flat, no wheat slop. |
+| Production usefulness | **OK-ish** — hex + negative good; but dual composition (icon + wordmark in one gen) confuses models → mushy lockups. |
+| Favicon reality | **Risky** — “optional crossbar” + “three strokes” at 16px often collapses to a blob. |
+
+**Root issue:** V1 describes a *pretty SaaS badge*, not Acriva’s *operating desk* metaphor (capital · commerce · counsel meeting at the grower).
+
+### V2 design intent
+
+1. **One subject per render** — Mark-only OR Wordmark OR OG scene (never all three).
+2. **Story in geometry:** apex node = grower hub; left leg = capital/finance; right leg = market/trade; crossbar = expert counsel bridging both; teal node = “alive” (*viva*), not decoration.
+3. **Emotion:** calm operator confidence — “this desk keeps the season moving,” not greenwash farming.
+4. **CN dual brand:** OG may include small 融销通 subline; icon never does.
+
+See V2 prompts below (also the Telegram-ready block in session notes).
+
 
 | File | Change |
 |------|--------|
