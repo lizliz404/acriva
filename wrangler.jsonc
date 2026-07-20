@@ -1,0 +1,22 @@
+/**
+ * Acriva (融销通) — Cloudflare Worker + D1
+ */
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "acriva",
+  "compatibility_date": "2026-07-20",
+  "compatibility_flags": ["nodejs_compat"],
+  "main": "@tanstack/react-start/server-entry",
+  "observability": {
+    "enabled": true
+  },
+  "upload_source_maps": true,
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "acriva",
+      "database_id": "0261f11d-71e9-4821-8b62-cee4198784f7",
+      "migrations_dir": "migrations"
+    }
+  ]
+}

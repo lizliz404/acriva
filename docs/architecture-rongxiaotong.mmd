@@ -1,0 +1,77 @@
+%%{init: {"theme": "base", "themeVariables": {"fontFamily": "ui-sans-serif, system-ui"}}}%%
+%% 融销通 — 完整业务架构（据用户原文 mermaid 补全）
+graph TD
+  classDef hubNode fill:#3b82f6,stroke:#2563eb,stroke-width:2px,color:#fff,font-weight:bold,font-size:16px;
+  classDef bankOrange fill:#fcbca0,stroke:#f97316,stroke-width:1px,color:#fff;
+  classDef actionBlue fill:#4c8bf5,stroke:#2563eb,stroke-width:1px,color:#fff;
+  classDef shopLightBlue fill:#8fd1db,stroke:#06b6d4,stroke-width:1px,color:#fff;
+  classDef techGreen fill:#95c77e,stroke:#65a30d,stroke-width:1px,color:#fff;
+
+  Farmer((农户)):::hubNode
+
+  subgraph Finance[金融与融资模块]
+    direction TB
+    Bank((银行)):::bankOrange
+    MatchFarmer[智能匹配农户]:::bankOrange
+    FinApprove[融资审批]:::bankOrange
+    FinInfo[融资信息]:::bankOrange
+    ApplyFin[申请融资]:::actionBlue
+    MatchJointLoan[智能匹配联合贷款农户]:::actionBlue
+    Bank -.-> MatchFarmer
+    MatchFarmer -.-> Farmer
+    Bank -.-> FinApprove
+    FinApprove -.-> FinInfo
+    FinInfo -.-> ApplyFin
+    Farmer -.-> MatchJointLoan
+    MatchJointLoan -.-> ApplyFin
+  end
+
+  subgraph Ecommerce[农产品供需与交易模块]
+    direction TB
+    ProdMgmt[商品管理]:::actionBlue
+    Product[商品]:::shopLightBlue
+    BuyProduct[购买商品]:::shopLightBlue
+    BrowseProduct[浏览商品]:::shopLightBlue
+    Buyer((买家)):::shopLightBlue
+    ViewDemand[查看需求]:::actionBlue
+    ContactBuyer[联系买家]:::actionBlue
+    ManageDemand[管理需求]:::shopLightBlue
+    BuyerDemand[买家需求]:::shopLightBlue
+    Farmer -.-> ProdMgmt
+    ProdMgmt -.-> Product
+    Product -.-> BuyProduct
+    Buyer -.-> BrowseProduct
+    BrowseProduct -.-> BuyProduct
+    Buyer -.-> ManageDemand
+    ManageDemand -.-> BuyerDemand
+    BuyerDemand -.-> ViewDemand
+    Farmer -.-> ViewDemand
+    ViewDemand -.-> ContactBuyer
+    ContactBuyer -.-> Buyer
+  end
+
+  subgraph TechSupport[农业技术与专家服务模块]
+    direction TB
+    BrowseKnowledge[浏览农业知识]:::actionBlue
+    AskExpert[向专家提问]:::actionBlue
+    BookExpert[预约专家]:::actionBlue
+    Knowledge[农业知识]:::techGreen
+    QAMsg[问答消息]:::techGreen
+    BookInfo[预约信息]:::techGreen
+    ManageKnowledge[管理农业知识]:::techGreen
+    QAProcess[问答处理]:::techGreen
+    BookProcess[预约处理]:::techGreen
+    Expert((技术专家)):::techGreen
+    Farmer -.-> BrowseKnowledge
+    Farmer -.-> AskExpert
+    Farmer -.-> BookExpert
+    BrowseKnowledge -.-> Knowledge
+    AskExpert -.-> QAMsg
+    BookExpert -.-> BookInfo
+    Expert -.-> ManageKnowledge
+    Expert -.-> QAProcess
+    Expert -.-> BookProcess
+    ManageKnowledge -.-> Knowledge
+    QAProcess -.-> QAMsg
+    BookProcess -.-> BookInfo
+  end

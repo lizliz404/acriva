@@ -1,0 +1,40 @@
+%%{init: {"theme": "base", "themeVariables": {"fontFamily": "ui-sans-serif, system-ui"}}}%%
+flowchart TB
+  subgraph Actors
+    User[User]
+    Expert[Expert]
+  end
+
+  subgraph UserFlows[User downlink]
+    BrowseKnowledge[BrowseKnowledge]
+    AskExpert[AskExpert]
+    BookExpert[BookExpert]
+  end
+
+  subgraph ExpertFlows[Expert uplink]
+    ManageKnowledge[ManageKnowledge]
+    QAProcess[QAProcess]
+    BookProcess[BookProcess]
+  end
+
+  subgraph Stores[Domain stores]
+    Knowledge[(Knowledge)]
+    QAMsg[(QAMsg)]
+    BookInfo[(BookInfo)]
+  end
+
+  User --> BrowseKnowledge
+  User --> AskExpert
+  User --> BookExpert
+
+  Expert --> ManageKnowledge
+  Expert --> QAProcess
+  Expert --> BookProcess
+
+  BrowseKnowledge -.-> Knowledge
+  AskExpert -.-> QAMsg
+  BookExpert -.-> BookInfo
+
+  ManageKnowledge -.-> Knowledge
+  QAProcess -.-> QAMsg
+  BookProcess -.-> BookInfo
