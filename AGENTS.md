@@ -32,8 +32,8 @@ Pages 列表里的 Git 壳（`dist/client`）是安慰剂，不是生产。
 中途切换管道：**不影响**自定义域 `acriva.lizliz.xyz`（已挂 Worker）。
 
 API 连 Builds 需要 user-scoped token + `Workers Builds Configuration: Edit`。  
-现有 account token 对 `/builds/*` 返回 403 —— **token 找得到，是权限不够**，不是路径错。  
-Dashboard OAuth 一次即可，不必先改 Any IP。
+**已接通（2026-07-21）**：Workers Builds trigger `Deploy production` → repo `lizliz404/acriva` @ `master`。  
+日常只 `git push`；验收=生产 `https://acriva.lizliz.xyz` 内容更新。
 
 ### GitHub Actions = CI only
 
