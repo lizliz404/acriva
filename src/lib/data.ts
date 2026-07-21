@@ -150,18 +150,50 @@ export const changelogItems: ChangelogItem[] = [
 export const footerColumns = [
   {
     title: "产品",
-    links: ["借得到", "卖得出", "问得着", "行情参照"],
+    links: [
+      { label: "借得到", href: "#platform" },
+      { label: "卖得出", href: "/app/market" },
+      { label: "问得着", href: "/app/knowledge" },
+      { label: "行情参照", href: "#platform" },
+    ],
   },
   {
     title: "席位",
-    links: ["农户", "银行", "买家", "专家"],
+    links: [
+      { label: "农户", href: "/app" },
+      { label: "银行", href: "/app/finance/bank" },
+      { label: "买家", href: "/app/market" },
+      { label: "专家", href: "/app/expert" },
+    ],
   },
   {
     title: "资源",
-    links: ["架构", "领域模型", "更新日志", "部署说明"],
+    links: [
+      {
+        label: "架构",
+        href: "https://github.com/lizliz404/acriva/blob/master/docs/architecture-rongxiaotong.mmd",
+      },
+      {
+        label: "领域模型",
+        href: "https://github.com/lizliz404/acriva/blob/master/docs/domain-rongxiaotong.md",
+      },
+      { label: "更新日志", href: "#resources" },
+      {
+        label: "部署说明",
+        href: "https://github.com/lizliz404/acriva/blob/master/docs/domain-backend.md",
+      },
+    ],
   },
   {
     title: "关于",
-    links: ["关于融销通", "联系", "隐私", "条款"],
+    links: [
+      { label: "关于融销通", href: "#" },
+      {
+        label: "联系",
+        href: "https://github.com/lizliz404/acriva/issues",
+      },
+      { label: "隐私", href: null, soon: true },
+      { label: "条款", href: null, soon: true },
+    ],
   },
 ];

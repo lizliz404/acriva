@@ -139,7 +139,7 @@ export function Navbar() {
                       to="/app"
                       className="whitespace-nowrap rounded-[10px] px-3 py-1.5 text-sm font-medium text-[#6F6558] hover:bg-[#1C1712]/[0.04] hover:text-[#1C1712]"
                     >
-                      登录
+                      进演示台
                     </Link>
                   </motion.div>
                 )}

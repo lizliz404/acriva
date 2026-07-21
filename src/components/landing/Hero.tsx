@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Link } from "@tanstack/react-router";
 import { fadeInTransition, fadeInUp, staggerContainer } from "#/lib/animations";
 import { product } from "#/lib/data";
@@ -49,11 +49,14 @@ function FinanceWindow() {
 
 function MarketWindow() {
   const [phase, setPhase] = useState(0);
+  const reduceMotion = useReducedMotion();
   useEffect(() => {
+    if (reduceMotion) return;
     const id = window.setInterval(() => setPhase((p) => (p + 1) % 3), 2200);
     return () => window.clearInterval(id);
-  }, []);
+  }, [reduceMotion]);
   const labels = ["上架批次…", "买家浏览中…", "已联系"];
+  const shownPhase = reduceMotion ? 2 : phase;
   return (
     <WindowChrome title="货盘 · 上架" dark className="interactive-window">
       <div className="space-y-3 p-3 text-[12.5px]">
@@ -63,7 +66,7 @@ function MarketWindow() {
         <div className="flex items-start gap-2">
           <Avatar initials="城" tone="amber" size="sm" />
           <div className="flex-1 rounded-lg bg-white/10 px-3 py-2 text-[#F7F0E4]/80">
-            {phase < 2 ? (
+            {shownPhase < 2 ? (
               <span className="inline-flex items-center gap-1">
                 <span className="typing-dot" />
                 <span className="typing-dot" />
@@ -75,7 +78,7 @@ function MarketWindow() {
           </div>
         </div>
         <div className="flex items-center justify-between rounded-lg border border-white/10 px-3 py-2 text-[11px] text-[#F7F0E4]/55">
-          <span>{labels[phase]}</span>
+          <span>{labels[shownPhase]}</span>
           <span className="badge badge-success !border-[#7BC4A0]/30 !bg-[#7BC4A0]/15 !text-[#7BC4A0]">
             货盘
           </span>
@@ -86,6 +89,7 @@ function MarketWindow() {
 }
 
 function BookWindow() {
+  const reduceMotion = useReducedMotion();
   return (
     <WindowChrome title="专家 · 预约" className="interactive-window">
       <div className="p-3">
@@ -113,6 +117,7 @@ function BookWindow() {
           onClick={(e) => {
             const el = e.currentTarget;
             el.textContent = "已确认";
+            if (reduceMotion) return;
             window.setTimeout(() => {
               el.textContent = "确认预约";
             }, 1600);
@@ -235,9 +240,9 @@ export function Hero() {
               <Link to="/app" className="btn-primary">
                 进经营台
               </Link>
-              <a href="#platform" className="btn-secondary">
-                先看怎么贷
-              </a>
+              <Link to="/app/market/sell" className="btn-secondary">
+                有货上架
+              </Link>
             </motion.div>
           </motion.div>
         </div>

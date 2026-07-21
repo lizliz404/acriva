@@ -1,5 +1,57 @@
+import { Link } from "@tanstack/react-router";
 import { footerColumns, product } from "#/lib/data";
 import { LogoMark } from "../ui";
+
+function FooterLink({
+  label,
+  href,
+  soon,
+}: {
+  label: string;
+  href: string | null;
+  soon?: boolean;
+}) {
+  if (soon || !href) {
+    return (
+      <span className="text-[13px] text-[#6F6558]/70">
+        {label}
+        <span className="ml-1 text-[11px] text-[#6F6558]/55">即将</span>
+      </span>
+    );
+  }
+
+  const className =
+    "text-[13px] text-[#6F6558] transition hover:text-[#1C1712]";
+  const external = href.startsWith("http");
+  const hashOrRoot = href.startsWith("#") || href === "/";
+
+  if (external) {
+    return (
+      <a
+        href={href}
+        className={className}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {label}
+      </a>
+    );
+  }
+
+  if (hashOrRoot) {
+    return (
+      <a href={href} className={className}>
+        {label}
+      </a>
+    );
+  }
+
+  return (
+    <Link to={href} className={className}>
+      {label}
+    </Link>
+  );
+}
 
 export function SiteFooter() {
   return (
@@ -19,8 +71,12 @@ export function SiteFooter() {
               </div>
               <ul className="mt-3 space-y-2">
                 {col.links.map((link) => (
-                  <li key={link}>
-                    <span className="text-[13px] text-[#6F6558]">{link}</span>
+                  <li key={link.label}>
+                    <FooterLink
+                      label={link.label}
+                      href={link.href}
+                      soon={link.soon}
+                    />
                   </li>
                 ))}
               </ul>

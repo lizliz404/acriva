@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "@tanstack/react-router";
 import { sectionInView } from "#/lib/animations";
 import { scaleItems } from "#/lib/data";
 
@@ -6,14 +7,20 @@ const cards = [
   {
     title: "借得到",
     body: "备耕贷、农资贷在线申请，联保匹配，银行过审留痕——季节前钱不卡。",
+    href: "/app/finance" as const,
+    cta: "去融资席",
   },
   {
     title: "卖得出",
     body: "货盘上架、买家浏览下单、需求对接——货有价、有量、能联系。",
+    href: "/app/market/sell" as const,
+    cta: "有货上架",
   },
   {
     title: "问得着",
     body: "知识、问答、预约同一队列——出事有人答，好回答能沉淀。",
+    href: "/app/ask" as const,
+    cta: "去提问",
   },
 ];
 
@@ -37,7 +44,7 @@ export function FeatureCards() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.08, duration: 0.45 }}
-              className="surface-card p-5 transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-lift)]"
+              className="surface-card flex flex-col p-5 transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-lift)]"
             >
               <div className="mb-3 text-[12px] font-semibold tracking-wide text-[#0F4D35]">
                 结果
@@ -45,7 +52,15 @@ export function FeatureCards() {
               <h3 className="text-[17px] font-semibold tracking-tight text-[#1C1712]">
                 {card.title}
               </h3>
-              <p className="mt-2 text-[14px] leading-relaxed text-[#4A433A]">{card.body}</p>
+              <p className="mt-2 flex-1 text-[14px] leading-relaxed text-[#4A433A]">
+                {card.body}
+              </p>
+              <Link
+                to={card.href}
+                className="mt-4 inline-flex text-[13px] font-semibold text-[#0F4D35] transition hover:text-[#146b4a]"
+              >
+                {card.cta} →
+              </Link>
             </motion.article>
           ))}
         </div>

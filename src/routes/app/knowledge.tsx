@@ -1,5 +1,5 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
-import { FormEvent, useMemo, useState } from "react";
+import { type FormEvent, useMemo, useState } from "react";
 import { getDeskSnapshot, upsertKnowledge } from "#/server/desk";
 
 export const Route = createFileRoute("/app/knowledge")({

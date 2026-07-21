@@ -1,5 +1,5 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
-import { FormEvent, useState } from "react";
+import { type FormEvent, useState } from "react";
 import { createBooking, getDeskSnapshot } from "#/server/desk";
 
 export const Route = createFileRoute("/app/book")({

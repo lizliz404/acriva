@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
-import { FormEvent, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { buyProduct, getCommerceSnapshot } from "#/server/commerce";
 
 export const Route = createFileRoute("/app/market")({

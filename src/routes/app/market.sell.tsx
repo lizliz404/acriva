@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
-import { FormEvent, useState } from "react";
+import { type FormEvent, useState } from "react";
 import {
   contactBuyerDemand,
   createBuyerDemand,

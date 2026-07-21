@@ -1,5 +1,7 @@
 # Domain model & backend
 
+> Scope note: this doc’s detailed status machines cover **Tech / Expert** (knowledge · QA · booking). Finance and Commerce live in sibling modules (`finance.server.ts`, `commerce.server.ts`) with their own tables in `migrations/0003_finance_commerce.sql`.
+
 ## Why this is the heavy part
 
 Landing copy is a skin. The product is three stores + two roles:
@@ -13,8 +15,11 @@ Landing copy is a skin. The product is three stores + two roles:
 TanStack Start gives routes + `createServerFn` RPC. Persistence and domain rules live in:
 
 - `migrations/` — D1 SQL schema + seed
-- `src/server/db.ts` — repository (SQL + mappers)
-- `src/server/desk.ts` — server functions + transitions
+- `src/server/db.server.ts` — D1 handle + shared helpers (`getDb`, `newId`, `nowIso`)
+- `src/server/desk.ts` — Tech server functions + transitions
+- `src/server/finance.ts` + `finance.server.ts` — Finance RPC + repository
+- `src/server/commerce.ts` + `commerce.server.ts` — Market RPC + repository
+- `src/server/ai.server.ts` — shared SMA / Jaccard helpers (no fake DL)
 
 ## Status machines (MVP)
 
@@ -28,6 +33,8 @@ TanStack Start gives routes + `createServerFn` RPC. Persistence and domain rules
 
 Invalid booking transitions throw from `processBooking`.
 
+Finance applications and commerce orders have their own status columns in `0003_finance_commerce.sql` (see `docs/domain-rongxiaotong.md`).
+
 ## Best-practice choices (kept lean)
 
 1. **Shared stores, role-shaped UI** — one DB, different write paths.
@@ -39,16 +46,18 @@ Invalid booking transitions throw from `processBooking`.
 
 ## Local D1
 
+Database binding / CLI name: **`acriva`** (see `wrangler.jsonc`). Do not rename an existing `database_id`.
+
 ```bash
-npx wrangler d1 migrations apply fieldwise --local
+npx wrangler d1 migrations apply acriva --local
 npm run dev
 ```
 
 Remote:
 
 ```bash
-npx wrangler d1 create fieldwise   # paste database_id into wrangler.jsonc
-npx wrangler d1 migrations apply fieldwise --remote
+npx wrangler d1 create acriva   # paste database_id into wrangler.jsonc (do not rename existing id)
+npx wrangler d1 migrations apply acriva --remote
 npm run deploy
 ```
 
@@ -60,5 +69,6 @@ npm run deploy
 - Notifications
 - Full-text search service
 - Multi-tenant org model
+- Email lead capture / subscribe list
 
 Add those only after a real pilot signal.

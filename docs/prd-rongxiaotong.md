@@ -1,7 +1,7 @@
 # 融销通 — 源材料（完整版）
 
 > 项目全称：基于数字经济的农产品融销一体平台（简称 **融销通**）  
-> 工程目录暂用：`/home/ubuntu/projects/fieldwise`（可后续 rename）  
+> 工程目录：`/home/ubuntu/projects/acriva`  
 > 栈决策（本仓库）：TanStack Start + Cloudflare Workers + D1（原教纲 SpringBoot+Vue 改为 CF 练手路径）
 
 ## 项目简介（原文整理）

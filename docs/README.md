@@ -1,6 +1,6 @@
 # Acriva / 融销通 docs
 
-> 工程目录仍叫 `fieldwise`；英文主品牌 **Acriva**，中文市场名 **融销通**。详见 `branding.md`。
+> 工程目录：`/home/ubuntu/projects/acriva`；英文主品牌 **Acriva**，中文市场名 **融销通**。详见 `branding.md`。
 
 ## Contents
 
