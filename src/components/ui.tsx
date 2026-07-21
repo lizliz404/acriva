@@ -1,6 +1,16 @@
 import type { ReactNode } from "react";
 import { product } from "#/lib/data";
 
+/*
+ * DESIGN.md §2.4 — anti–tea-gift-box checklist (no visual change; keep us on「经营台」):
+ * - Fonts: geometric sans (Plex/Noto), horizontal — NEVER calligraphy / Song title / vertical type
+ * - Seal/mark: abstract solid geometric A — NEVER realistic ink-rubbing or large vermilion blocks
+ * - Density: ledger-grade (status, amount, time) — NEVER big zen whitespace + one poetic line
+ * - Gold: single accent (apex / amount) — NEVER gold borders or large gilt fills
+ * - Outcome: every screen ends on action/status — NEVER mood/atmosphere as the punchline
+ * Acceptance: first reaction must be「能借钱卖货的台子」, not「送礼的茶叶罐」.
+ */
+
 const toneMap = {
   blue: "bg-[#e4eef4] text-[#2F5D7C]",
   violet: "bg-[#f0ebe4] text-[#4A433A]",
@@ -77,7 +87,39 @@ export function WindowChrome({
   );
 }
 
-/** Seal A mark + Acriva (+ optional 融销通) */
+/** DESIGN.md §7.5 — quiet mono audit trail; bottom-right of product mocks only. */
+export function AuditTrailStrip({
+  batch = "#A-2607",
+  time = "14:32",
+  operator = "合作社-陈",
+  dark = false,
+  className = "",
+}: {
+  batch?: string;
+  time?: string;
+  operator?: string;
+  dark?: boolean;
+  className?: string;
+}) {
+  return (
+    <div
+      className={cn(
+        "audit-trail-strip absolute bottom-2 right-2.5 max-w-[calc(100%-1rem)] truncate",
+        dark && "audit-trail-strip--dark",
+        className,
+      )}
+      aria-hidden
+    >
+      批次 {batch} · 已留痕 {time} · 操作人：{operator}
+    </div>
+  );
+}
+
+/**
+ * Seal A mark + Acriva (+ optional 融销通).
+ * Static mark: soil / rice / gold only — never seal red (DESIGN §6.4 / §8.2).
+ * §2.4: solid geometric A, not ink-stamp realism or vermilion fill.
+ */
 export function LogoMark({
   className = "",
   showZh = true,

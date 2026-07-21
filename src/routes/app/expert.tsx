@@ -8,6 +8,7 @@ import {
   publishKnowledge,
 } from "#/server/desk";
 import { statusLabel } from "#/lib/status-labels";
+import { playStampFeedback } from "#/lib/stamp-feedback";
 
 export const Route = createFileRoute("/app/expert")({
   loader: () => getDeskSnapshot(),
@@ -36,11 +37,16 @@ function ExpertPage() {
   const [busyId, setBusyId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const run = async (id: string, fn: () => Promise<void>) => {
+  const run = async (
+    id: string,
+    fn: () => Promise<void>,
+    stampEl?: HTMLElement | null,
+  ) => {
     setBusyId(id);
     setError(null);
     try {
       await fn();
+      if (stampEl) playStampFeedback(stampEl);
       await router.invalidate();
     } catch (e) {
       setError(e instanceof Error ? e.message : "操作失败");
@@ -184,17 +190,21 @@ function ExpertPage() {
                 type="button"
                 className="btn-primary"
                 disabled={busyId === b.id}
-                onClick={() =>
-                  run(b.id, async () => {
-                    await processBooking({
-                      data: {
-                        id: b.id,
-                        status: "confirmed",
-                        expert: defaultExpert?.name,
-                        expertId: defaultExpert?.id,
-                      },
-                    });
-                  })
+                onClick={(e) =>
+                  run(
+                    b.id,
+                    async () => {
+                      await processBooking({
+                        data: {
+                          id: b.id,
+                          status: "confirmed",
+                          expert: defaultExpert?.name,
+                          expertId: defaultExpert?.id,
+                        },
+                      });
+                    },
+                    e.currentTarget,
+                  )
                 }
               >
                 确认

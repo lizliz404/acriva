@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
-import { type FormEvent, useMemo, useState } from "react";
+import { type FormEvent, useMemo, useRef, useState } from "react";
 import {
   createFinApplication,
   getFinanceSnapshot,
@@ -7,6 +7,12 @@ import {
   matchJointLoanPeers,
 } from "#/server/finance";
 import { statusLabel } from "#/lib/status-labels";
+import { playStampFeedback } from "#/lib/stamp-feedback";
+
+/*
+ * DESIGN.md §2.4 — anti–tea-gift-box (finance desk):
+ * Ledger density (status/amount/time), geometric UI. Not gift-box zen layout.
+ */
 
 export const Route = createFileRoute("/app/finance")({
   loader: () => getFinanceSnapshot(),
@@ -16,6 +22,7 @@ export const Route = createFileRoute("/app/finance")({
 function FinanceFarmerPage() {
   const data = Route.useLoaderData();
   const router = useRouter();
+  const stampBtnRef = useRef<HTMLButtonElement>(null);
   const defaultFarmer = data.farmers[0]?.id || "";
   const [farmerId, setFarmerId] = useState(defaultFarmer);
   const [productId, setProductId] = useState(data.products[0]?.id || "");
@@ -44,6 +51,7 @@ function FinanceFarmerPage() {
       await createFinApplication({
         data: { farmerId, productId, amountWan, purpose, jointMode },
       });
+      playStampFeedback(stampBtnRef.current);
       setPurpose("");
       await router.invalidate();
     } catch (err) {
@@ -153,7 +161,12 @@ function FinanceFarmerPage() {
             />
             开启联合贷匹配（相似经营主体推荐）
           </label>
-          <button type="submit" className="btn-primary" disabled={busy}>
+          <button
+            ref={stampBtnRef}
+            type="submit"
+            className="btn-primary"
+            disabled={busy}
+          >
             {busy ? "提交中…" : "提交申请"}
           </button>
         </form>

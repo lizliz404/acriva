@@ -1,11 +1,17 @@
 import { useEffect, useState } from "react";
-import { WindowChrome, Avatar } from "../ui";
+import { AuditTrailStrip, WindowChrome, Avatar } from "../ui";
+
+/*
+ * DESIGN.md §2.4 — anti–tea-gift-box (platform mocks):
+ * Status/amount/time density, geometric UI. No calligraphy, ink-rubbing,
+ * gilt frames, or zen-empty gift-box composition.
+ */
 
 export function PlatformMock({ tabId }: { tabId: string }) {
   if (tabId === "finance") {
     return (
       <WindowChrome title="融资申请" className="interactive-window">
-        <div className="space-y-3 p-4">
+        <div className="space-y-3 p-4 pb-8">
           <div className="flex items-center justify-between">
             <div className="text-[13px] font-medium text-[#1C1712]">备耕贷 · 东棚合作社</div>
             <span className="badge badge-warn">申请中</span>
@@ -37,6 +43,7 @@ export function PlatformMock({ tabId }: { tabId: string }) {
             ))}
           </div>
         </div>
+        <AuditTrailStrip batch="#A-2607" time="14:32" operator="合作社-陈" />
       </WindowChrome>
     );
   }
@@ -44,7 +51,7 @@ export function PlatformMock({ tabId }: { tabId: string }) {
   if (tabId === "market") {
     return (
       <WindowChrome title="货盘" className="interactive-window">
-        <div className="grid gap-0 sm:grid-cols-[140px_1fr]">
+        <div className="grid gap-0 pb-6 sm:grid-cols-[140px_1fr]">
           <aside className="border-b border-[#E8DFD0] p-3 text-[12px] sm:border-b-0 sm:border-r">
             {["全部", "黄瓜", "番茄", "苹果", "水稻"].map((c, i) => (
               <div
@@ -71,6 +78,7 @@ export function PlatformMock({ tabId }: { tabId: string }) {
             ))}
           </div>
         </div>
+        <AuditTrailStrip batch="#C-0721" time="15:08" operator="农户-王" />
       </WindowChrome>
     );
   }
@@ -161,7 +169,7 @@ function AskMock() {
   const status = ["采集现场", "已匹配专家", "回答就绪"][tick % 3];
   return (
     <WindowChrome title="问专家" className="interactive-window">
-      <div className="space-y-3 p-4 text-[12.5px]">
+      <div className="space-y-3 p-4 pb-8 text-[12.5px]">
         <div className="rounded-lg border border-[#E8DFD0] bg-[#F7F0E4] px-3 py-2 text-[#4A433A]">
           黄瓜 EC 2.9 后尖端焦枯——先扛还是降浓度？
         </div>
@@ -189,6 +197,7 @@ function AskMock() {
           <span className="badge badge-success">可约</span>
         </div>
       </div>
+      <AuditTrailStrip batch="#B-0719" time="09:12" operator="专家-林" />
     </WindowChrome>
   );
 }

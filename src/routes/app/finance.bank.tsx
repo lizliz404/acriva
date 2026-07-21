@@ -7,6 +7,7 @@ import {
   type FinApplicationStatus,
 } from "#/server/finance";
 import { statusLabel } from "#/lib/status-labels";
+import { playStampFeedback } from "#/lib/stamp-feedback";
 
 export const Route = createFileRoute("/app/finance/bank")({
   loader: () => getFinanceSnapshot(),
@@ -32,13 +33,18 @@ function BankDeskPage() {
     [data.applications],
   );
 
-  const act = async (id: string, status: FinApplicationStatus) => {
+  const act = async (
+    id: string,
+    status: FinApplicationStatus,
+    stampEl?: HTMLElement | null,
+  ) => {
     setBusyId(id);
     setError(null);
     try {
       await processFinApplication({
         data: { id, status, bankNote: note[id] },
       });
+      if (status === "approved") playStampFeedback(stampEl);
       await router.invalidate();
     } catch (e) {
       setError(e instanceof Error ? e.message : "操作失败");
@@ -146,7 +152,7 @@ function BankDeskPage() {
                     type="button"
                     className="btn-primary"
                     disabled={busyId === a.id}
-                    onClick={() => act(a.id, "approved")}
+                    onClick={(e) => act(a.id, "approved", e.currentTarget)}
                   >
                     批准
                   </button>

@@ -217,6 +217,7 @@
   }
 
   .surface-window {
+    position: relative;
     background: var(--color-cream);
     border: 1px solid rgba(28, 23, 18, 0.06);
     border-radius: var(--radius-window);
@@ -225,6 +226,7 @@
   }
 
   .surface-window-dark {
+    position: relative;
     background: var(--color-soil);
     border: 1px solid var(--color-soil-soft);
     border-radius: var(--radius-window);
@@ -361,6 +363,42 @@
     border-radius: 12px;
     box-shadow: var(--shadow-soft);
   }
+
+  /* DESIGN.md §6.4 — seal press (confirm actions only; never hover/scroll) */
+  .stamp-pressing {
+    animation: stamp-sink 180ms ease-out;
+  }
+
+  .stamp-smear {
+    position: absolute;
+    left: 14%;
+    right: 14%;
+    bottom: -2px;
+    height: 7px;
+    border-radius: 999px;
+    background: var(--color-seal);
+    filter: blur(5px);
+    pointer-events: none;
+    animation: stamp-smear 140ms ease-out forwards;
+    z-index: 1;
+  }
+
+  /* DESIGN.md §7.5 — quiet mono audit trail in mock corners */
+  .audit-trail-strip {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.3;
+    color: var(--color-clay);
+    letter-spacing: 0.01em;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .audit-trail-strip--dark {
+    color: rgba(247, 240, 228, 0.45);
+  }
 }
 
 @keyframes live-pulse {
@@ -399,6 +437,31 @@
   }
 }
 
+/* DESIGN.md §6.4 — seal sink + ink smear (confirm-class only) */
+@keyframes stamp-sink {
+  0% {
+    transform: translateY(0);
+  }
+  55% {
+    transform: translateY(2.5px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes stamp-smear {
+  0% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.35;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 .flow-list {
   animation: flow-scroll 18s linear infinite;
 }
@@ -408,7 +471,9 @@
   .typing-dot,
   .interactive-window,
   .flow-list,
-  .nav-island {
+  .nav-island,
+  .stamp-pressing,
+  .stamp-smear {
     animation: none !important;
     transition: none !important;
   }

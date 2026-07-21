@@ -3,7 +3,13 @@ import { motion, useReducedMotion } from "framer-motion";
 import { Link } from "@tanstack/react-router";
 import { fadeInTransition, fadeInUp, staggerContainer } from "#/lib/animations";
 import { product } from "#/lib/data";
-import { Avatar, WindowChrome } from "../ui";
+import { AuditTrailStrip, Avatar, WindowChrome } from "../ui";
+
+/*
+ * DESIGN.md §2.4 — anti–tea-gift-box (landing hero collage):
+ * Keep ledger density + geometric sans + result CTAs. Avoid calligraphy,
+ * vermilion ink-rubbing, zen whitespace, or gilt borders that read as gift packaging.
+ */
 
 const feed = [
   { title: "备耕贷 · 申请中", meta: "¥48万 · 番茄棚", tone: "amber" as const },
@@ -21,7 +27,7 @@ function FinanceWindow() {
       className="interactive-window"
       trailing={<span className="live-dot" />}
     >
-      <div className="space-y-2 p-3">
+      <div className="space-y-2 p-3 pb-8">
         <div className="flex items-center justify-between rounded-lg border border-[#E8DFD0] bg-[#F7F0E4] px-2.5 py-2 text-[12px]">
           <span className="text-[#6F6558]">备耕贷 · 东棚合作社</span>
           <span className="badge badge-warn">申请中</span>
@@ -43,6 +49,7 @@ function FinanceWindow() {
           银行席可见 · 留痕可审
         </div>
       </div>
+      <AuditTrailStrip batch="#A-2607" time="14:32" operator="合作社-陈" />
     </WindowChrome>
   );
 }
@@ -59,7 +66,7 @@ function MarketWindow() {
   const shownPhase = reduceMotion ? 2 : phase;
   return (
     <WindowChrome title="货盘 · 上架" dark className="interactive-window">
-      <div className="space-y-3 p-3 text-[12.5px]">
+      <div className="space-y-3 p-3 pb-8 text-[12.5px]">
         <div className="rounded-lg bg-white/8 px-3 py-2 text-[#F7F0E4]/90">
           黄瓜 · 批次 C-0721 · 2.4 吨 · ¥3.2/斤
         </div>
@@ -84,6 +91,7 @@ function MarketWindow() {
           </span>
         </div>
       </div>
+      <AuditTrailStrip batch="#C-0721" time="15:08" operator="农户-王" dark />
     </WindowChrome>
   );
 }
@@ -92,7 +100,7 @@ function BookWindow() {
   const reduceMotion = useReducedMotion();
   return (
     <WindowChrome title="专家 · 预约" className="interactive-window">
-      <div className="p-3">
+      <div className="p-3 pb-8">
         <div className="mb-2 text-[12px] font-medium text-[#1C1712]">
           棚室病害巡诊
         </div>
@@ -126,6 +134,7 @@ function BookWindow() {
           确认预约
         </button>
       </div>
+      <AuditTrailStrip batch="#B-0719" time="09:12" operator="专家-林" />
     </WindowChrome>
   );
 }

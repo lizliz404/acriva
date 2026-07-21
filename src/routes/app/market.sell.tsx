@@ -1,11 +1,12 @@
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
-import { type FormEvent, useState } from "react";
+import { type FormEvent, useRef, useState } from "react";
 import {
   contactBuyerDemand,
   getCommerceSnapshot,
   upsertProduct,
 } from "#/server/commerce";
 import { statusLabel } from "#/lib/status-labels";
+import { playStampFeedback } from "#/lib/stamp-feedback";
 
 export const Route = createFileRoute("/app/market/sell")({
   loader: () => getCommerceSnapshot(),
@@ -15,6 +16,7 @@ export const Route = createFileRoute("/app/market/sell")({
 function MarketSellPage() {
   const data = Route.useLoaderData();
   const router = useRouter();
+  const listBtnRef = useRef<HTMLButtonElement>(null);
   const [sellerId, setSellerId] = useState(data.farmers[0]?.id || "");
   const [title, setTitle] = useState("");
   const [crop, setCrop] = useState("番茄");
@@ -47,6 +49,7 @@ function MarketSellPage() {
           status: "listed",
         },
       });
+      playStampFeedback(listBtnRef.current);
       setTitle("");
       setDescription("");
       await router.invalidate();
@@ -161,7 +164,12 @@ function MarketSellPage() {
             onChange={(e) => setDescription(e.target.value)}
             required
           />
-          <button type="submit" className="btn-primary" disabled={busy}>
+          <button
+            ref={listBtnRef}
+            type="submit"
+            className="btn-primary"
+            disabled={busy}
+          >
             {busy ? "提交中…" : "上架"}
           </button>
         </form>

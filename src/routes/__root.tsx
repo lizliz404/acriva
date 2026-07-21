@@ -4,6 +4,13 @@ import { product } from "#/lib/data";
 
 const SITE_URL = `https://${product.domain}`;
 const OG_IMAGE = `${SITE_URL}/og-image.png`;
+/*
+ * DESIGN.md §10.11 — WeChat share card (separate from OG):
+ * Spec 500×400 (or 1:1 fallback) → public/wechat-share.png.
+ * WeChat chat thumbnails / 公众号 cards do not consume 1200×630 og:image;
+ * wire via公众号/小程序 share-image APIs when shipping that channel.
+ * Image prompts are locked in DESIGN.md — do not regenerate here.
+ */
 
 /** CTR-tight: 融销通 + result line, ≤60 display chars */
 const title = `${product.zhName} — ${product.taglineAlt.replace(/ · /g, "·")}｜${product.name}`;
