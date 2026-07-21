@@ -1,18 +1,39 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 148 32" fill="none" role="img" aria-label="Acriva">
-  <!-- Mark: Direction A — Triad A -->
-  <rect width="32" height="32" rx="8" fill="#0A0A0A"/>
-  <path d="M9 24 L15.2 8.5" stroke="#FAFAFA" stroke-width="2.4" stroke-linecap="round"/>
-  <path d="M23 24 L16.8 8.5" stroke="#FAFAFA" stroke-width="2.4" stroke-linecap="round"/>
-  <path d="M11.4 17.5 H20.6" stroke="#FAFAFA" stroke-width="2.2" stroke-linecap="round"/>
-  <rect x="14.25" y="6.75" width="3.5" height="3.5" rx="0.6" fill="#0F766E"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 168 40" role="img" aria-label="Acriva 融销通">
+  <!-- Mark: Seal A -->
+  <rect width="32" height="32" y="4" rx="7" fill="#1C1712"/>
+  <path fill="#F7F0E4" fill-rule="evenodd" d="
+    M16 11.2
+    L25.2 28.8
+    H21.4
+    L19.55 24.6
+    H12.45
+    L10.6 28.8
+    H6.8
+    L16 11.2
+    Z
+    M16 15.6
+    L18.35 21.2
+    H13.65
+    L16 15.6
+    Z
+  "/>
+  <rect x="14.4" y="9.5" width="3.2" height="3.2" rx="0.5" fill="#C9892E"/>
   <!-- Wordmark -->
   <text
     x="42"
-    y="21.5"
-    fill="#0A0A0A"
-    font-family="ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+    y="22"
+    fill="#1C1712"
+    font-family="IBM Plex Sans, Noto Sans SC, system-ui, sans-serif"
     font-size="18"
-    font-weight="600"
-    letter-spacing="-0.04em"
+    font-weight="700"
+    letter-spacing="-0.03em"
   >Acriva</text>
+  <text
+    x="42"
+    y="34"
+    fill="#6F6558"
+    font-family="IBM Plex Sans, Noto Sans SC, system-ui, sans-serif"
+    font-size="9"
+    font-weight="500"
+  >融销通</text>
 </svg>

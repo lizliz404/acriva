@@ -9,16 +9,15 @@ export function PlatformTabs() {
   const current = tabs.find((t) => t.id === active) ?? tabs[0];
 
   return (
-    <section id="platform" className="py-24 md:py-28">
+    <section id="platform" className="py-20 md:py-24">
       <div className="container-page">
         <motion.div {...sectionInView} className="mx-auto mb-14 max-w-[820px] text-center">
-          <span className="text-eyebrow">Platform</span>
+          <span className="text-eyebrow">三结果</span>
           <h2 className="text-section mt-4">
-            The field desk that compounds.
+            借得到 · 卖得出 · 问得着
             <br />
-            <span className="text-[#737373]">
-              Browse what already works. Ask when it doesn&apos;t. Book the expert
-              hour — then publish what you learned.
+            <span className="text-[#6F6558]">
+              不讲模块名，讲你这季能不能办成。
             </span>
           </h2>
         </motion.div>
@@ -29,7 +28,7 @@ export function PlatformTabs() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.45 }}
-            aria-label="Platform showcases"
+            aria-label="三结果分镜"
             className="flex gap-2 overflow-x-auto pb-1 lg:flex-col lg:overflow-visible lg:pb-0"
           >
             {tabs.map((tab) => {
@@ -39,10 +38,10 @@ export function PlatformTabs() {
                   key={tab.id}
                   type="button"
                   onClick={() => setActive(tab.id)}
-                  className={`relative shrink-0 rounded-[10px] px-3.5 py-2.5 text-left text-[14px] font-medium transition-all duration-200 ${
+                  className={`relative shrink-0 rounded-[12px] px-3.5 py-2.5 text-left text-[14px] font-medium transition-all duration-200 ${
                     on
-                      ? "bg-[#0a0a0a] text-white shadow-sm"
-                      : "text-[#525252] hover:bg-[#f4f4f5] hover:text-[#0a0a0a]"
+                      ? "bg-[#0F4D35] text-[#FFFBF4] shadow-sm"
+                      : "text-[#4A433A] hover:bg-[#E8DFD0] hover:text-[#1C1712]"
                   }`}
                   aria-pressed={on}
                 >
@@ -64,7 +63,7 @@ export function PlatformTabs() {
               >
                 <div className="max-w-xl">
                   <h3 className="text-subsection mb-4 leading-snug">{current.title}</h3>
-                  <h4 className="mb-2 text-[17px] font-medium tracking-tight text-[#0a0a0a]">
+                  <h4 className="mb-2 text-[17px] font-medium tracking-tight text-[#1C1712]">
                     {current.subtitle}
                   </h4>
                   <p className="text-body">{current.description}</p>

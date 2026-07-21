@@ -86,7 +86,7 @@ function FinanceFarmerPage() {
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">Finance · Farmer</h1>
-          <p className="mt-1 text-[14px] text-[#737373]">
+          <p className="mt-1 text-[14px] text-[#6F6558]">
             ApplyFin · MatchJointLoan · price signal. Bank desk:{" "}
             <Link to="/app/finance/bank" className="underline">
               /app/finance/bank
@@ -94,7 +94,7 @@ function FinanceFarmerPage() {
           </p>
         </div>
         <select
-          className="rounded-lg border border-[#d4d4d4] px-3 py-2 text-[13px]"
+          className="rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
           value={farmerId}
           onChange={(e) => setFarmerId(e.target.value)}
         >
@@ -116,7 +116,7 @@ function FinanceFarmerPage() {
         <form onSubmit={onApply} className="app-card space-y-3 p-4">
           <h2 className="text-[14px] font-semibold">申请融资 ApplyFin</h2>
           <select
-            className="w-full rounded-lg border border-[#d4d4d4] px-3 py-2 text-[13px]"
+            className="w-full rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
             value={productId}
             onChange={(e) => setProductId(e.target.value)}
           >
@@ -131,19 +131,19 @@ function FinanceFarmerPage() {
             type="number"
             min={1}
             step={1}
-            className="w-full rounded-lg border border-[#d4d4d4] px-3 py-2 text-[13px]"
+            className="w-full rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
             value={amountWan}
             onChange={(e) => setAmountWan(Number(e.target.value))}
             required
           />
           <textarea
-            className="min-h-20 w-full rounded-lg border border-[#d4d4d4] px-3 py-2 text-[13px]"
+            className="min-h-20 w-full rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
             placeholder="Purpose"
             value={purpose}
             onChange={(e) => setPurpose(e.target.value)}
             required
           />
-          <label className="flex items-center gap-2 text-[12px] text-[#525252]">
+          <label className="flex items-center gap-2 text-[12px] text-[#4A433A]">
             <input
               type="checkbox"
               checked={jointMode}
@@ -164,11 +164,11 @@ function FinanceFarmerPage() {
             </button>
             <ul className="space-y-2">
               {peers.map((p) => (
-                <li key={p.id} className="rounded-lg border border-[#ececec] px-2.5 py-2 text-[12px]">
+                <li key={p.id} className="rounded-lg border border-[#E8DFD0] px-2.5 py-2 text-[12px]">
                   <div className="font-medium">
                     {p.name} · {(p.score * 100).toFixed(0)}%
                   </div>
-                  <div className="text-[#737373]">{p.reason}</div>
+                  <div className="text-[#6F6558]">{p.reason}</div>
                 </li>
               ))}
             </ul>
@@ -179,11 +179,11 @@ function FinanceFarmerPage() {
               Forecast primary crop
             </button>
             {forecast && (
-              <div className="text-[12px] text-[#525252]">
-                <div className="font-medium text-[#0a0a0a]">
+              <div className="text-[12px] text-[#4A433A]">
+                <div className="font-medium text-[#1C1712]">
                   {forecast.crop} · {forecast.region}
                 </div>
-                <div className="mt-1 text-[#a3a3a3]">{forecast.method}</div>
+                <div className="mt-1 text-[#6F6558]">{forecast.method}</div>
                 <div className="mt-2">
                   History: {forecast.history.map((h) => h.priceYuan).join(" → ")}
                 </div>
@@ -205,18 +205,18 @@ function FinanceFarmerPage() {
               {a.jointMode && <span className="badge badge-warn">joint</span>}
               <span className="text-[14px] font-semibold">{a.amountWan}万</span>
             </div>
-            <div className="mt-1 text-[13px] text-[#525252]">
+            <div className="mt-1 text-[13px] text-[#4A433A]">
               {a.productTitle} · {a.bankName}
             </div>
-            <div className="mt-1 text-[12px] text-[#737373]">{a.purpose}</div>
+            <div className="mt-1 text-[12px] text-[#6F6558]">{a.purpose}</div>
             {a.jointPeers && a.jointPeers.length > 0 && (
-              <div className="mt-2 text-[12px] text-[#525252]">
+              <div className="mt-2 text-[12px] text-[#4A433A]">
                 Peers:{" "}
                 {a.jointPeers.map((p) => `${p.name}(${(p.score * 100).toFixed(0)}%)`).join(", ")}
               </div>
             )}
             {a.bankNote && (
-              <div className="mt-2 rounded-lg bg-[#f4f4f5] px-3 py-2 text-[12px]">
+              <div className="mt-2 rounded-lg bg-[#F7F0E4] px-3 py-2 text-[12px]">
                 Bank: {a.bankNote}
               </div>
             )}

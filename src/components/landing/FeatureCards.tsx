@@ -4,29 +4,28 @@ import { scaleItems } from "#/lib/data";
 
 const cards = [
   {
-    title: "Finance",
-    body: "ApplyFin, joint-loan match, bank approve — working capital with a clear trail.",
+    title: "借得到",
+    body: "备耕贷、农资贷在线申请，联保匹配，银行过审留痕——季节前钱不卡。",
   },
   {
-    title: "Market",
-    body: "List lots, browse & buy, open demands, contact buyers without another group chat.",
+    title: "卖得出",
+    body: "货盘上架、买家浏览下单、需求对接——货有价、有量、能联系。",
   },
   {
-    title: "Expert",
-    body: "Knowledge, Q&A, and bookings — dual uplink so answers compound into SOPs.",
+    title: "问得着",
+    body: "知识、问答、预约同一队列——出事有人答，好回答能沉淀。",
   },
 ];
 
 export function FeatureCards() {
   return (
-    <section className="py-24 md:py-28">
+    <section className="py-20 md:py-24">
       <div className="container-page">
         <motion.div {...sectionInView} className="mx-auto mb-12 max-w-2xl text-center">
-          <span className="text-eyebrow">Architecture</span>
-          <h2 className="text-section mt-4">Three modules. One farmer hub.</h2>
+          <span className="text-eyebrow">融 · 销 · 通</span>
+          <h2 className="text-section mt-4">三个结果，一张台子</h2>
           <p className="text-body mt-4">
-            融销通 stitches finance, trade, and agronomy. Shared identity, role-shaped
-            queues, status machines per store — not three orphaned mini-apps.
+            融销通把钱、货、专家问诊放在同一经营台。身份共用、席位分流、状态机按模块——不是三个孤儿小程序。
           </p>
         </motion.div>
 
@@ -40,20 +39,25 @@ export function FeatureCards() {
               transition={{ delay: i * 0.08, duration: 0.45 }}
               className="surface-card p-5 transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-lift)]"
             >
-              <div className="mb-3 text-[12px] font-semibold uppercase tracking-wide text-emerald-700">
-                Store
+              <div className="mb-3 text-[12px] font-semibold tracking-wide text-[#0F4D35]">
+                结果
               </div>
-              <h3 className="text-[17px] font-semibold tracking-tight">{card.title}</h3>
-              <p className="mt-2 text-[14px] leading-relaxed text-[#525252]">{card.body}</p>
+              <h3 className="text-[17px] font-semibold tracking-tight text-[#1C1712]">
+                {card.title}
+              </h3>
+              <p className="mt-2 text-[14px] leading-relaxed text-[#4A433A]">{card.body}</p>
             </motion.article>
           ))}
         </div>
 
         <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {scaleItems.map((item) => (
-            <div key={item.title} className="rounded-xl border border-[#ececec] bg-white px-4 py-4">
-              <div className="text-[14px] font-semibold text-[#0a0a0a]">{item.title}</div>
-              <div className="mt-1 text-[13px] text-[#737373]">{item.description}</div>
+            <div
+              key={item.title}
+              className="rounded-xl border border-[#E8DFD0] bg-[#FFFBF4] px-4 py-4"
+            >
+              <div className="text-[14px] font-semibold text-[#1C1712]">{item.title}</div>
+              <div className="mt-1 text-[13px] text-[#6F6558]">{item.description}</div>
             </div>
           ))}
         </div>

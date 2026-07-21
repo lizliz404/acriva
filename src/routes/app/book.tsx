@@ -41,34 +41,34 @@ function BookPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-semibold tracking-tight">Book consult</h1>
-        <p className="mt-1 text-[14px] text-[#737373]">
+        <p className="mt-1 text-[14px] text-[#6F6558]">
           User downlink: BookExpert → BookInfo. Experts confirm in Expert console.
         </p>
       </div>
 
       <form onSubmit={onSubmit} className="app-card grid gap-3 p-4 md:grid-cols-2">
         <input
-          className="rounded-lg border border-[#d4d4d4] px-3 py-2 text-[13px] md:col-span-2"
+          className="rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px] md:col-span-2"
           placeholder="Topic"
           value={topic}
           onChange={(e) => setTopic(e.target.value)}
           required
         />
         <input
-          className="rounded-lg border border-[#d4d4d4] px-3 py-2 text-[13px]"
+          className="rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
           placeholder="Crop"
           value={crop}
           onChange={(e) => setCrop(e.target.value)}
         />
         <input
           type="datetime-local"
-          className="rounded-lg border border-[#d4d4d4] px-3 py-2 text-[13px]"
+          className="rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
           value={preferredAt}
           onChange={(e) => setPreferredAt(e.target.value)}
           required
         />
         <textarea
-          className="min-h-20 rounded-lg border border-[#d4d4d4] px-3 py-2 text-[13px] md:col-span-2"
+          className="min-h-20 rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px] md:col-span-2"
           placeholder="Prep notes"
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
@@ -88,13 +88,13 @@ function BookPage() {
                 <h2 className="text-[14px] font-semibold">{b.topic}</h2>
                 <span className="badge badge-neutral">{b.status}</span>
               </div>
-              <div className="mt-1 text-[12px] text-[#737373]">
+              <div className="mt-1 text-[12px] text-[#6F6558]">
                 {new Date(b.preferredAt).toLocaleString()} · {b.durationMin} min
                 {b.crop ? ` · ${b.crop}` : ""}
               </div>
-              {b.notes && <p className="mt-2 text-[13px] text-[#525252]">{b.notes}</p>}
+              {b.notes && <p className="mt-2 text-[13px] text-[#4A433A]">{b.notes}</p>}
             </div>
-            <div className="text-[12px] text-[#737373]">
+            <div className="text-[12px] text-[#6F6558]">
               {b.requester}
               {b.expert ? ` → ${b.expert}` : ""}
             </div>

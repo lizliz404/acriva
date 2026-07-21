@@ -16,7 +16,7 @@ export const Route = createFileRoute("/")({
 
 function LandingPage() {
   return (
-    <main className="min-h-screen overflow-x-hidden bg-[#fafafa]">
+    <main className="min-h-screen overflow-x-hidden bg-[#F7F0E4]">
       <Navbar />
       <Hero />
       <LogoCloud />

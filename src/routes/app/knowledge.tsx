@@ -68,20 +68,20 @@ function KnowledgePage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-semibold tracking-tight">Browse knowledge</h1>
-        <p className="mt-1 text-[14px] text-[#737373]">
+        <p className="mt-1 text-[14px] text-[#6F6558]">
           BrowseKnowledge → Knowledge (D1). Experts ManageKnowledge via the draft form.
         </p>
       </div>
 
       <div className="flex flex-wrap gap-2">
         <input
-          className="min-w-[200px] flex-1 rounded-lg border border-[#d4d4d4] px-3 py-2 text-[13px]"
+          className="min-w-[200px] flex-1 rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
           placeholder="Search title, summary, tags…"
           value={q}
           onChange={(e) => setQ(e.target.value)}
         />
         <select
-          className="rounded-lg border border-[#d4d4d4] px-3 py-2 text-[13px]"
+          className="rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
           value={crop}
           onChange={(e) => setCrop(e.target.value)}
         >
@@ -108,8 +108,8 @@ function KnowledgePage() {
                 <span className="badge badge-neutral">{k.status}</span>
                 <span className="badge badge-success">{k.confidence}</span>
               </div>
-              <p className="mt-2 text-[13px] leading-relaxed text-[#525252]">{k.summary}</p>
-              <div className="mt-3 flex flex-wrap gap-2 text-[11px] text-[#737373]">
+              <p className="mt-2 text-[13px] leading-relaxed text-[#4A433A]">{k.summary}</p>
+              <div className="mt-3 flex flex-wrap gap-2 text-[11px] text-[#6F6558]">
                 <span>{k.crop}</span>
                 <span>·</span>
                 <span>{k.region}</span>
@@ -132,14 +132,14 @@ function KnowledgePage() {
             </article>
           ))}
           {filtered.length === 0 && (
-            <div className="app-card p-6 text-[13px] text-[#737373]">No matching articles.</div>
+            <div className="app-card p-6 text-[13px] text-[#6F6558]">No matching articles.</div>
           )}
         </div>
 
         <form onSubmit={onSubmit} className="app-card h-fit space-y-3 p-4">
           <h3 className="text-[14px] font-semibold">ManageKnowledge</h3>
           <input
-            className="w-full rounded-lg border border-[#d4d4d4] px-3 py-2 text-[13px]"
+            className="w-full rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
             placeholder="Title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -147,18 +147,18 @@ function KnowledgePage() {
           />
           <div className="grid grid-cols-2 gap-2">
             <input
-              className="rounded-lg border border-[#d4d4d4] px-3 py-2 text-[13px]"
+              className="rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
               value={newCrop}
               onChange={(e) => setNewCrop(e.target.value)}
             />
             <input
-              className="rounded-lg border border-[#d4d4d4] px-3 py-2 text-[13px]"
+              className="rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
               value={region}
               onChange={(e) => setRegion(e.target.value)}
             />
           </div>
           <textarea
-            className="min-h-24 w-full rounded-lg border border-[#d4d4d4] px-3 py-2 text-[13px]"
+            className="min-h-24 w-full rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
             placeholder="Summary"
             value={summary}
             onChange={(e) => setSummary(e.target.value)}

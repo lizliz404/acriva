@@ -1,12 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" role="img" aria-label="Acriva">
-  <!-- Direction A — Triad A monogram; readable at 16px -->
-  <rect width="32" height="32" rx="8" fill="#0A0A0A"/>
-  <!-- Left leg -->
-  <path d="M9 24 L15.2 8.5" stroke="#FAFAFA" stroke-width="2.4" stroke-linecap="round"/>
-  <!-- Right leg -->
-  <path d="M23 24 L16.8 8.5" stroke="#FAFAFA" stroke-width="2.4" stroke-linecap="round"/>
-  <!-- Crossbar (Finance ↔ Market bridge / expert counsel) -->
-  <path d="M11.4 17.5 H20.6" stroke="#FAFAFA" stroke-width="2.2" stroke-linecap="round"/>
-  <!-- Apex ledger node -->
-  <rect x="14.25" y="6.75" width="3.5" height="3.5" rx="0.6" fill="#0F766E"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Acriva">
+  <!-- Seal A: soil tile + filled bone A + gold apex -->
+  <rect width="32" height="32" rx="7" fill="#1C1712"/>
+  <!-- Solid A with triangular counter (evenodd) -->
+  <path fill="#F7F0E4" fill-rule="evenodd" d="
+    M16 7.2
+    L25.2 24.8
+    H21.4
+    L19.55 20.6
+    H12.45
+    L10.6 24.8
+    H6.8
+    L16 7.2
+    Z
+    M16 11.6
+    L18.35 17.2
+    H13.65
+    L16 11.6
+    Z
+  "/>
+  <!-- Gold seal heart at apex -->
+  <rect x="14.4" y="5.5" width="3.2" height="3.2" rx="0.5" fill="#C9892E"/>
 </svg>

@@ -21,10 +21,10 @@ function AppOverview() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-[#0a0a0a]">
+        <h1 className="text-2xl font-semibold tracking-tight text-[#1C1712]">
           融销通 desk
         </h1>
-        <p className="mt-1 text-[14px] text-[#737373]">
+        <p className="mt-1 text-[14px] text-[#6F6558]">
           Finance + Market + Expert service — three modules, one farmer hub.
         </p>
       </div>
@@ -64,11 +64,11 @@ function AppOverview() {
           <h2 className="text-[15px] font-semibold">Latest financing</h2>
           <ul className="mt-3 space-y-2">
             {finance.applications.slice(0, 4).map((a) => (
-              <li key={a.id} className="rounded-lg border border-[#ececec] px-3 py-2">
+              <li key={a.id} className="rounded-lg border border-[#E8DFD0] px-3 py-2">
                 <div className="text-[13px] font-medium">
                   {a.farmerName} · {a.amountWan}万
                 </div>
-                <div className="text-[11px] text-[#737373]">
+                <div className="text-[11px] text-[#6F6558]">
                   {a.status} · {a.productTitle}
                 </div>
               </li>
@@ -82,9 +82,9 @@ function AppOverview() {
               .filter((p) => p.status === "listed")
               .slice(0, 4)
               .map((p) => (
-                <li key={p.id} className="rounded-lg border border-[#ececec] px-3 py-2">
+                <li key={p.id} className="rounded-lg border border-[#E8DFD0] px-3 py-2">
                   <div className="text-[13px] font-medium">{p.title}</div>
-                  <div className="text-[11px] text-[#737373]">
+                  <div className="text-[11px] text-[#6F6558]">
                     ¥{p.priceYuan}/{p.unit} · stock {p.stock} · {p.sellerName}
                   </div>
                 </li>
@@ -107,13 +107,13 @@ function ModuleCard({
 }) {
   return (
     <Link to={href} className="app-card block p-5 transition hover:-translate-y-0.5">
-      <div className="text-[12px] font-medium uppercase tracking-wide text-[#737373]">
+      <div className="text-[12px] font-medium uppercase tracking-wide text-[#6F6558]">
         {title}
       </div>
       <ul className="mt-3 space-y-2">
         {items.map(([label, value]) => (
           <li key={label} className="flex items-baseline justify-between gap-3">
-            <span className="text-[13px] text-[#525252]">{label}</span>
+            <span className="text-[13px] text-[#4A433A]">{label}</span>
             <span className="text-lg font-semibold tracking-tight">{value}</span>
           </li>
         ))}

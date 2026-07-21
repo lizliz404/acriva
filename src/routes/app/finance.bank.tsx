@@ -63,7 +63,7 @@ function BankDeskPage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-semibold tracking-tight">Finance · Bank</h1>
-        <p className="mt-1 text-[14px] text-[#737373]">
+        <p className="mt-1 text-[14px] text-[#6F6558]">
           MatchFarmer · FinApprove · FinInfo
         </p>
       </div>
@@ -78,7 +78,7 @@ function BankDeskPage() {
         <h2 className="text-[14px] font-semibold">智能匹配农户 MatchFarmer</h2>
         <div className="flex flex-wrap gap-2">
           <select
-            className="min-w-[220px] flex-1 rounded-lg border border-[#d4d4d4] px-3 py-2 text-[13px]"
+            className="min-w-[220px] flex-1 rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
             value={productId}
             onChange={(e) => setProductId(e.target.value)}
           >
@@ -99,11 +99,11 @@ function BankDeskPage() {
         </div>
         <div className="grid gap-2 sm:grid-cols-2">
           {matches.map((m) => (
-            <div key={m.id} className="rounded-lg border border-[#ececec] px-3 py-2 text-[12px]">
+            <div key={m.id} className="rounded-lg border border-[#E8DFD0] px-3 py-2 text-[12px]">
               <div className="font-medium">
                 {m.name} · {(m.score * 100).toFixed(0)}%
               </div>
-              <div className="text-[#737373]">{m.reason}</div>
+              <div className="text-[#6F6558]">{m.reason}</div>
             </div>
           ))}
         </div>
@@ -119,11 +119,11 @@ function BankDeskPage() {
                 {a.farmerName} · {a.amountWan}万
               </span>
             </div>
-            <div className="text-[13px] text-[#525252]">
+            <div className="text-[13px] text-[#4A433A]">
               {a.productTitle} · {a.purpose}
             </div>
             <textarea
-              className="min-h-16 w-full rounded-lg border border-[#d4d4d4] px-3 py-2 text-[13px]"
+              className="min-h-16 w-full rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
               placeholder="Bank note"
               value={note[a.id] || ""}
               onChange={(e) => setNote((prev) => ({ ...prev, [a.id]: e.target.value }))}
@@ -179,12 +179,12 @@ function BankDeskPage() {
         <div className="grid gap-3 md:grid-cols-3">
           {data.products.map((p) => (
             <div key={p.id} className="app-card p-4">
-              <div className="text-[12px] text-[#737373]">{p.bankName}</div>
+              <div className="text-[12px] text-[#6F6558]">{p.bankName}</div>
               <div className="mt-1 text-[14px] font-semibold">{p.title}</div>
-              <div className="mt-2 text-[12px] text-[#525252]">
+              <div className="mt-2 text-[12px] text-[#4A433A]">
                 {p.minAmountWan}–{p.maxAmountWan}万 · {p.rateApr}% · {p.termMonths} mo
               </div>
-              <p className="mt-2 text-[12px] text-[#737373]">{p.description}</p>
+              <p className="mt-2 text-[12px] text-[#6F6558]">{p.description}</p>
             </div>
           ))}
         </div>

@@ -9,12 +9,12 @@ import { Link } from "@tanstack/react-router";
 import { LogoMark } from "../ui";
 
 const NAV_LINKS = [
-  { label: "Platform", href: "#platform" },
-  { label: "Customers", href: "#customers" },
-  { label: "Pricing", href: "#pricing" },
+  { label: "三结果", href: "#platform" },
+  { label: "对手方", href: "#customers" },
+  { label: "进台", href: "#pricing" },
 ] as const;
 
-const EXPANDED_EXTRA = [{ label: "Resources", href: "#resources" }] as const;
+const EXPANDED_EXTRA = [{ label: "更新", href: "#resources" }] as const;
 
 const spring = {
   type: "spring" as const,
@@ -54,30 +54,30 @@ export function Navbar() {
   return (
     <header className="pointer-events-none fixed inset-x-0 top-0 z-50 flex justify-center px-3 pt-3 sm:pt-4">
       <LayoutGroup id="nav-island">
-        <div className="pointer-events-auto relative flex w-full max-w-[min(100%,720px)] flex-col items-center">
+        <div className="pointer-events-auto relative flex w-full max-w-[min(100%,760px)] flex-col items-center">
           <motion.nav
             layout
             layoutRoot
-            aria-label="Primary"
+            aria-label="主导航"
             transition={transition}
-            className={`nav-island flex items-center border border-black/[0.06] bg-white/92 shadow-[0_8px_30px_rgba(0,0,0,0.08)] backdrop-blur-xl ${
+            className={`nav-island flex items-center border border-[#1C1712]/[0.08] bg-[#FFFBF4]/92 shadow-[0_8px_30px_rgba(28,23,18,0.08)] backdrop-blur-xl ${
               compact
-                ? "h-11 gap-1 rounded-full px-2.5 sm:gap-1.5 sm:px-3"
-                : "h-14 gap-2 rounded-full px-3 sm:gap-3 sm:px-5"
-            } ${mobileOpen ? "shadow-[0_12px_40px_rgba(0,0,0,0.12)]" : ""}`}
-            style={{ borderRadius: 9999 }}
+                ? "h-11 gap-1 rounded-[14px] px-2.5 sm:gap-1.5 sm:px-3"
+                : "h-14 gap-2 rounded-[16px] px-3 sm:gap-3 sm:px-5"
+            } ${mobileOpen ? "shadow-[0_12px_40px_rgba(28,23,18,0.12)]" : ""}`}
           >
             <motion.a
               layout
               href="#"
-              className="shrink-0 text-[#0a0a0a]"
+              className="shrink-0 text-[#1C1712]"
               transition={transition}
               onClick={() => setMobileOpen(false)}
             >
               <LogoMark
+                showZh={!compact}
                 className={
                   compact
-                    ? "[&>span]:text-[13px] sm:[&>span]:text-[14px] [&>svg]:h-[18px] [&>svg]:w-[18px]"
+                    ? "[&>span>span:first-child]:text-[13px] sm:[&>span>span:first-child]:text-[14px] [&>svg]:h-[18px] [&>svg]:w-[18px]"
                     : ""
                 }
               />
@@ -97,7 +97,7 @@ export function Navbar() {
                     layout
                     href={item.href}
                     transition={transition}
-                    className={`rounded-full font-medium text-[#525252] transition-colors hover:bg-black/[0.04] hover:text-[#0a0a0a] ${
+                    className={`rounded-[10px] font-medium text-[#6F6558] transition-colors hover:bg-[#1C1712]/[0.04] hover:text-[#1C1712] ${
                       compact
                         ? "px-2.5 py-1.5 text-[13px]"
                         : "px-3 py-1.5 text-sm"
@@ -116,7 +116,7 @@ export function Navbar() {
                         animate={{ opacity: 1, width: "auto" }}
                         exit={{ opacity: 0, width: 0 }}
                         transition={itemTransition}
-                        className="overflow-hidden whitespace-nowrap rounded-full px-3 py-1.5 text-sm font-medium text-[#525252] hover:bg-black/[0.04] hover:text-[#0a0a0a]"
+                        className="overflow-hidden whitespace-nowrap rounded-[10px] px-3 py-1.5 text-sm font-medium text-[#6F6558] hover:bg-[#1C1712]/[0.04] hover:text-[#1C1712]"
                       >
                         {item.label}
                       </motion.a>
@@ -137,27 +137,27 @@ export function Navbar() {
                   >
                     <Link
                       to="/app"
-                      className="whitespace-nowrap rounded-full px-3 py-1.5 text-sm font-medium text-[#525252] hover:bg-black/[0.04] hover:text-[#0a0a0a]"
+                      className="whitespace-nowrap rounded-[10px] px-3 py-1.5 text-sm font-medium text-[#6F6558] hover:bg-[#1C1712]/[0.04] hover:text-[#1C1712]"
                     >
-                      Sign in
+                      登录
                     </Link>
                   </motion.div>
                 )}
               </AnimatePresence>
               <Link
                 to="/app"
-                className={`rounded-full bg-[#0a0a0a] font-medium text-white transition hover:bg-[#262626] ${
+                className={`rounded-[12px] bg-[#0F4D35] font-semibold text-[#FFFBF4] transition hover:bg-[#146b4a] ${
                   compact
                     ? "px-3 py-1.5 text-[13px]"
                     : "px-3.5 py-2 text-sm"
                 }`}
               >
-                Start for free
+                进经营台
               </Link>
               <button
                 type="button"
-                className="inline-flex h-8 w-8 items-center justify-center rounded-full text-[#525252] hover:bg-black/[0.04] md:hidden"
-                aria-label="Menu"
+                className="inline-flex h-8 w-8 items-center justify-center rounded-[10px] text-[#6F6558] hover:bg-[#1C1712]/[0.04] md:hidden"
+                aria-label="菜单"
                 aria-expanded={mobileOpen}
                 onClick={() => setMobileOpen((v) => !v)}
               >
@@ -171,8 +171,8 @@ export function Navbar() {
               <>
                 <motion.button
                   type="button"
-                  aria-label="Close menu"
-                  className="fixed inset-0 z-40 bg-black/20"
+                  aria-label="关闭菜单"
+                  className="fixed inset-0 z-40 bg-[#1C1712]/30"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
@@ -183,13 +183,13 @@ export function Navbar() {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -8, scale: 0.98 }}
                   transition={itemTransition}
-                  className="absolute top-[calc(100%+8px)] z-50 w-full max-w-sm rounded-2xl border border-black/[0.06] bg-white/95 p-2 shadow-[0_16px_40px_rgba(0,0,0,0.12)] backdrop-blur-xl"
+                  className="absolute top-[calc(100%+8px)] z-50 w-full max-w-sm rounded-2xl border border-[#E8DFD0] bg-[#FFFBF4]/95 p-2 shadow-[0_16px_40px_rgba(28,23,18,0.12)] backdrop-blur-xl"
                 >
                   {[...NAV_LINKS, ...EXPANDED_EXTRA].map((item) => (
                     <a
                       key={item.href}
                       href={item.href}
-                      className="block rounded-xl px-3 py-2.5 text-sm font-medium text-[#525252] hover:bg-black/[0.04] hover:text-[#0a0a0a]"
+                      className="block rounded-xl px-3 py-2.5 text-sm font-medium text-[#6F6558] hover:bg-[#1C1712]/[0.04] hover:text-[#1C1712]"
                       onClick={() => setMobileOpen(false)}
                     >
                       {item.label}
@@ -197,10 +197,10 @@ export function Navbar() {
                   ))}
                   <Link
                     to="/app"
-                    className="mt-1 block rounded-xl px-3 py-2.5 text-sm font-medium text-[#0a0a0a] hover:bg-black/[0.04]"
+                    className="mt-1 block rounded-xl px-3 py-2.5 text-sm font-semibold text-[#0F4D35] hover:bg-[#E3F0E8]"
                     onClick={() => setMobileOpen(false)}
                   >
-                    Open app
+                    进经营台
                   </Link>
                 </motion.div>
               </>

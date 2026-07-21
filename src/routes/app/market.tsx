@@ -52,7 +52,7 @@ function MarketBrowsePage() {
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">Market · Browse</h1>
-          <p className="mt-1 text-[14px] text-[#737373]">
+          <p className="mt-1 text-[14px] text-[#6F6558]">
             BrowseProduct · BuyProduct. Farmer sell desk:{" "}
             <Link to="/app/market/sell" className="underline">
               /app/market/sell
@@ -61,13 +61,13 @@ function MarketBrowsePage() {
         </div>
         <div className="flex flex-wrap gap-2">
           <input
-            className="rounded-lg border border-[#d4d4d4] px-3 py-2 text-[13px]"
+            className="rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
             placeholder="Search crop / title"
             value={q}
             onChange={(e) => setQ(e.target.value)}
           />
           <input
-            className="rounded-lg border border-[#d4d4d4] px-3 py-2 text-[13px]"
+            className="rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
             placeholder="Buyer name"
             value={buyerName}
             onChange={(e) => setBuyerName(e.target.value)}
@@ -87,22 +87,22 @@ function MarketBrowsePage() {
             <div className="flex items-start justify-between gap-2">
               <div>
                 <div className="text-[14px] font-semibold">{p.title}</div>
-                <div className="mt-1 text-[12px] text-[#737373]">
+                <div className="mt-1 text-[12px] text-[#6F6558]">
                   {p.crop} · {p.region} · {p.sellerName}
                 </div>
               </div>
               <div className="text-right">
                 <div className="text-[15px] font-semibold">¥{p.priceYuan}</div>
-                <div className="text-[11px] text-[#a3a3a3]">/{p.unit}</div>
+                <div className="text-[11px] text-[#6F6558]">/{p.unit}</div>
               </div>
             </div>
-            <p className="mt-2 flex-1 text-[12.5px] text-[#525252]">{p.description}</p>
+            <p className="mt-2 flex-1 text-[12.5px] text-[#4A433A]">{p.description}</p>
             <div className="mt-3 flex flex-wrap items-center gap-2">
               <span className="badge badge-ok">stock {p.stock}</span>
               <input
                 type="number"
                 min={1}
-                className="w-24 rounded-lg border border-[#d4d4d4] px-2 py-1.5 text-[13px]"
+                className="w-24 rounded-lg border border-[#D4C7B0] px-2 py-1.5 text-[13px]"
                 value={qty[p.id] ?? 10}
                 onChange={(e) =>
                   setQty((prev) => ({ ...prev, [p.id]: Number(e.target.value) }))
@@ -133,10 +133,10 @@ function MarketBrowsePage() {
                   {d.crop} · {d.qty}
                   {d.unit}
                 </span>
-                <span className="text-[12px] text-[#737373]">{d.buyerName}</span>
+                <span className="text-[12px] text-[#6F6558]">{d.buyerName}</span>
               </div>
-              <p className="mt-2 text-[13px] text-[#525252]">{d.detail}</p>
-              <div className="mt-1 text-[12px] text-[#a3a3a3]">
+              <p className="mt-2 text-[13px] text-[#4A433A]">{d.detail}</p>
+              <div className="mt-1 text-[12px] text-[#6F6558]">
                 {d.region}
                 {d.budgetYuan != null ? ` · budget ¥${d.budgetYuan}/${d.unit}` : ""}
               </div>
@@ -149,7 +149,7 @@ function MarketBrowsePage() {
         {data.orders.slice(0, 6).map((o) => (
           <div
             key={o.id}
-            className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-[#ececec] px-3 py-2 text-[13px]"
+            className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-[#E8DFD0] px-3 py-2 text-[13px]"
           >
             <span>
               {o.productTitle} · {o.buyerName} · {o.qty} @ ¥{o.unitPriceYuan}

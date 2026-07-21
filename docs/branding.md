@@ -1,227 +1,270 @@
 # Acriva Branding
 
-**Product (CN):** 融销通 — 基于数字经济的农产品融销一体平台  
-**Primary EN brand:** **Acriva**  
-**Market dual-name:** Acriva（融销通）  
-**Stack context:** TanStack Start + Cloudflare · landing tone: Linear / Agent CRM-grade B2B  
-
-**Recommended name = Acriva**
-
----
-
-## 1. Naming shortlist (screened)
-
-| # | Name | Pronunciation | Why considered | Verdict |
-|---|------|---------------|----------------|---------|
-| 1 | **Acriva** | uh-CREE-vuh | *acre* + Lat. *viva* (alive) — living productive land; finance + market that keep farms operating | **Primary** |
-| 2 | **Tiltha** | TIL-thuh | From *tilth* (soil readiness) — rare ag term, soft premium mouthfeel; **tiltha.com** WHOIS free | **Backup A** |
-| 3 | **Hectara** | hek-TAR-uh | From *hectare* — land as economic unit; scalable B2B sound | **Backup B** |
-| 4 | Merxa | MURK-suh | Lat. *merx* (goods/trade) — commerce + capital | Reserve — merxa.com hosted (NL); unclear owner |
-| 5 | Sward | sward | Continuous grass cover; one-syllable Linear-like word | Reserve — sward.com parked; fine .io path |
-| 6 | Glume | gloom | Botanical grain part; highly distinctive | Reserve — harder spoken clarity for mixed EN/CN audiences |
-| 7 | Ferrow | FAIR-oh | *Furrow* path you plow | Cut — ferrow.com occupied; less “registerable product” feel |
-| 8 | Arvum | AR-vum | Lat. *arvum* (plowed field) | **Killed** — Arvum Group (IE, seeds/ag since 1850s) + Arvum Agriculture IoT |
-| 9 | Plotline | PLOT-line | Field *plot* + operating line | **Killed** — Plotline.so (agentic marketing SaaS), travel app, multiple software hits |
-| 10 | Rivva | RIV-uh | River / flow of capital & goods | **Killed** — rivva.app productivity AI; rivva.com WHOIS active (privacy) |
-| 11 | Valora | va-LOR-uh | Value / valor | **Killed** — Valora crypto wallet + valora.technology AI billing |
-| 12 | Lumen / Meridian | — | Light / path metaphors | **Killed** — Lumen Technologies; CHG-Meridian leasing; Meridian AI CRM |
-| 13 | Folio / Harvex / Bushel | — | Ledger / harvest metaphors | **Killed** — Folio3 AgTech; Harvex retail; Bushel (major ag SaaS) |
-| 14 | CropDesk / Acrely compounds | — | Desk metaphor from old Fieldwise | **Killed** — CropDesk Technologies; compound names feel lower-tier than Stripe/Linear |
-| — | Verdant, TerraLink, GrowHub, Fieldwise | — | Prior / reserved | **Do not use** (brief) |
-
-### Screening rules applied
-- 2–3 syllables preferred; spellable after one hearing  
-- No Agri-X / FarmSoft / SmartNong stack  
-- Search pattern: `{name} software`, `{name} agtech`, exact domain chatter  
-- Prefer single invented or rare-root words over `Agri` + noun  
+**产品中文名：** 融销通  
+**英文主品牌：** Acriva  
+**市场双名：** Acriva（融销通）  
+**Live：** https://acriva.lizliz.xyz  
+**设计源：** `docs/DESIGN.md`（气质 / 色 / 字 / 成交）← **先读它**  
+**本文职责：** 命名资产、标志几何、导出规格、生产 SVG 描述、（可选）生图 prompt  
+**非职责：** 再发明一套冷灰 Linear 徽章美学
 
 ---
 
-## 2. Final recommendation
+## 0. 和 DESIGN.md 的关系
 
-| Role | Name | CN pairing |
-|------|------|------------|
-| **Primary** | **Acriva** | Acriva（融销通） |
-| Backup A | Tiltha | Tiltha（融销通） |
-| Backup B | Hectara | Hectara（融销通） |
+| 文件 | 说了算的事 |
+|---|---|
+| `DESIGN.md` | 用户是谁、怎么成交、色板、字体、版式、组件、landing 叙事 |
+| `branding.md`（本文） | 名字为什么叫 Acriva、mark 画什么几何、文件导出、禁止元素 |
 
-### Rationale — why Acriva
-1. **Product geometry:** Three modules (Finance · Ecommerce · TechSupport) orbit the grower. *Acre* grounds the category without saying “farm software”; *viva* signals ongoing viability (credit, sales, counsel).  
-2. **B2B mouthfeel:** Abstract enough for Stripe/Linear shelf; not a wheat-clipart name.  
-3. **Phonetics:** Open vowels, hard-C punch, ends on soft *a* — works in EN and is easy for CN speakers (阿克里瓦 / 阿克瑞瓦).  
-4. **Differentiation:** Clears prior Fieldwise / Verdant / TerraLink / GrowHub space.  
-5. **Trademark posture (rough):** Ophthalmic IOL line “Acriva” (VSY) exists in **medical devices** — different Nice classes from SaaS (9/42). Still run counsel search before filing; `.io`/`.ai` DNS empty at screen time; `.com` appears parked (dan.com) — acquire or use `acriva.io` / `getacriva.com`.  
-
-### Why not promote backups first
-- **Tiltha:** Stronger raw `.com` availability; slightly more “soil poetry,” less fintech edge for bank partners.  
-- **Hectara:** Neighbor noise from **Hectar** (FR ag campus) and **Hectre** (orchard SaaS) — workable but softer moat.  
+**冲突时：** DESIGN.md 的色与气质优先。本文旧 V1/V2 冷青灰方案 **作废**。
 
 ---
 
-## 3. Taglines
+## 1. 命名（保留结论，压缩过程）
+
+| 角色 | 名 | 读音 / 配对 |
+|---|---|---|
+| **主品牌** | **Acriva** | uh-CREE-vuh · 阿克里瓦 |
+| **市场名** | **融销通** | 融=资 · 销=货 · 通=专家与信息跑通 |
+| Backup A | Tiltha | 仅域名/商标绝境 |
+| Backup B | Hectara | 仅绝境 |
+
+### 词源（对内）
+
+- *acre*：地亩经营单位，不说 “farm app”  
+- *viva*：活着、转得动——季节里信贷、出货、问诊不断档  
+
+### 对外怎么说（不要背词源作文）
+
+| 场景 | 说法 |
+|---|---|
+| 3 秒电梯 | 农户一张经营台：借得到、卖得出、问得着 |
+| 对银行 | 农贷申请、联合匹配、审批留痕与经营数据同台 |
+| 对买家 | 产地货盘与需求对接，状态清楚 |
+| 对专家 | 知识、问答、预约一条队列 |
+
+**禁止对外主句：** “Capital, commerce, and counsel” 当唯一英雄文案（可作英文小类别标签）。
+
+### Taglines
 
 | Lang | Primary | Alt |
-|------|---------|-----|
-| **EN** | Capital, commerce, and counsel — one desk for every grower. | Finance, market, and expertise on a single operating surface. |
-| **EN short** | The grower’s operating desk. | Acre to outcome. |
-| **ZH** | 融资 · 销售 · 专家 — 农户一站式经营台 | 让每一亩地，连上资金、市场与专家 |
-| **ZH short** | 农产品融销一体 | 融销通 · 农户经营台 |
+|---|---|---|
+| **ZH** | 钱、货、技术，一张台子办成 | 借得到 · 卖得出 · 问得着 |
+| **ZH short** | 农产品融销一体经营台 | 融销通 |
+| **EN** | One desk to fund, sell, and get counsel. | The grower’s operating desk. |
+| **EN short** | Fund. Sell. Ask. | Acre to outcome. |
 
-**Category line (EN):** Agricultural finance · market · expert services  
-**Category line (product.category field):** grower operating system  
-
----
-
-## 4. Domain & conflict rough-check (2026-07-20)
-
-| Candidate | .com | .io / .ai | Software / agtech chatter |
-|-----------|------|-----------|---------------------------|
-| **Acriva** | Parked / marketplace (dan.com); not a live SaaS homepage | **No A/NS** on acriva.io, acriva.ai at dig time | Medical IOL brand only; **no** competing ag SaaS found |
-| **Tiltha** | **WHOIS: no match** (appears registrable) | — | No material SaaS collision |
-| **Hectara** | Cloudflare 403 (held / shielded); not confirmed product | **No A/NS** on hectara.io / .ai | Hectar / Hectre / Hecterra neighbors — phonetic care |
-| Merxa | Live host (NL) | merxa.io empty-looking; merxa.ai parking DNS | No major agtech hit |
-| Sward | Sedo parking | sward.io empty-looking | getbract-class botanical; low SaaS clash |
-| Glume | Above.com parking | glume.io empty-looking | Clean but pronounce risk |
-| Arvum | Occupied | arvum.io empty | **Ag seed / IoT collisions — avoid** |
-| Plotline | Occupied | Occupied | Multiple SaaS — avoid |
-| Rivva | WHOIS 2006 + privacy | rivva.io CF | rivva.app AI planner — avoid |
-| fuseacre / bondacre / acrebind | WHOIS free | free-looking | Available but compound / lower shelf |
-
-**Practical domain plan for Acriva**
-1. Register **acriva.io** (product) + **acriva.ai** (defensive) immediately.  
-2. Bid/park-buy **acriva.com** if price sane; else **useacriva.com** / **getacriva.com**.  
-3. Demo host can stay on `*.lizliz.xyz` until cutover.  
-4. CN market mark 融销通 remains; file 融销通 + Acriva as combo when commercializing.
-
-*This is not a formal trademark opinion — counsel search before spend.*
+Category：`grower operating desk` / 农产品融销经营台  
 
 ---
 
-## 5. Logo strategy
+## 2. 颜色（品牌应用层 — 与 DESIGN 对齐）
 
-### System
-- **Wordmark:** “Acriva” in geometric grotesque (Inter / Geist / Satoshi-like), medium weight, slight negative tracking (−2%). No gradient type.  
-- **Mark:** Standalone monogram for favicon, app icon, avatar. Must read at **16×16**.  
-- **Lockup:** Mark left + wordmark; 8px optical gap at 24px cap height.  
-- **CN subline (optional):** 融销通 under wordmark at 60% weight, tracking +4%, only on CN surfaces.  
-- **Forbidden:** Gradient lettering, wheat sheaf clipart stacks, leaf+coin mashups, 3D gloss, rainbow ag gradients, “AI neural” node soup.
+| Token | Hex | Brand use |
+|---|---|---|
+| Soil | `#1C1712` | Mark tile、主墨、深色带 |
+| Rice | `#F7F0E4` | 浅底、OG 底 |
+| Cream | `#FFFBF4` | 卡片 |
+| Husk | `#E8DFD0` | 线 |
+| Jade | `#0F4D35` | 主 CTA、正向状态 |
+| Gold | `#C9892E` | **唯一高光** — mark 印心、金额、稀有强调 |
+| Seal | `#B33A2B` | 错误/驳回 |
 
-### Color (shared)
-| Token | Hex | Use |
-|-------|-----|-----|
-| Ink | `#0A0A0A` | Mark fill on light; wordmark |
-| Paper | `#FAFAFA` | App chrome / OG light bg |
-| Soft | `#F4F4F5` | Cards |
-| Line | `#E4E4E7` | Borders |
-| Accent | `#0F766E` | Teal — trust/finance without cartoon farm green |
-| Accent mute | `#14B8A6` | Charts / success (spare) |
-| Danger | `#B91C1C` | Errors only |
-
-Dark UI invert: paper mark on ink tile; accent unchanged.
-
-### Direction A — Primary monogram “Triad A”
-**Concept:** Capital **A** built from three ascending strokes that meet at an apex node (the grower). Left stroke = Finance, right = Market, crossbar = Expert counsel bridging both. Apex is a 1.5px square “ledger point,” not a leaf.
-
-- Geometry only; 2px stroke feel at 32px  
-- Square app icon: ink rounded-rect (rx ≈ 22% of size) + paper mark  
-- Favicon 16px: drop crossbar detail if needed; keep two legs + apex — still an “A”  
-- Feels: Linear mark discipline + banking gravity  
-
-### Direction B — Backup “Furrow Link”
-**Concept:** Three horizontal slightly-arced furrows (rows) linked by a single vertical stem on the left — reads as **field rows + spine**, or abstract **E/F** without letters. Suggests ledger lines and planted rows at once.
-
-- Better for users who never learn the “A” monogram  
-- Weaker letter tie-in to Acriva; stronger category cue  
-- Same palette and rounded tile  
+**已废弃品牌主色：** `#0A0A0A` 冷黑、`#0F766E` 冷青、`#FAFAFA` 冷灰纸、亮草绿 `#22C55E`。
 
 ---
 
-## 6. Image-generation prompts (Flux / SD / Ideogram)
+## 3. Logo system — 「田印 A / Seal A」（终局方向）
 
-### Direction A — Primary (Triad A)
+### 3.1 为什么杀掉 Triad 细线 A（V1/V2）
 
-**Prompt (EN):**
-```
-Minimal B2B SaaS app icon and logo system for "Acriva", a premium agricultural finance + marketplace + expert-services platform. Style: Linear.app / Stripe Atlas caliber — flat geometric vector, perfect pixel alignment, no skeuomorphism. Composition: (1) centered monogram mark on a rounded square tile: a capital letter A constructed from three bold geometric strokes meeting at a sharp apex; small solid square node at the apex; optional thin crossbar bridging the legs; no leaves, no wheat, no coins. (2) separate horizontal wordmark "Acriva" in clean geometric sans-serif, medium weight, tight tracking. Palette hex: background #FAFAFA, tile #0A0A0A, mark #FAFAFA, accent detail #0F766E used sparingly on the apex node only. White studio backdrop, orthographic front view, generous padding, single icon centered. Ultra crisp edges, SVG-ready clarity, 2D flat design, professional fintech-agtech hybrid.
-```
-
-**Negative prompt:**
-```
-gradient text, glossy 3D, neon, glassmorphism, wheat sheaf, corn, tractor, barn, leaf logo, seedling, coin stack, handshake, globe, neural network, circuit board, photorealistic, mockup phone, busy background, drop shadow soup, bevel, emboss, watercolor, mascot, cartoon, isometric city, stock photo farmer
-```
-
-**Export sizes:**
-| Asset | Size | Notes |
-|-------|------|-------|
-| Favicon | 32×32, 16×16 | Mark only on transparent or ink tile |
-| Apple touch | 180×180 | Rounded mask applied by OS |
-| PWA | 192, 512 | Same as icon.svg master |
-| OG image | 1200×630 | Ink wordmark + mark left; tagline right; paper bg; thin #E4E4E7 top rule |
-| SVG mark | viewBox 0 0 32 32 | See `public/icon.svg` |
-| SVG logo | viewBox 0 0 140 32 | Mark + wordmark — see `public/logo.svg` |
-
-**SVG mark description (A):**  
-Rounded rect 32×32 rx=8 fill `#0A0A0A`. White paths: left leg from (8,24)→(15,8), right leg (24,24)→(17,8), apex square 2×2 at (15,7), crossbar from (11.5,18)→(20.5,18) stroke 2. Optional 2×2 teal `#0F766E` at apex center for brand moments (omit at 16px if muddy).
-
----
-
-### Direction B — Backup (Furrow Link)
-
-**Prompt (EN):**
-```
-Minimal B2B SaaS app icon for "Acriva". Style: Swiss flat vector, Stripe/Linear quality, monochrome with one accent. Composition: rounded square tile #0A0A0A; inside, three parallel horizontal curved lines (gentle furrows) in #FAFAFA, evenly spaced, linked on the left by one vertical bar; tiny #0F766E square at the junction of vertical bar and middle furrow. No text in icon. No plants, no wheat. Companion wordmark "Acriva" geometric sans, #0A0A0A on #FAFAFA. Centered, huge padding, orthographic, crisp vector edges, production-ready app icon.
-```
-
-**Negative prompt:**
-```
-3D, gradients on type, leaves, wheat, farm clipart, mascot, glow, blur, busy pattern, serif, script font, photograph, landscape scenery
-```
-
-**Export sizes:** same table as Direction A.  
-
-**SVG mark description (B):**  
-Tile as above. Vertical bar x=10, y=9–23, width 2.5. Three furrows y={12,16,20}, from x=10 to x=23, stroke 2, slight quadratic bend (control +1.5y mid). Teal 2×2 at (10,15).
-
----
-
-## 6b. Image prompt audit + V2 (2026-07-20)
-
-### V1 audit (Direction A)
-
-| Check | Verdict |
+| 问题 | 说明 |
 |---|---|
-| Product fit (finance + market + expert) | **Weak** — says the category once, then becomes generic “fintech-agtech hybrid.” Three modules are not visible in the mark story. |
-| Name meaning (acre + viva) | **Missed** — never encodes “living productive land / keep the farm operating.” Only letter A geometry. |
-| Audience resonance (grower · bank · buyer) | **Narrow** — B2B SaaS shelf only. No quiet dignity of land-as-ledger; bank partners see “another startup icon,” growers see nothing of themselves. |
-| Tone vs landing (Linear/Agent CRM) | **OK** — flat, no wheat slop. |
-| Production usefulness | **OK-ish** — hex + negative good; but dual composition (icon + wordmark in one gen) confuses models → mushy lockups. |
-| Favicon reality | **Risky** — “optional crossbar” + “three strokes” at 16px often collapses to a blob. |
+| 无线条重量 | 远看蛛网，近看「又一个 SaaS A」 |
+| 无欲望点 | 冷青小点不够；需要 **金印心** |
+| 故事靠说明文 | 观众看不懂「左融资右市场」——标志不该依赖 README |
+| 与土老板无共鸣 | 像给 VC deck 的徽章，不像能盖在合同旁的印 |
 
-**Root issue:** V1 describes a *pretty SaaS badge*, not Acriva’s *operating desk* metaphor (capital · commerce · counsel meeting at the grower).
+### 3.2 概念（给设计师 / 手写 SVG 的人）
 
-### V2 design intent
+**名字：** Seal A（田印 A）  
+**一句话：** 深土色圆角方印上，一块厚实的负形/实心 **A**，顶点是一颗 **金印心**——经营台的「成色」。
 
-1. **One subject per render** — Mark-only OR Wordmark OR OG scene (never all three).
-2. **Story in geometry:** apex node = grower hub; left leg = capital/finance; right leg = market/trade; crossbar = expert counsel bridging both; teal node = “alive” (*viva*), not decoration.
-3. **Emotion:** calm operator confidence — “this desk keeps the season moving,” not greenwash farming.
-4. **CN dual brand:** OG may include small 融销通 subline; icon never does.
+几何锁定：
 
-See V2 prompts below (also the Telegram-ready block in session notes).
+1. **外框：** 圆角方印，rx ≈ 22% 边长，fill `Soil`。这是印章，不是细线 app glyph。  
+2. **A 的结构 — 实心块面，不是 stroke：**  
+   - 用 **filled polygon** 画 A 的字腔（counters）或实心双脚+横档，保证 16px 仍是剪影。  
+   - 推荐：**深印底 + 米色实心 A**（A 为 fill `#F7F0E4` 的几何字，不是描边）。  
+3. **横档：** 略低于视觉中心，粗壮，连接两脚（融与销之间的「通」）。  
+4. **金印心：** 顶点实心方点或短横章 `Gold #C9892E`，边长约为 tile 的 10–12%。**这是抓眼的唯一高光。**  
+5. **光学：** A 在印内 optical center 略上 2%；左右脚等重；金点不要做成叶子/菱形闪光。
 
+**16×16 规则：** 允许合并横档与脚的细节；必须保留 **方印剪影 + A 开口 + 金点（若糊则金点可略放大）**。
 
-| File | Change |
-|------|--------|
-| `src/lib/data.ts` | `product.name` → Acriva; tagline + description + category |
-| `src/routes/__root.tsx` | Uses `product.*` — inherits title/meta automatically |
-| `public/icon.svg` | Direction A monogram (favicon SVG) |
-| `public/logo.svg` | Mark + wordmark lockup |
-| `public/favicon.ico` | Legacy multi-size; SVG preferred via `__root` link |
-| `docs/branding.md` | This document |
+**Forbidden in mark：** 麦穗、叶子、谷粒、拖拉机、握手、地球、电路、渐变、3D、双色渐变字、中文。
+
+### 3.3 备选方向（仅主方向做不出块面时）
+
+**Plot Stamp（田块印）：** 印内三块竖向田畦（左窄融资、中主经营、右市场）+ 顶上一颗金点。更「地」，更弱字母绑定。默认仍推 Seal A。
+
+### 3.4 Lockups
+
+| 类型 | 结构 |
+|---|---|
+| **App / favicon** | Seal A only |
+| **横式** | Mark + 字距 0.5×cap · Wordmark `Acriva` |
+| **双名横式** | Mark + Acriva + 小号 `融销通`（clay） |
+| **竖式 CN 市场** | Mark / Acriva / 融销通 三行，用于海报导视 |
+
+Wordmark：IBM Plex Sans 600–700，`Soil`，EN tracking `-0.02em`～`-0.03em`。不要脚本字、不要渐变字。
 
 ---
 
-## 8. Voice (quick)
+## 4. 生产 SVG 规格（工程师直接画，优先于 AI 位图）
 
-- **Do:** precise, calm, operator-grade; “desk,” “queue,” “clear,” “match,” “book.”  
-- **Don’t:** “revolutionize farming,” emoji harvests, greenwash fluff.  
-- Address **growers** as primary; banks and buyers as counterparties on the same rails.
+### 4.1 `public/icon.svg` — 32 viewBox
+
+```
+viewBox="0 0 32 32"
+- rect 0,0 32×32 rx=7 fill #1C1712
+- Solid A (fill #F7F0E4), approximately:
+  - Left leg: polygon thick trapezoid from bottom-left foot to apex
+  - Right leg: mirror
+  - Counter (hole) optional if using evenodd: center triangle cut
+  - Simpler path approach: one evenodd path = outer A shape with triangular counter
+- Crossbar integrated as A structure (not hairline)
+- Apex gold square: ~3.2×3.2 at apex center, fill #C9892E, rx=0.5
+```
+
+**推荐 path 策略（实心 A + 三角字腔）：**
+
+用 `fill-rule="evenodd"`：
+
+1. 外轮廓：底部左脚 → 顶点 → 底部右脚 → 沿外缘回到左脚（厚重字怀）  
+2. 内腔：A 的 transom 上方三角 void  
+3. 横档区域保持实心带  
+
+若 evenodd 不好控，可拆三条 **filled** 腿/杠，腿宽在 32 网格上约 **3.2–3.6 units**，禁止 2px stroke 方案作为终态。
+
+### 4.2 `public/logo.svg`
+
+- 左：32×32 mark（内嵌与 icon 相同）  
+- 右：`Acriva` 文本或 outlined path，x≈40，y baseline 光学居中  
+- 可选：`融销通` 在 Acriva 下 10px，font-size ~9，fill `#6F6558`
+
+### 4.3 导出清单
+
+| Asset | Size | 笔记 |
+|---|---|---|
+| `icon.svg` | 32 master | favicon + PWA 源 |
+| `favicon.ico` | 16/32 multi | 从 SVG 栅格；勿留 Next/默认 ico |
+| Apple touch | 180 | 系统会蒙圆角 |
+| PWA | 192, 512 | 同 mark |
+| `og-image` | 1200×630 | 见下构图 |
+| `logo.svg` | lockup | Nav / 页脚 |
+
+### 4.4 OG 1200×630 构图
+
+- 底：`#F7F0E4`  
+- 顶一条 1px `#E8DFD0`  
+- 左：大 Seal A（≥160px）  
+- 中：Acriva 大字 + 下「融销通」  
+- 右或下：一行结果句 **借得到 · 卖得出 · 问得着**  
+- 不要塞产品截图四拼盘除非 hi-fi 已稳  
+
+---
+
+## 5. 生图 prompt（仅探索；生产以 SVG 为准）
+
+> AI 位图 **不得** 直接当 favicon 上线。用于 mood / 汇报可以；终态手写 SVG。
+
+### 5.1 Mark only（主推）
+
+```text
+Single subject: premium app icon mark for Chinese agribusiness brand "Acriva / 融销通" (grower desk: credit + sell crop + expert help).
+
+Make it CAPTIVATING — solid stamp energy, not a thin SaaS line-monogram.
+
+Geometry:
+- Rounded-square seal tile, corner radius ~22%, fill deep soil #1C1712
+- Inside: a HEAVY solid capital A in bone #F7F0E4 (filled shapes, NOT strokes, NOT outlined wire A)
+- Wide stable legs, strong crossbar, clean triangular counterhole
+- Apex: small solid square "seal heart" in harvest gold #C9892E (the only bright accent)
+- Optical center true, orthographic front, huge padding on #F7F0E4 studio field
+- Must read at 16px as a dark seal with light A and gold tip
+
+Mood: thick, prosperous, trustworthy operator stamp a co-op boss and a rural bank officer both respect. Not cute farm. Not cold fintech teal. Not VC-deck minimal hairline.
+
+Style: Swiss geometry + Chinese chop/seal gravity. Flat vector, razor edges.
+
+Negative: wheat, grain, leaf, seedling, tractor, barn, handshake, coin stack, globe, neural net, stroke-only monogram, thin lines, teal, cyan, neon, glassmorphism, gradient type, 3D bevel, soft blur, mascot, photoreal farm, multiple icons, wordmark text, Chinese characters inside the tile
+```
+
+### 5.2 Wordmark only
+
+```text
+Wordmark only: "Acriva". No icon.
+IBM Plex Sans / similar grotesque, weight 650, slight negative tracking, fill #1C1712 on #F7F0E4.
+Quiet institutional confidence — bank + co-op shelf, not crypto, not rustic script.
+Centered, huge margins, vector crisp.
+Negative: icons, wheat, slogans, Chinese in this render, gradients, shadows, mockups
+```
+
+### 5.3 OG card
+
+```text
+Open Graph 1200x630 brand card, warm rice paper #F7F0E4.
+Left: soil #1C1712 rounded seal with solid bone A and gold #C9892E apex square.
+Beside: "Acriva" heavy grotesque #1C1712; under it "融销通" muted clay.
+Right: one Chinese outcome line only — 借得到 · 卖得出 · 问得着 — large, confident, not tiny footer.
+Hairline top rule #E8DFD0. Lots of air. No screenshots, no wheat, no teal.
+```
+
+---
+
+## 6. Voice（品牌话术短表）
+
+完整成交话术见 `DESIGN.md` §1 / §9。
+
+- **Do：** 季节、金额、批次、过审、上架、回款、预约、留痕  
+- **Don't：** 赋能、数字化转型、revolutionize、绿色童话  
+- 主用户称谓：老板 / 合作社 / 种植户（看场景），少用文艺腔 “grower” 硬译堆砌  
+- 英文界面可保留 grower desk 类别词  
+
+---
+
+## 7. 工程落点
+
+| 文件 | 内容 |
+|---|---|
+| `docs/DESIGN.md` | 源：色字版式成交 |
+| `docs/branding.md` | 本文 |
+| `public/icon.svg` | Seal A |
+| `public/logo.svg` | lockup |
+| `public/favicon.ico` | 栅格 |
+| `src/styles.css` | token |
+| `src/lib/data.ts` | name / tagline / 模块文案 |
+| `src/routes/__root.tsx` | title / theme-color / icons |
+
+---
+
+## 8. 历史与作废声明
+
+| 版本 | 状态 |
+|---|---|
+| 命名 shortlist / 域名粗查（2026-07-20） | 保留作档案，见 git 历史 |
+| V1 Triad stroke-A + teal apex | **作废** |
+| V2 精密 prompt 仍 stroke-A | **作废**（精密≠正确） |
+| Seal A + soil/jade/gold + DESIGN.md | **当前** |
+
+---
+
+## 9. 验收
+
+- [ ] Tab favicon：深色方印 + 浅 A + 金点，一眼有重量  
+- [ ] 任何页面不出现品牌级冷青 `#0F766E`  
+- [ ] 双名锁在 nav：Acriva + 融销通  
+- [ ] 对外主句是结果句，不是英文三词排比唯一英雄  
+- [ ] 设计师/agent 改视觉前先读 `DESIGN.md`  

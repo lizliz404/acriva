@@ -2,15 +2,15 @@ import { Link, Outlet, useRouterState } from "@tanstack/react-router";
 import { LogoMark, cn } from "../ui";
 
 const links = [
-  { to: "/app", label: "Overview", exact: true },
-  { to: "/app/finance", label: "Finance" },
-  { to: "/app/finance/bank", label: "Bank" },
-  { to: "/app/market", label: "Market" },
-  { to: "/app/market/sell", label: "Sell" },
-  { to: "/app/knowledge", label: "Knowledge" },
-  { to: "/app/ask", label: "Ask" },
-  { to: "/app/book", label: "Book" },
-  { to: "/app/expert", label: "Expert" },
+  { to: "/app", label: "总览", exact: true },
+  { to: "/app/finance", label: "融资", exact: false },
+  { to: "/app/finance/bank", label: "银行席", exact: false },
+  { to: "/app/market", label: "货盘", exact: false },
+  { to: "/app/market/sell", label: "上架", exact: false },
+  { to: "/app/knowledge", label: "知识", exact: false },
+  { to: "/app/ask", label: "问答", exact: false },
+  { to: "/app/book", label: "预约", exact: false },
+  { to: "/app/expert", label: "专家席", exact: false },
 ] as const;
 
 export function AppShell() {
@@ -18,10 +18,10 @@ export function AppShell() {
 
   return (
     <div className="app-shell">
-      <header className="sticky top-0 z-40 border-b border-[#e5e5e5] bg-white/90 backdrop-blur">
+      <header className="sticky top-0 z-40 border-b border-[#E8DFD0] bg-[#FFFBF4]/90 backdrop-blur">
         <div className="mx-auto flex h-14 max-w-6xl items-center gap-4 px-4">
           <Link to="/" className="shrink-0">
-            <LogoMark className="[&>span]:text-[14px]" />
+            <LogoMark showZh={false} className="[&>span>span:first-child]:text-[14px]" />
           </Link>
           <nav className="flex min-w-0 flex-1 items-center gap-1 overflow-x-auto">
             {links.map((link) => {
@@ -33,10 +33,10 @@ export function AppShell() {
                   key={link.to}
                   to={link.to}
                   className={cn(
-                    "rounded-lg px-2.5 py-1.5 text-[12.5px] font-medium whitespace-nowrap transition sm:px-3 sm:text-[13px]",
+                    "rounded-[10px] px-2.5 py-1.5 text-[12.5px] font-medium whitespace-nowrap transition sm:px-3 sm:text-[13px]",
                     active
-                      ? "bg-[#0a0a0a] text-white"
-                      : "text-[#525252] hover:bg-[#f4f4f5] hover:text-[#0a0a0a]",
+                      ? "bg-[#0F4D35] text-[#FFFBF4]"
+                      : "text-[#4A433A] hover:bg-[#E8DFD0] hover:text-[#1C1712]",
                   )}
                 >
                   {link.label}
@@ -44,8 +44,8 @@ export function AppShell() {
               );
             })}
           </nav>
-          <span className="hidden text-[11px] text-[#a3a3a3] lg:inline">
-            融销通 demo · finance + market + expert
+          <span className="hidden text-[11px] text-[#6F6558] lg:inline">
+            {productZhDemo}
           </span>
         </div>
       </header>
@@ -55,3 +55,5 @@ export function AppShell() {
     </div>
   );
 }
+
+const productZhDemo = "融销通演示 · 融资 + 货盘 + 专家";

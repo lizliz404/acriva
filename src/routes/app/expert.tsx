@@ -52,11 +52,11 @@ function ExpertPage() {
     <div className="space-y-8">
       <div>
         <h1 className="text-2xl font-semibold tracking-tight">Expert uplink</h1>
-        <p className="mt-1 text-[14px] text-[#737373]">
+        <p className="mt-1 text-[14px] text-[#6F6558]">
           ManageKnowledge · QAProcess · BookProcess — same three D1 stores as grower flows.
         </p>
         {defaultExpert && (
-          <p className="mt-2 text-[12px] text-[#a3a3a3]">
+          <p className="mt-2 text-[12px] text-[#6F6558]">
             Acting as {defaultExpert.name} · {defaultExpert.specialty}
           </p>
         )}
@@ -70,18 +70,18 @@ function ExpertPage() {
       <section className="space-y-3">
         <h2 className="text-[15px] font-semibold">QAProcess ({openQa.length})</h2>
         {openQa.length === 0 && (
-          <div className="app-card p-4 text-[13px] text-[#737373]">Queue clear.</div>
+          <div className="app-card p-4 text-[13px] text-[#6F6558]">Queue clear.</div>
         )}
         {openQa.map((q) => (
           <div key={q.id} className="app-card space-y-3 p-4">
             <div className="flex flex-wrap items-center gap-2">
               <span className="badge badge-neutral">{q.status}</span>
               <span className="badge badge-warn">{q.priority}</span>
-              {q.crop && <span className="text-[11px] text-[#737373]">{q.crop}</span>}
-              {q.region && <span className="text-[11px] text-[#737373]">· {q.region}</span>}
+              {q.crop && <span className="text-[11px] text-[#6F6558]">{q.crop}</span>}
+              {q.region && <span className="text-[11px] text-[#6F6558]">· {q.region}</span>}
             </div>
             <p className="text-[14px] font-medium">{q.question}</p>
-            <div className="text-[12px] text-[#737373]">
+            <div className="text-[12px] text-[#6F6558]">
               {q.asker}
               {q.expert ? ` · assigned ${q.expert}` : ""}
             </div>
@@ -108,12 +108,12 @@ function ExpertPage() {
             )}
 
             <textarea
-              className="min-h-20 w-full rounded-lg border border-[#d4d4d4] px-3 py-2 text-[13px]"
+              className="min-h-20 w-full rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
               placeholder="Write answer…"
               value={answers[q.id] || ""}
               onChange={(e) => setAnswers((prev) => ({ ...prev, [q.id]: e.target.value }))}
             />
-            <label className="flex items-center gap-2 text-[12px] text-[#525252]">
+            <label className="flex items-center gap-2 text-[12px] text-[#4A433A]">
               <input
                 type="checkbox"
                 checked={Boolean(promote[q.id])}
@@ -151,7 +151,7 @@ function ExpertPage() {
       <section className="space-y-3">
         <h2 className="text-[15px] font-semibold">BookProcess ({pendingBooks.length})</h2>
         {pendingBooks.length === 0 && (
-          <div className="app-card p-4 text-[13px] text-[#737373]">No pending requests.</div>
+          <div className="app-card p-4 text-[13px] text-[#6F6558]">No pending requests.</div>
         )}
         {pendingBooks.map((b) => (
           <div
@@ -160,11 +160,11 @@ function ExpertPage() {
           >
             <div>
               <div className="text-[14px] font-semibold">{b.topic}</div>
-              <div className="text-[12px] text-[#737373]">
+              <div className="text-[12px] text-[#6F6558]">
                 {new Date(b.preferredAt).toLocaleString()} · {b.requester}
                 {b.crop ? ` · ${b.crop}` : ""}
               </div>
-              {b.notes && <p className="mt-1 text-[13px] text-[#525252]">{b.notes}</p>}
+              {b.notes && <p className="mt-1 text-[13px] text-[#4A433A]">{b.notes}</p>}
             </div>
             <div className="flex gap-2">
               <button
@@ -218,7 +218,7 @@ function ExpertPage() {
           >
             <div>
               <div className="text-[14px] font-semibold">{k.title}</div>
-              <div className="text-[12px] text-[#737373]">
+              <div className="text-[12px] text-[#6F6558]">
                 {k.status} · {k.confidence} · v{k.version} · {k.crop} · {k.region}
               </div>
             </div>
