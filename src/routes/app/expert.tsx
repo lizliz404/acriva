@@ -7,6 +7,7 @@ import {
   processBooking,
   publishKnowledge,
 } from "#/server/desk";
+import { statusLabel } from "#/lib/status-labels";
 
 export const Route = createFileRoute("/app/expert")({
   loader: () => getDeskSnapshot(),
@@ -75,7 +76,7 @@ function ExpertPage() {
         {openQa.map((q) => (
           <div key={q.id} className="app-card space-y-3 p-4">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="badge badge-neutral">{q.status}</span>
+              <span className="badge badge-neutral">{statusLabel(q.status)}</span>
               <span className="badge badge-warn">{q.priority}</span>
               {q.crop && <span className="text-[11px] text-[#6F6558]">{q.crop}</span>}
               {q.region && <span className="text-[11px] text-[#6F6558]">· {q.region}</span>}
@@ -219,7 +220,7 @@ function ExpertPage() {
             <div>
               <div className="text-[14px] font-semibold">{k.title}</div>
               <div className="text-[12px] text-[#6F6558]">
-                {k.status} · {k.confidence} · v{k.version} · {k.crop} · {k.region}
+                {statusLabel(k.status)} · {k.confidence} · v{k.version} · {k.crop} · {k.region}
               </div>
             </div>
             <button type="submit" className="btn-secondary" disabled={busyId === k.id}>

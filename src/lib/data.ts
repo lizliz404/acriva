@@ -187,7 +187,7 @@ export const footerColumns = [
   {
     title: "关于",
     links: [
-      { label: "关于融销通", href: "#" },
+      { label: "关于融销通", href: "#platform" },
       {
         label: "联系",
         href: "https://github.com/lizliz404/acriva/issues",

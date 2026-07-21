@@ -28,8 +28,9 @@ Workflow 文件：`.github/workflows/deploy.yml`（已提交）。
 
 ### 如果 GitHub Actions 失败
 
-- 检查 secrets 是否设置
-- 检查 CF token 是否过期或有 Workers Scripts Edit 权限
+- 检查 secrets 是否设置：`CLOUDFLARE_API_TOKEN`、`CLOUDFLARE_ACCOUNT_ID`
+- 检查 CF token 是否过期或有 **Workers Scripts:Edit**
+- **CF token 不能开 IP 白名单。** GitHub Actions runner IP 不固定；白名单会导致 `code: 9109 Cannot use the access token from location`。CI 专用 token 必须允许 **Any IP**
 - 本地调试用 `npm run build`（只 build，不部署）
 - **不要试图用 `wrangler deploy` 绕过 CI**
 

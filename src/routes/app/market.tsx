@@ -1,6 +1,7 @@
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { buyProduct, getCommerceSnapshot } from "#/server/commerce";
+import { statusLabel } from "#/lib/status-labels";
 
 export const Route = createFileRoute("/app/market")({
   loader: () => getCommerceSnapshot(),
@@ -128,7 +129,7 @@ function MarketBrowsePage() {
           .map((d) => (
             <article key={d.id} className="app-card p-4">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="badge badge-neutral">{d.status}</span>
+                <span className="badge badge-neutral">{statusLabel(d.status)}</span>
                 <span className="text-[14px] font-semibold">
                   {d.crop} · {d.qty}
                   {d.unit}
@@ -154,7 +155,7 @@ function MarketBrowsePage() {
             <span>
               {o.productTitle} · {o.buyerName} · {o.qty} @ ¥{o.unitPriceYuan}
             </span>
-            <span className="badge badge-neutral">{o.status}</span>
+            <span className="badge badge-neutral">{statusLabel(o.status)}</span>
           </div>
         ))}
       </section>

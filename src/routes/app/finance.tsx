@@ -6,6 +6,7 @@ import {
   getPriceForecast,
   matchJointLoanPeers,
 } from "#/server/finance";
+import { statusLabel } from "#/lib/status-labels";
 
 export const Route = createFileRoute("/app/finance")({
   loader: () => getFinanceSnapshot(),
@@ -201,7 +202,7 @@ function FinanceFarmerPage() {
         {myApps.map((a) => (
           <article key={a.id} className="app-card p-4">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="badge badge-neutral">{a.status}</span>
+              <span className="badge badge-neutral">{statusLabel(a.status)}</span>
               {a.jointMode && <span className="badge badge-warn">joint</span>}
               <span className="text-[14px] font-semibold">{a.amountWan}万</span>
             </div>

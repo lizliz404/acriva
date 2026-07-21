@@ -11,7 +11,7 @@
     "build": "vite build",
     "preview": "npm run build && vite preview",
     "test": "vitest run",
-    "deploy": "npm run build && wrangler deploy",
+    "deploy": "echo 'BANNED: use git push → GitHub Actions. Do not wrangler deploy locally.' && exit 1",
     "cf-typegen": "wrangler types",
     "db:migrate": "wrangler d1 migrations apply acriva --local",
     "db:migrate:prod": "wrangler d1 migrations apply acriva --remote"

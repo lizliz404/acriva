@@ -6,6 +6,7 @@ import {
   getCommerceSnapshot,
   upsertProduct,
 } from "#/server/commerce";
+import { statusLabel } from "#/lib/status-labels";
 
 export const Route = createFileRoute("/app/market/sell")({
   loader: () => getCommerceSnapshot(),
@@ -204,7 +205,7 @@ function MarketSellPage() {
           >
             {data.demands.map((d) => (
               <option key={d.id} value={d.id}>
-                {d.crop} · {d.buyerName} · {d.status}
+                {d.crop} · {d.buyerName} · {statusLabel(d.status)}
               </option>
             ))}
           </select>
@@ -280,7 +281,7 @@ function MarketSellPage() {
             <span>
               {p.title} · ¥{p.priceYuan}/{p.unit} · stock {p.stock}
             </span>
-            <span className="badge badge-neutral">{p.status}</span>
+            <span className="badge badge-neutral">{statusLabel(p.status)}</span>
           </div>
         ))}
       </section>
@@ -290,7 +291,7 @@ function MarketSellPage() {
         {data.contacts.slice(0, 8).map((c) => (
           <div key={c.id} className="rounded-xl border border-[#E8DFD0] px-3 py-2 text-[13px]">
             <div className="font-medium">
-              {c.farmerName} → demand {c.demandId} · {c.status}
+              {c.farmerName} → demand {c.demandId} · {statusLabel(c.status)}
             </div>
             <div className="text-[#6F6558]">{c.message}</div>
           </div>

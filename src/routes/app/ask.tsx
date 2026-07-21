@@ -1,6 +1,7 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { type FormEvent, useState } from "react";
 import { createQuestion, getDeskSnapshot } from "#/server/desk";
+import { statusLabel } from "#/lib/status-labels";
 
 export const Route = createFileRoute("/app/ask")({
   loader: () => getDeskSnapshot(),
@@ -68,7 +69,7 @@ function AskPage() {
         {data.qa.map((q) => (
           <article key={q.id} className="app-card p-4">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="badge badge-neutral">{q.status}</span>
+              <span className="badge badge-neutral">{statusLabel(q.status)}</span>
               {q.crop && <span className="text-[11px] text-[#6F6558]">{q.crop}</span>}
               {q.region && <span className="text-[11px] text-[#6F6558]">· {q.region}</span>}
             </div>

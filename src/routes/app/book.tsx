@@ -1,6 +1,7 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { type FormEvent, useState } from "react";
 import { createBooking, getDeskSnapshot } from "#/server/desk";
+import { statusLabel } from "#/lib/status-labels";
 
 export const Route = createFileRoute("/app/book")({
   loader: () => getDeskSnapshot(),
@@ -86,7 +87,7 @@ function BookPage() {
             <div>
               <div className="flex flex-wrap items-center gap-2">
                 <h2 className="text-[14px] font-semibold">{b.topic}</h2>
-                <span className="badge badge-neutral">{b.status}</span>
+                <span className="badge badge-neutral">{statusLabel(b.status)}</span>
               </div>
               <div className="mt-1 text-[12px] text-[#6F6558]">
                 {new Date(b.preferredAt).toLocaleString()} · {b.durationMin} min

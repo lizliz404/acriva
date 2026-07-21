@@ -6,6 +6,7 @@ import {
   processFinApplication,
   type FinApplicationStatus,
 } from "#/server/finance";
+import { statusLabel } from "#/lib/status-labels";
 
 export const Route = createFileRoute("/app/finance/bank")({
   loader: () => getFinanceSnapshot(),
@@ -40,7 +41,7 @@ function BankDeskPage() {
       });
       await router.invalidate();
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Action failed");
+      setError(e instanceof Error ? e.message : "操作失败");
     } finally {
       setBusyId(null);
     }
@@ -53,7 +54,7 @@ function BankDeskPage() {
       const res = await matchFarmersToProduct({ data: { productId } });
       setMatches(res);
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Match failed");
+      setError(e instanceof Error ? e.message : "匹配失败");
     } finally {
       setBusyId(null);
     }
@@ -62,9 +63,9 @@ function BankDeskPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight">Finance · Bank</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">银行席</h1>
         <p className="mt-1 text-[14px] text-[#6F6558]">
-          MatchFarmer · FinApprove · FinInfo
+          农户匹配 · 融资审批 · 产品上架信息
         </p>
       </div>
 
@@ -75,7 +76,7 @@ function BankDeskPage() {
       )}
 
       <section className="app-card space-y-3 p-4">
-        <h2 className="text-[14px] font-semibold">智能匹配农户 MatchFarmer</h2>
+        <h2 className="text-[14px] font-semibold">智能匹配农户</h2>
         <div className="flex flex-wrap gap-2">
           <select
             className="min-w-[220px] flex-1 rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
@@ -94,7 +95,7 @@ function BankDeskPage() {
             disabled={busyId === "match"}
             onClick={runMatch}
           >
-            Run match
+            开始匹配
           </button>
         </div>
         <div className="grid gap-2 sm:grid-cols-2">
@@ -110,11 +111,11 @@ function BankDeskPage() {
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-[15px] font-semibold">融资审批 queue ({queue.length})</h2>
+        <h2 className="text-[15px] font-semibold">融资审批队列（{queue.length}）</h2>
         {queue.map((a) => (
           <article key={a.id} className="app-card space-y-3 p-4">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="badge badge-neutral">{a.status}</span>
+              <span className="badge badge-neutral">{statusLabel(a.status)}</span>
               <span className="text-[14px] font-semibold">
                 {a.farmerName} · {a.amountWan}万
               </span>
@@ -124,7 +125,7 @@ function BankDeskPage() {
             </div>
             <textarea
               className="min-h-16 w-full rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
-              placeholder="Bank note"
+              placeholder="银行备注"
               value={note[a.id] || ""}
               onChange={(e) => setNote((prev) => ({ ...prev, [a.id]: e.target.value }))}
             />
@@ -136,7 +137,7 @@ function BankDeskPage() {
                   disabled={busyId === a.id}
                   onClick={() => act(a.id, "under_review")}
                 >
-                  Start review
+                  开始审核
                 </button>
               )}
               {(a.status === "submitted" || a.status === "under_review") && (
@@ -147,7 +148,7 @@ function BankDeskPage() {
                     disabled={busyId === a.id}
                     onClick={() => act(a.id, "approved")}
                   >
-                    Approve
+                    批准
                   </button>
                   <button
                     type="button"
@@ -155,7 +156,7 @@ function BankDeskPage() {
                     disabled={busyId === a.id}
                     onClick={() => act(a.id, "rejected")}
                   >
-                    Reject
+                    驳回
                   </button>
                 </>
               )}
@@ -166,7 +167,7 @@ function BankDeskPage() {
                   disabled={busyId === a.id}
                   onClick={() => act(a.id, "disbursed")}
                 >
-                  Mark disbursed
+                  标记已放款
                 </button>
               )}
             </div>
@@ -175,7 +176,7 @@ function BankDeskPage() {
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-[15px] font-semibold">融资产品 FinInfo</h2>
+        <h2 className="text-[15px] font-semibold">融资产品</h2>
         <div className="grid gap-3 md:grid-cols-3">
           {data.products.map((p) => (
             <div key={p.id} className="app-card p-4">

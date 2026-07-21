@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { getDeskSnapshot } from "#/server/desk";
 import { getFinanceSnapshot } from "#/server/finance";
 import { getCommerceSnapshot } from "#/server/commerce";
+import { statusLabel } from "#/lib/status-labels";
 
 export const Route = createFileRoute("/app/")({
   loader: async () => {
@@ -69,7 +70,7 @@ function AppOverview() {
                   {a.farmerName} · {a.amountWan}万
                 </div>
                 <div className="text-[11px] text-[#6F6558]">
-                  {a.status} · {a.productTitle}
+                  {statusLabel(a.status)} · {a.productTitle}
                 </div>
               </li>
             ))}

@@ -1,6 +1,7 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { type FormEvent, useMemo, useState } from "react";
 import { getDeskSnapshot, upsertKnowledge } from "#/server/desk";
+import { statusLabel } from "#/lib/status-labels";
 
 export const Route = createFileRoute("/app/knowledge")({
   loader: () => getDeskSnapshot(),
@@ -105,7 +106,7 @@ function KnowledgePage() {
             <article key={k.id} className="app-card p-4">
               <div className="flex flex-wrap items-center gap-2">
                 <h2 className="text-[15px] font-semibold">{k.title}</h2>
-                <span className="badge badge-neutral">{k.status}</span>
+                <span className="badge badge-neutral">{statusLabel(k.status)}</span>
                 <span className="badge badge-success">{k.confidence}</span>
               </div>
               <p className="mt-2 text-[13px] leading-relaxed text-[#4A433A]">{k.summary}</p>
