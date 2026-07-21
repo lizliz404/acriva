@@ -1,24 +1,24 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
-import { tabs } from "#/lib/data";
 import { sectionInView } from "#/lib/animations";
+import { useI18n } from "#/i18n";
 import { PlatformMock } from "./PlatformMock";
 
 export function PlatformTabs() {
+  const { t } = useI18n();
+  const tabs = t.tabs;
   const [active, setActive] = useState(tabs[0].id);
-  const current = tabs.find((t) => t.id === active) ?? tabs[0];
+  const current = tabs.find((tab) => tab.id === active) ?? tabs[0];
 
   return (
     <section id="platform" className="py-20 md:py-24">
       <div className="container-page">
         <motion.div {...sectionInView} className="mx-auto mb-14 max-w-[820px] text-center">
-          <span className="text-eyebrow">三结果</span>
+          <span className="text-eyebrow">{t.platform.eyebrow}</span>
           <h2 className="text-section mt-4">
-            借得到 · 卖得出 · 问得着
+            {t.platform.title}
             <br />
-            <span className="text-[#6F6558]">
-              不讲模块名，讲你这季能不能办成。
-            </span>
+            <span className="text-[#6F6558]">{t.platform.subtitle}</span>
           </h2>
         </motion.div>
 
@@ -28,7 +28,7 @@ export function PlatformTabs() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.45 }}
-            aria-label="三结果分镜"
+            aria-label={t.platform.ariaTabs}
             className="flex gap-2 overflow-x-auto pb-1 lg:flex-col lg:overflow-visible lg:pb-0"
           >
             {tabs.map((tab) => {

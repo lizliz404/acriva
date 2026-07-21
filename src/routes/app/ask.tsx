@@ -2,6 +2,7 @@ import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { type FormEvent, useState } from "react";
 import { createQuestion, getDeskSnapshot } from "#/server/desk";
 import { statusLabel } from "#/lib/status-labels";
+import { useI18n } from "#/i18n";
 
 export const Route = createFileRoute("/app/ask")({
   loader: () => getDeskSnapshot(),
@@ -11,6 +12,9 @@ export const Route = createFileRoute("/app/ask")({
 function AskPage() {
   const data = Route.useLoaderData();
   const router = useRouter();
+  const { t, locale } = useI18n();
+  const a = t.app.ask;
+  const c = t.app.common;
   const [question, setQuestion] = useState("");
   const [crop, setCrop] = useState("");
   const [region, setRegion] = useState("");
@@ -27,7 +31,7 @@ function AskPage() {
       setQuestion("");
       await router.invalidate();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "提问失败");
+      setError(err instanceof Error ? err.message : a.askFailed);
     } finally {
       setBusy(false);
     }
@@ -36,10 +40,8 @@ function AskPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight">向专家提问</h1>
-        <p className="mt-1 text-[14px] text-[#6F6558]">
-          问题进入问答队列，专家席回答后可沉淀为知识稿。
-        </p>
+        <h1 className="text-2xl font-semibold tracking-tight">{a.title}</h1>
+        <p className="mt-1 text-[14px] text-[#6F6558]">{a.subtitle}</p>
       </div>
 
       {error && (
@@ -51,7 +53,7 @@ function AskPage() {
       <form onSubmit={onSubmit} className="app-card space-y-3 p-4">
         <textarea
           className="min-h-28 w-full rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
-          placeholder="描述田间问题…"
+          placeholder={a.placeholder}
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
           required
@@ -59,19 +61,19 @@ function AskPage() {
         <div className="grid gap-2 sm:grid-cols-2">
           <input
             className="rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
-            placeholder="作物"
+            placeholder={a.crop}
             value={crop}
             onChange={(e) => setCrop(e.target.value)}
           />
           <input
             className="rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
-            placeholder="产区"
+            placeholder={a.region}
             value={region}
             onChange={(e) => setRegion(e.target.value)}
           />
         </div>
         <button type="submit" className="btn-primary" disabled={busy}>
-          {busy ? "提交中…" : "提交问题"}
+          {busy ? c.submitting : a.submit}
         </button>
       </form>
 
@@ -79,9 +81,11 @@ function AskPage() {
         {data.qa.map((q) => (
           <article key={q.id} className="app-card p-4">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="badge badge-neutral">{statusLabel(q.status)}</span>
+              <span className="badge badge-neutral">{statusLabel(q.status, locale)}</span>
               {q.crop && <span className="text-[11px] text-[#6F6558]">{q.crop}</span>}
-              {q.region && <span className="text-[11px] text-[#6F6558]">· {q.region}</span>}
+              {q.region && (
+                <span className="text-[11px] text-[#6F6558]">· {q.region}</span>
+              )}
             </div>
             <p className="mt-2 text-[14px] font-medium text-[#1C1712]">{q.question}</p>
             {q.answer && (

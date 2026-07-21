@@ -8,6 +8,7 @@ import {
 } from "#/server/finance";
 import { statusLabel } from "#/lib/status-labels";
 import { playStampFeedback } from "#/lib/stamp-feedback";
+import { useI18n } from "#/i18n";
 
 /*
  * DESIGN.md §2.4 — anti–tea-gift-box (finance desk):
@@ -22,6 +23,9 @@ export const Route = createFileRoute("/app/finance")({
 function FinanceFarmerPage() {
   const data = Route.useLoaderData();
   const router = useRouter();
+  const { t, locale } = useI18n();
+  const f = t.app.finance;
+  const c = t.app.common;
   const stampBtnRef = useRef<HTMLButtonElement>(null);
   const defaultFarmer = data.farmers[0]?.id || "";
   const [farmerId, setFarmerId] = useState(defaultFarmer);
@@ -55,7 +59,7 @@ function FinanceFarmerPage() {
       setPurpose("");
       await router.invalidate();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "申请失败");
+      setError(err instanceof Error ? err.message : f.applyFailed);
     } finally {
       setBusy(false);
     }
@@ -68,7 +72,7 @@ function FinanceFarmerPage() {
       const res = await matchJointLoanPeers({ data: { farmerId } });
       setPeers(res);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "匹配失败");
+      setError(err instanceof Error ? err.message : f.matchFailed);
     } finally {
       setBusy(false);
     }
@@ -84,7 +88,7 @@ function FinanceFarmerPage() {
       const res = await getPriceForecast({ data: { crop, region } });
       setForecast(res);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "行情参照失败");
+      setError(err instanceof Error ? err.message : f.forecastFailed);
     } finally {
       setBusy(false);
     }
@@ -94,11 +98,11 @@ function FinanceFarmerPage() {
     <div className="space-y-6">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">融资 · 农户席</h1>
+          <h1 className="text-2xl font-semibold tracking-tight">{f.title}</h1>
           <p className="mt-1 text-[14px] text-[#6F6558]">
-            申请 · 联合匹配 · 行情参照。银行席：{" "}
+            {f.subtitle}{" "}
             <Link to="/app/finance/bank" className="underline">
-              去审批
+              {f.bankCta}
             </Link>
           </p>
         </div>
@@ -123,7 +127,7 @@ function FinanceFarmerPage() {
 
       <div className="grid gap-4 lg:grid-cols-[1fr_320px]">
         <form onSubmit={onApply} className="app-card space-y-3 p-4">
-          <h2 className="text-[14px] font-semibold">申请融资</h2>
+          <h2 className="text-[14px] font-semibold">{f.applyTitle}</h2>
           <select
             className="w-full rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
             value={productId}
@@ -131,8 +135,8 @@ function FinanceFarmerPage() {
           >
             {data.products.map((p) => (
               <option key={p.id} value={p.id}>
-                {p.bankName} · {p.title}（{p.minAmountWan}-{p.maxAmountWan}万 ·{" "}
-                {p.rateApr}%）
+                {p.bankName} · {p.title}（{p.minAmountWan}-{p.maxAmountWan}
+                {c.wan} · {p.rateApr}%）
               </option>
             ))}
           </select>
@@ -143,12 +147,12 @@ function FinanceFarmerPage() {
             className="w-full rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
             value={amountWan}
             onChange={(e) => setAmountWan(Number(e.target.value))}
-            placeholder="金额（万）"
+            placeholder={f.amountWan}
             required
           />
           <textarea
             className="min-h-20 w-full rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
-            placeholder="用途说明"
+            placeholder={f.purpose}
             value={purpose}
             onChange={(e) => setPurpose(e.target.value)}
             required
@@ -159,7 +163,7 @@ function FinanceFarmerPage() {
               checked={jointMode}
               onChange={(e) => setJointMode(e.target.checked)}
             />
-            开启联合贷匹配（相似经营主体推荐）
+            {f.jointMode}
           </label>
           <button
             ref={stampBtnRef}
@@ -167,15 +171,15 @@ function FinanceFarmerPage() {
             className="btn-primary"
             disabled={busy}
           >
-            {busy ? "提交中…" : "提交申请"}
+            {busy ? c.submitting : f.submit}
           </button>
         </form>
 
         <div className="space-y-3">
           <div className="app-card space-y-2 p-4">
-            <h3 className="text-[13px] font-semibold">联合贷匹配预览</h3>
+            <h3 className="text-[13px] font-semibold">{f.peersTitle}</h3>
             <button type="button" className="btn-secondary w-full" onClick={runMatch} disabled={busy}>
-              查看同行匹配
+              {f.matchPeers}
             </button>
             <ul className="space-y-2">
               {peers.map((p) => (
@@ -189,9 +193,9 @@ function FinanceFarmerPage() {
             </ul>
           </div>
           <div className="app-card space-y-2 p-4">
-            <h3 className="text-[13px] font-semibold">行情参照（均线启发式）</h3>
+            <h3 className="text-[13px] font-semibold">{f.forecast}</h3>
             <button type="button" className="btn-secondary w-full" onClick={runForecast} disabled={busy}>
-              看主作物走势
+              {f.forecastCta}
             </button>
             {forecast && (
               <div className="text-[12px] text-[#4A433A]">
@@ -200,10 +204,10 @@ function FinanceFarmerPage() {
                 </div>
                 <div className="mt-1 text-[#6F6558]">{forecast.method}</div>
                 <div className="mt-2">
-                  历史：{forecast.history.map((h) => h.priceYuan).join(" → ")}
+                  {f.history}: {forecast.history.map((h) => h.priceYuan).join(" → ")}
                 </div>
                 <div className="mt-1">
-                  参照：{forecast.forecast.map((h) => h.priceYuan).join(" → ")}
+                  {f.reference}: {forecast.forecast.map((h) => h.priceYuan).join(" → ")}
                 </div>
               </div>
             )}
@@ -212,13 +216,16 @@ function FinanceFarmerPage() {
       </div>
 
       <section className="space-y-3">
-        <h2 className="text-[15px] font-semibold">我的申请</h2>
+        <h2 className="text-[15px] font-semibold">{f.myApplications}</h2>
         {myApps.map((a) => (
           <article key={a.id} className="app-card p-4">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="badge badge-neutral">{statusLabel(a.status)}</span>
-              {a.jointMode && <span className="badge badge-warn">联合贷</span>}
-              <span className="text-[14px] font-semibold">{a.amountWan}万</span>
+              <span className="badge badge-neutral">{statusLabel(a.status, locale)}</span>
+              {a.jointMode && <span className="badge badge-warn">{f.jointBadge}</span>}
+              <span className="text-[14px] font-semibold">
+                {a.amountWan}
+                {c.wan}
+              </span>
             </div>
             <div className="mt-1 text-[13px] text-[#4A433A]">
               {a.productTitle} · {a.bankName}
@@ -226,13 +233,13 @@ function FinanceFarmerPage() {
             <div className="mt-1 text-[12px] text-[#6F6558]">{a.purpose}</div>
             {a.jointPeers && a.jointPeers.length > 0 && (
               <div className="mt-2 text-[12px] text-[#4A433A]">
-                匹配同行：{" "}
+                {f.matchedPeers}:{" "}
                 {a.jointPeers.map((p) => `${p.name}(${(p.score * 100).toFixed(0)}%)`).join("，")}
               </div>
             )}
             {a.bankNote && (
               <div className="mt-2 rounded-lg bg-[#F7F0E4] px-3 py-2 text-[12px]">
-                银行备注：{a.bankNote}
+                {f.bankNote}: {a.bankNote}
               </div>
             )}
           </article>

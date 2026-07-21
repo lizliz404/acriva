@@ -1,5 +1,7 @@
 import { Link, Outlet, useRouterState } from "@tanstack/react-router";
 import { LogoMark, cn } from "../ui";
+import { LanguageSwitcher } from "../LanguageSwitcher";
+import { useI18n } from "#/i18n";
 
 /*
  * DESIGN.md §2.4 — anti–tea-gift-box (app shell):
@@ -8,21 +10,22 @@ import { LogoMark, cn } from "../ui";
  * Seal red is allowed in the mark only — never as shell background or CTA fill.
  */
 
-const links = [
-  { to: "/app", label: "总览", exact: true },
-  { to: "/app/finance", label: "融资", exact: false },
-  { to: "/app/finance/bank", label: "银行席", exact: false },
-  { to: "/app/market", label: "货盘", exact: true },
-  { to: "/app/market/buy", label: "采购", exact: false },
-  { to: "/app/market/sell", label: "上架", exact: false },
-  { to: "/app/knowledge", label: "知识", exact: false },
-  { to: "/app/ask", label: "问答", exact: false },
-  { to: "/app/book", label: "预约", exact: false },
-  { to: "/app/expert", label: "专家席", exact: false },
-] as const;
-
 export function AppShell() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const { t } = useI18n();
+
+  const links = [
+    { to: "/app", label: t.app.nav.overview, exact: true },
+    { to: "/app/finance", label: t.app.nav.finance, exact: false },
+    { to: "/app/finance/bank", label: t.app.nav.bank, exact: false },
+    { to: "/app/market", label: t.app.nav.inventory, exact: true },
+    { to: "/app/market/buy", label: t.app.nav.buy, exact: false },
+    { to: "/app/market/sell", label: t.app.nav.sell, exact: false },
+    { to: "/app/knowledge", label: t.app.nav.knowledge, exact: false },
+    { to: "/app/ask", label: t.app.nav.ask, exact: false },
+    { to: "/app/book", label: t.app.nav.book, exact: false },
+    { to: "/app/expert", label: t.app.nav.expert, exact: false },
+  ] as const;
 
   return (
     <div className="app-shell">
@@ -30,8 +33,8 @@ export function AppShell() {
         role="status"
         className="border-b border-[#E8DFD0] bg-[#F7F0E4] px-4 py-2 text-center text-[12px] leading-relaxed text-[#4A433A]"
       >
-        <span className="font-medium text-[#1C1712]">开放演示台</span>
-        ——默认无强制登录（AUTH_ENFORCE 关闭）；会话/角色表已就绪。请勿录入真实农户/银行数据。
+        <span className="font-medium text-[#1C1712]">{t.app.banner.title}</span>
+        {t.app.banner.body}
       </div>
       <header className="sticky top-0 z-40 border-b border-[#E8DFD0] bg-[#FFFBF4]/90 backdrop-blur">
         <div className="mx-auto flex h-14 max-w-6xl items-center gap-4 px-4">
@@ -59,9 +62,12 @@ export function AppShell() {
               );
             })}
           </nav>
-          <span className="hidden text-[11px] text-[#6F6558] lg:inline">
-            融资 + 货盘 + 专家
-          </span>
+          <div className="flex shrink-0 items-center gap-2">
+            <span className="hidden text-[11px] text-[#6F6558] lg:inline">
+              {t.app.nav.tagline}
+            </span>
+            <LanguageSwitcher className="!text-[#4A433A] hover:!bg-[#E8DFD0]" />
+          </div>
         </div>
       </header>
       <main className="mx-auto max-w-6xl px-4 py-8">

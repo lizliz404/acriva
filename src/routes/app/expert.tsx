@@ -9,6 +9,7 @@ import {
 } from "#/server/desk";
 import { statusLabel } from "#/lib/status-labels";
 import { playStampFeedback } from "#/lib/stamp-feedback";
+import { useI18n } from "#/i18n";
 
 export const Route = createFileRoute("/app/expert")({
   loader: () => getDeskSnapshot(),
@@ -18,6 +19,9 @@ export const Route = createFileRoute("/app/expert")({
 function ExpertPage() {
   const data = Route.useLoaderData();
   const router = useRouter();
+  const { t, locale } = useI18n();
+  const ex = t.app.expert;
+  const c = t.app.common;
   const openQa = useMemo(
     () => data.qa.filter((q) => q.status === "open" || q.status === "assigned"),
     [data.qa],
@@ -48,8 +52,8 @@ function ExpertPage() {
       await fn();
       if (stampEl) playStampFeedback(stampEl);
       await router.invalidate();
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "操作失败");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : ex.opFailed);
     } finally {
       setBusyId(null);
     }
@@ -58,13 +62,11 @@ function ExpertPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight">专家席</h1>
-        <p className="mt-1 text-[14px] text-[#6F6558]">
-          知识管理 · 问答处理 · 预约确认——与农户下行共用三张表。
-        </p>
+        <h1 className="text-2xl font-semibold tracking-tight">{ex.title}</h1>
+        <p className="mt-1 text-[14px] text-[#6F6558]">{ex.subtitle}</p>
         {defaultExpert && (
           <p className="mt-2 text-[12px] text-[#6F6558]">
-            当前身份：{defaultExpert.name} · {defaultExpert.specialty}
+            {ex.identity}: {defaultExpert.name} · {defaultExpert.specialty}
           </p>
         )}
         {error && (
@@ -75,22 +77,24 @@ function ExpertPage() {
       </div>
 
       <section className="space-y-3">
-        <h2 className="text-[15px] font-semibold">问答队列（{openQa.length}）</h2>
+        <h2 className="text-[15px] font-semibold">
+          {ex.qaQueue}（{openQa.length}）
+        </h2>
         {openQa.length === 0 && (
-          <div className="app-card p-4 text-[13px] text-[#6F6558]">队列清空。</div>
+          <div className="app-card p-4 text-[13px] text-[#6F6558]">{ex.emptyQa}</div>
         )}
         {openQa.map((q) => (
           <div key={q.id} className="app-card space-y-3 p-4">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="badge badge-neutral">{statusLabel(q.status)}</span>
-              <span className="badge badge-warn">{statusLabel(q.priority)}</span>
+              <span className="badge badge-neutral">{statusLabel(q.status, locale)}</span>
+              <span className="badge badge-warn">{statusLabel(q.priority, locale)}</span>
               {q.crop && <span className="text-[11px] text-[#6F6558]">{q.crop}</span>}
               {q.region && <span className="text-[11px] text-[#6F6558]">· {q.region}</span>}
             </div>
             <p className="text-[14px] font-medium">{q.question}</p>
             <div className="text-[12px] text-[#6F6558]">
               {q.asker}
-              {q.expert ? ` · 已指派 ${q.expert}` : ""}
+              {q.expert ? ` · ${ex.assignedTo} ${q.expert}` : ""}
             </div>
 
             {q.status === "open" && defaultExpert && (
@@ -110,13 +114,13 @@ function ExpertPage() {
                   })
                 }
               >
-                指派给我
+                {ex.assignMe}
               </button>
             )}
 
             <textarea
               className="min-h-20 w-full rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
-              placeholder="写下回答…"
+              placeholder={ex.answerPh}
               value={answers[q.id] || ""}
               onChange={(e) => setAnswers((prev) => ({ ...prev, [q.id]: e.target.value }))}
             />
@@ -128,7 +132,7 @@ function ExpertPage() {
                   setPromote((prev) => ({ ...prev, [q.id]: e.target.checked }))
                 }
               />
-              回答后沉淀为知识草稿
+              {ex.promoteDraft}
             </label>
             <button
               type="button"
@@ -149,16 +153,18 @@ function ExpertPage() {
                 })
               }
             >
-              {busyId === q.id ? "发送中…" : "提交回答"}
+              {busyId === q.id ? c.sending : ex.submitAnswer}
             </button>
           </div>
         ))}
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-[15px] font-semibold">预约待确认（{pendingBooks.length}）</h2>
+        <h2 className="text-[15px] font-semibold">
+          {ex.bookQueue}（{pendingBooks.length}）
+        </h2>
         {pendingBooks.length === 0 && (
-          <div className="app-card p-4 text-[13px] text-[#6F6558]">暂无待确认预约。</div>
+          <div className="app-card p-4 text-[13px] text-[#6F6558]">{ex.emptyBook}</div>
         )}
         {pendingBooks.map((b) => (
           <div
@@ -184,7 +190,7 @@ function ExpertPage() {
                   })
                 }
               >
-                婉拒
+                {ex.decline}
               </button>
               <button
                 type="button"
@@ -207,7 +213,7 @@ function ExpertPage() {
                   )
                 }
               >
-                确认
+                {ex.confirm}
               </button>
             </div>
           </div>
@@ -215,7 +221,9 @@ function ExpertPage() {
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-[15px] font-semibold">知识草稿（{drafts.length}）</h2>
+        <h2 className="text-[15px] font-semibold">
+          {ex.drafts}（{drafts.length}）
+        </h2>
         {drafts.map((k) => (
           <form
             key={k.id}
@@ -230,12 +238,12 @@ function ExpertPage() {
             <div>
               <div className="text-[14px] font-semibold">{k.title}</div>
               <div className="text-[12px] text-[#6F6558]">
-                {statusLabel(k.status)} · {statusLabel(k.confidence)} · v{k.version} · {k.crop} ·{" "}
+                {statusLabel(k.status, locale)} · {statusLabel(k.confidence, locale)} · v{k.version} · {k.crop} ·{" "}
                 {k.region}
               </div>
             </div>
             <button type="submit" className="btn-secondary" disabled={busyId === k.id}>
-              发布
+              {ex.publish}
             </button>
           </form>
         ))}

@@ -8,6 +8,7 @@ import {
 } from "#/server/finance";
 import { statusLabel } from "#/lib/status-labels";
 import { playStampFeedback } from "#/lib/stamp-feedback";
+import { useI18n } from "#/i18n";
 
 export const Route = createFileRoute("/app/finance/bank")({
   loader: () => getFinanceSnapshot(),
@@ -17,6 +18,9 @@ export const Route = createFileRoute("/app/finance/bank")({
 function BankDeskPage() {
   const data = Route.useLoaderData();
   const router = useRouter();
+  const { t, locale } = useI18n();
+  const b = t.app.bank;
+  const c = t.app.common;
   const [productId, setProductId] = useState(data.products[0]?.id || "");
   const [matches, setMatches] = useState<
     Array<{ id: string; name: string; score: number; reason: string }>
@@ -47,7 +51,7 @@ function BankDeskPage() {
       if (status === "approved") playStampFeedback(stampEl);
       await router.invalidate();
     } catch (e) {
-      setError(e instanceof Error ? e.message : "操作失败");
+      setError(e instanceof Error ? e.message : c.failed);
     } finally {
       setBusyId(null);
     }
@@ -60,7 +64,7 @@ function BankDeskPage() {
       const res = await matchFarmersToProduct({ data: { productId } });
       setMatches(res);
     } catch (e) {
-      setError(e instanceof Error ? e.message : "匹配失败");
+      setError(e instanceof Error ? e.message : c.failed);
     } finally {
       setBusyId(null);
     }
@@ -69,10 +73,8 @@ function BankDeskPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight">银行席</h1>
-        <p className="mt-1 text-[14px] text-[#6F6558]">
-          农户匹配 · 融资审批 · 产品上架信息
-        </p>
+        <h1 className="text-2xl font-semibold tracking-tight">{b.title}</h1>
+        <p className="mt-1 text-[14px] text-[#6F6558]">{b.subtitle}</p>
       </div>
 
       {error && (
@@ -82,7 +84,7 @@ function BankDeskPage() {
       )}
 
       <section className="app-card space-y-3 p-4">
-        <h2 className="text-[14px] font-semibold">智能匹配农户</h2>
+        <h2 className="text-[14px] font-semibold">{b.matchTitle}</h2>
         <div className="flex flex-wrap gap-2">
           <select
             className="min-w-[220px] flex-1 rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
@@ -101,7 +103,7 @@ function BankDeskPage() {
             disabled={busyId === "match"}
             onClick={runMatch}
           >
-            开始匹配
+            {b.match}
           </button>
         </div>
         <div className="grid gap-2 sm:grid-cols-2">
@@ -117,13 +119,16 @@ function BankDeskPage() {
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-[15px] font-semibold">融资审批队列（{queue.length}）</h2>
+        <h2 className="text-[15px] font-semibold">
+          {b.queue}（{queue.length}）
+        </h2>
         {queue.map((a) => (
           <article key={a.id} className="app-card space-y-3 p-4">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="badge badge-neutral">{statusLabel(a.status)}</span>
+              <span className="badge badge-neutral">{statusLabel(a.status, locale)}</span>
               <span className="text-[14px] font-semibold">
-                {a.farmerName} · {a.amountWan}万
+                {a.farmerName} · {a.amountWan}
+                {t.app.common.wan}
               </span>
             </div>
             <div className="text-[13px] text-[#4A433A]">
@@ -131,7 +136,7 @@ function BankDeskPage() {
             </div>
             <textarea
               className="min-h-16 w-full rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
-              placeholder="银行备注"
+              placeholder={b.note}
               value={note[a.id] || ""}
               onChange={(e) => setNote((prev) => ({ ...prev, [a.id]: e.target.value }))}
             />
@@ -143,7 +148,7 @@ function BankDeskPage() {
                   disabled={busyId === a.id}
                   onClick={() => act(a.id, "under_review")}
                 >
-                  开始审核
+                  {b.startReview}
                 </button>
               )}
               {(a.status === "submitted" || a.status === "under_review") && (
@@ -154,7 +159,7 @@ function BankDeskPage() {
                     disabled={busyId === a.id}
                     onClick={(e) => act(a.id, "approved", e.currentTarget)}
                   >
-                    批准
+                    {b.approve}
                   </button>
                   <button
                     type="button"
@@ -162,7 +167,7 @@ function BankDeskPage() {
                     disabled={busyId === a.id}
                     onClick={() => act(a.id, "rejected")}
                   >
-                    驳回
+                    {b.reject}
                   </button>
                 </>
               )}
@@ -173,7 +178,7 @@ function BankDeskPage() {
                   disabled={busyId === a.id}
                   onClick={() => act(a.id, "disbursed")}
                 >
-                  标记已放款
+                  {b.disburse}
                 </button>
               )}
             </div>
@@ -182,14 +187,16 @@ function BankDeskPage() {
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-[15px] font-semibold">融资产品</h2>
+        <h2 className="text-[15px] font-semibold">{b.products}</h2>
         <div className="grid gap-3 md:grid-cols-3">
           {data.products.map((p) => (
             <div key={p.id} className="app-card p-4">
               <div className="text-[12px] text-[#6F6558]">{p.bankName}</div>
               <div className="mt-1 text-[14px] font-semibold">{p.title}</div>
               <div className="mt-2 text-[12px] text-[#4A433A]">
-                {p.minAmountWan}–{p.maxAmountWan}万 · {p.rateApr}% · {p.termMonths} mo
+                {p.minAmountWan}–{p.maxAmountWan}
+                {t.app.common.wan} · {p.rateApr}% · {p.termMonths}{" "}
+                {t.app.common.monthsAbbr}
               </div>
               <p className="mt-2 text-[12px] text-[#6F6558]">{p.description}</p>
             </div>

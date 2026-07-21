@@ -7,14 +7,8 @@ import {
 } from "framer-motion";
 import { Link } from "@tanstack/react-router";
 import { LogoMark } from "../ui";
-
-const NAV_LINKS = [
-  { label: "三结果", href: "#platform" },
-  { label: "对手方", href: "#customers" },
-  { label: "进台", href: "#pricing" },
-] as const;
-
-const EXPANDED_EXTRA = [{ label: "更新", href: "#resources" }] as const;
+import { LanguageSwitcher } from "../LanguageSwitcher";
+import { useI18n } from "#/i18n";
 
 const spring = {
   type: "spring" as const,
@@ -25,18 +19,39 @@ const spring = {
 const softFade = { duration: 0.22, ease: [0.22, 1, 0.36, 1] as const };
 
 export function Navbar() {
+  const { t } = useI18n();
   const [compact, setCompact] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const reduceMotion = useReducedMotion();
 
+  const navLinks = [
+    { label: t.nav.platform, href: "#platform" },
+    { label: t.nav.customers, href: "#customers" },
+    { label: t.nav.pricing, href: "#pricing" },
+  ] as const;
+  const expandedExtra = [{ label: t.nav.resources, href: "#resources" }] as const;
+
   useEffect(() => {
-    const onScroll = () => {
-      const next = window.scrollY > 36;
-      setCompact((prev) => (prev === next ? prev : next));
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const hero = document.getElementById("hero");
+    if (!hero) {
+      const onScroll = () => {
+        const next = window.scrollY > window.innerHeight * 0.85;
+        setCompact((prev) => (prev === next ? prev : next));
+      };
+      onScroll();
+      window.addEventListener("scroll", onScroll, { passive: true });
+      return () => window.removeEventListener("scroll", onScroll);
+    }
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        const next = !entry.isIntersecting;
+        setCompact((prev) => (prev === next ? prev : next));
+      },
+      { threshold: 0, rootMargin: "0px" },
+    );
+    io.observe(hero);
+    return () => io.disconnect();
   }, []);
 
   useEffect(() => {
@@ -58,7 +73,7 @@ export function Navbar() {
           <motion.nav
             layout
             layoutRoot
-            aria-label="主导航"
+            aria-label={t.nav.aria}
             transition={transition}
             className={`nav-island flex items-center border border-[#1C1712]/[0.08] bg-[#FFFBF4]/92 shadow-[0_8px_30px_rgba(28,23,18,0.08)] backdrop-blur-xl ${
               compact
@@ -91,7 +106,7 @@ export function Navbar() {
               <div
                 className={`flex items-center ${compact ? "gap-0.5" : "gap-0.5 sm:gap-1"}`}
               >
-                {NAV_LINKS.map((item) => (
+                {navLinks.map((item) => (
                   <motion.a
                     key={item.href}
                     layout
@@ -108,7 +123,7 @@ export function Navbar() {
                 ))}
                 <AnimatePresence initial={false}>
                   {!compact &&
-                    EXPANDED_EXTRA.map((item) => (
+                    expandedExtra.map((item) => (
                       <motion.a
                         key={item.href}
                         href={item.href}
@@ -126,6 +141,7 @@ export function Navbar() {
             </motion.div>
 
             <div className="ml-auto flex items-center gap-1 sm:gap-1.5">
+              <LanguageSwitcher compact={compact} />
               <AnimatePresence initial={false}>
                 {!compact && (
                   <motion.div
@@ -139,7 +155,7 @@ export function Navbar() {
                       to="/app"
                       className="whitespace-nowrap rounded-[10px] px-3 py-1.5 text-sm font-medium text-[#6F6558] hover:bg-[#1C1712]/[0.04] hover:text-[#1C1712]"
                     >
-                      进演示台
+                      {t.nav.demo}
                     </Link>
                   </motion.div>
                 )}
@@ -152,12 +168,12 @@ export function Navbar() {
                     : "px-3.5 py-2 text-sm"
                 }`}
               >
-                进经营台
+                {t.nav.enterDesk}
               </Link>
               <button
                 type="button"
                 className="inline-flex h-8 w-8 items-center justify-center rounded-[10px] text-[#6F6558] hover:bg-[#1C1712]/[0.04] md:hidden"
-                aria-label="菜单"
+                aria-label={t.nav.menu}
                 aria-expanded={mobileOpen}
                 onClick={() => setMobileOpen((v) => !v)}
               >
@@ -171,7 +187,7 @@ export function Navbar() {
               <>
                 <motion.button
                   type="button"
-                  aria-label="关闭菜单"
+                  aria-label={t.nav.closeMenu}
                   className="fixed inset-0 z-40 bg-[#1C1712]/30"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -185,7 +201,7 @@ export function Navbar() {
                   transition={itemTransition}
                   className="absolute top-[calc(100%+8px)] z-50 w-full max-w-sm rounded-2xl border border-[#E8DFD0] bg-[#FFFBF4]/95 p-2 shadow-[0_16px_40px_rgba(28,23,18,0.12)] backdrop-blur-xl"
                 >
-                  {[...NAV_LINKS, ...EXPANDED_EXTRA].map((item) => (
+                  {[...navLinks, ...expandedExtra].map((item) => (
                     <a
                       key={item.href}
                       href={item.href}
@@ -200,7 +216,7 @@ export function Navbar() {
                     className="mt-1 block rounded-xl px-3 py-2.5 text-sm font-semibold text-[#0F4D35] hover:bg-[#E3F0E8]"
                     onClick={() => setMobileOpen(false)}
                   >
-                    进经营台
+                    {t.nav.enterDesk}
                   </Link>
                 </motion.div>
               </>

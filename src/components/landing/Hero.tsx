@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { Link } from "@tanstack/react-router";
 import { fadeInTransition, fadeInUp, staggerContainer } from "#/lib/animations";
 import { product } from "#/lib/data";
+import { useI18n } from "#/i18n";
 import { AuditTrailStrip, Avatar, WindowChrome } from "../ui";
 
 /*
@@ -11,7 +12,7 @@ import { AuditTrailStrip, Avatar, WindowChrome } from "../ui";
  * vermilion ink-rubbing, zen whitespace, or gilt borders that read as gift packaging.
  */
 
-const feed = [
+const feedZh = [
   { title: "备耕贷 · 申请中", meta: "¥48万 · 番茄棚", tone: "amber" as const },
   { title: "货盘上架 · 黄瓜批次", meta: "2.4吨 · 已联系", tone: "emerald" as const },
   { title: "早疫病 SOP", meta: "华东 · 已核验", tone: "blue" as const },
@@ -20,33 +21,47 @@ const feed = [
   { title: "新问：肥水漂移", meta: "已派专家", tone: "rose" as const },
 ];
 
+const feedEn = [
+  { title: "Season loan · in review", meta: "¥480k · tomato house", tone: "amber" as const },
+  { title: "Listed · cucumber batch", meta: "2.4 t · contacted", tone: "emerald" as const },
+  { title: "Early blight SOP", meta: "East China · verified", tone: "blue" as const },
+  { title: "Booked: greenhouse visit", meta: "Tue 09:00 · 林薇", tone: "violet" as const },
+  { title: "Buyer demand · apple", meta: "城鲜 · awaiting", tone: "slate" as const },
+  { title: "New Q: fertigation drift", meta: "Expert assigned", tone: "rose" as const },
+];
+
 function FinanceWindow() {
+  const { t, locale } = useI18n();
   return (
     <WindowChrome
-      title="融资 · 申请"
+      title={t.collage.financeTitle}
       className="interactive-window"
       trailing={<span className="live-dot" />}
     >
       <div className="space-y-2 p-3 pb-8">
         <div className="flex items-center justify-between rounded-lg border border-[#E8DFD0] bg-[#F7F0E4] px-2.5 py-2 text-[12px]">
-          <span className="text-[#6F6558]">备耕贷 · 东棚合作社</span>
-          <span className="badge badge-warn">申请中</span>
+          <span className="text-[#6F6558]">
+            {locale === "zh" ? "备耕贷 · 东棚合作社" : "Season loan · 东棚合作社"}
+          </span>
+          <span className="badge badge-warn">{t.collage.applying}</span>
         </div>
-        {[
-          ["用途", "农资 + 棚膜"],
-          ["金额", "¥480,000"],
-          ["产区", "华东 · 番茄"],
-        ].map(([t, s]) => (
+        {(
+          [
+            [t.collage.purpose, locale === "zh" ? "农资 + 棚膜" : "Inputs + film"],
+            [t.collage.amount, "¥480,000"],
+            [t.collage.region, locale === "zh" ? "华东 · 番茄" : "East China · tomato"],
+          ] as const
+        ).map(([label, value]) => (
           <div
-            key={t}
+            key={label}
             className="flex items-center justify-between rounded-lg border border-[#E8DFD0] bg-[#FFFBF4] px-3 py-2.5 transition hover:border-[#D4C7B0] hover:shadow-sm"
           >
-            <div className="text-[12px] text-[#6F6558]">{t}</div>
-            <div className="text-num text-[13px] font-medium text-[#1C1712]">{s}</div>
+            <div className="text-[12px] text-[#6F6558]">{label}</div>
+            <div className="text-num text-[13px] font-medium text-[#1C1712]">{value}</div>
           </div>
         ))}
         <div className="rounded-lg border border-dashed border-[#D4C7B0] px-3 py-2 text-[11px] text-[#6F6558]">
-          银行席可见 · 留痕可审
+          {t.collage.bankVisible}
         </div>
       </div>
       <AuditTrailStrip batch="#A-2607" time="14:32" operator="合作社-陈" />
@@ -55,6 +70,7 @@ function FinanceWindow() {
 }
 
 function MarketWindow() {
+  const { t } = useI18n();
   const [phase, setPhase] = useState(0);
   const reduceMotion = useReducedMotion();
   useEffect(() => {
@@ -62,10 +78,10 @@ function MarketWindow() {
     const id = window.setInterval(() => setPhase((p) => (p + 1) % 3), 2200);
     return () => window.clearInterval(id);
   }, [reduceMotion]);
-  const labels = ["上架批次…", "买家浏览中…", "已联系"];
+  const labels = [t.collage.listing, t.collage.browsing, t.collage.contacted];
   const shownPhase = reduceMotion ? 2 : phase;
   return (
-    <WindowChrome title="货盘 · 上架" dark className="interactive-window">
+    <WindowChrome title={t.collage.marketTitle} dark className="interactive-window">
       <div className="space-y-3 p-3 pb-8 text-[12.5px]">
         <div className="rounded-lg bg-white/8 px-3 py-2 text-[#F7F0E4]/90">
           黄瓜 · 批次 C-0721 · 2.4 吨 · ¥3.2/斤
@@ -78,39 +94,28 @@ function MarketWindow() {
                 <span className="typing-dot" />
                 <span className="typing-dot" />
                 <span className="typing-dot" />
+                <span className="ml-1">{labels[shownPhase]}</span>
               </span>
             ) : (
-              "城鲜采购：要量、要新鲜度证明，今天下午能装吗？"
+              labels[2]
             )}
           </div>
         </div>
-        <div className="flex items-center justify-between rounded-lg border border-white/10 px-3 py-2 text-[11px] text-[#F7F0E4]/55">
-          <span>{labels[shownPhase]}</span>
-          <span className="badge badge-success !border-[#7BC4A0]/30 !bg-[#7BC4A0]/15 !text-[#7BC4A0]">
-            货盘
-          </span>
-        </div>
       </div>
-      <AuditTrailStrip batch="#C-0721" time="15:08" operator="农户-王" dark />
     </WindowChrome>
   );
 }
 
 function BookWindow() {
+  const { t } = useI18n();
   const reduceMotion = useReducedMotion();
   return (
-    <WindowChrome title="专家 · 预约" className="interactive-window">
+    <WindowChrome title={t.collage.bookTitle} className="interactive-window">
       <div className="p-3 pb-8">
-        <div className="mb-2 text-[12px] font-medium text-[#1C1712]">
-          棚室病害巡诊
-        </div>
+        <div className="mb-2 text-[12px] font-medium text-[#1C1712]">棚室病害巡诊</div>
         <div className="mb-3 grid grid-cols-2 gap-2 text-[11px]">
-          <div className="rounded-lg bg-[#F7F0E4] px-2.5 py-2 text-[#4A433A]">
-            周二 · 09:00
-          </div>
-          <div className="rounded-lg bg-[#F7F0E4] px-2.5 py-2 text-[#4A433A]">
-            60 分 · 远程
-          </div>
+          <div className="rounded-lg bg-[#F7F0E4] px-2.5 py-2 text-[#4A433A]">周二 · 09:00</div>
+          <div className="rounded-lg bg-[#F7F0E4] px-2.5 py-2 text-[#4A433A]">60 分 · 远程</div>
         </div>
         <div className="mb-3 flex items-center gap-2">
           <Avatar initials="林" tone="emerald" size="sm" />
@@ -124,14 +129,14 @@ function BookWindow() {
           className="btn-primary w-full !py-2 text-[12px]"
           onClick={(e) => {
             const el = e.currentTarget;
-            el.textContent = "已确认";
+            el.textContent = t.collage.confirmed;
             if (reduceMotion) return;
             window.setTimeout(() => {
-              el.textContent = "确认预约";
+              el.textContent = t.collage.confirmBook;
             }, 1600);
           }}
         >
-          确认预约
+          {t.collage.confirmBook}
         </button>
       </div>
       <AuditTrailStrip batch="#B-0719" time="09:12" operator="专家-林" />
@@ -140,13 +145,17 @@ function BookWindow() {
 }
 
 function FeedWindow() {
+  const { t, locale } = useI18n();
   const reduceMotion = useReducedMotion();
+  const feed = locale === "zh" ? feedZh : feedEn;
   const items = reduceMotion ? feed : [...feed, ...feed];
   return (
     <WindowChrome
-      title="经营动态"
+      title={t.collage.feedTitle}
       className="interactive-window max-h-[220px]"
-      trailing={<span className="text-[10px] font-medium text-[#0F4D35]">流动中</span>}
+      trailing={
+        <span className="text-[10px] font-medium text-[#0F4D35]">{t.collage.live}</span>
+      }
     >
       <div className="relative h-[170px] overflow-hidden">
         <div className={`space-y-2 p-3 ${reduceMotion ? "" : "flow-list"}`}>
@@ -210,8 +219,9 @@ export function HeroCollage() {
 }
 
 export function Hero() {
+  const { t } = useI18n();
   return (
-    <section className="relative overflow-hidden pb-10 pt-20 md:pt-24">
+    <section id="hero" className="relative overflow-hidden pb-10 pt-20 md:pt-24">
       <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[520px] bg-[radial-gradient(ellipse_at_top,rgba(255,251,244,0.95),transparent_60%)]" />
       <div className="container-page">
         <div className="mx-auto max-w-[760px] text-center">
@@ -230,9 +240,9 @@ export function Hero() {
               transition={fadeInTransition}
               className="text-hero mb-5"
             >
-              钱、货、技术，
+              {t.hero.titleLine1}
               <br />
-              一张台子办成
+              {t.hero.titleLine2}
             </motion.h1>
 
             <motion.p
@@ -240,7 +250,7 @@ export function Hero() {
               transition={fadeInTransition}
               className="text-body mx-auto mb-8 max-w-[520px]"
             >
-              借得到 · 卖得出 · 问得着。季节前钱不卡、货有出路、出事有人答——给土老板和合作社的经营台。
+              {t.hero.body}
             </motion.p>
 
             <motion.div
@@ -249,10 +259,10 @@ export function Hero() {
               className="flex flex-wrap items-center justify-center gap-3"
             >
               <Link to="/app" className="btn-primary">
-                进经营台
+                {t.hero.ctaPrimary}
               </Link>
               <Link to="/app/market/sell" className="btn-secondary">
-                有货上架
+                {t.hero.ctaSecondary}
               </Link>
             </motion.div>
           </motion.div>

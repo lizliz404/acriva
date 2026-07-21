@@ -1,6 +1,7 @@
 import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
 import appCss from "../styles.css?url";
 import { product } from "#/lib/data";
+import { I18nProvider } from "#/i18n";
 
 const SITE_URL = `https://${product.domain}`;
 const OG_IMAGE = `${SITE_URL}/og-image.png`;
@@ -100,7 +101,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body className="antialiased">
-        {children}
+        <I18nProvider>{children}</I18nProvider>
         <Scripts />
       </body>
     </html>

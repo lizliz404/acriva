@@ -2,6 +2,7 @@ import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { type FormEvent, useState } from "react";
 import { createBooking, getDeskSnapshot } from "#/server/desk";
 import { statusLabel } from "#/lib/status-labels";
+import { useI18n } from "#/i18n";
 
 export const Route = createFileRoute("/app/book")({
   loader: () => getDeskSnapshot(),
@@ -11,6 +12,9 @@ export const Route = createFileRoute("/app/book")({
 function BookPage() {
   const data = Route.useLoaderData();
   const router = useRouter();
+  const { t, locale } = useI18n();
+  const b = t.app.book;
+  const c = t.app.common;
   const [topic, setTopic] = useState("");
   const [crop, setCrop] = useState("");
   const [preferredAt, setPreferredAt] = useState("2026-07-28T10:00");
@@ -36,7 +40,7 @@ function BookPage() {
       setNotes("");
       await router.invalidate();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "预约失败");
+      setError(err instanceof Error ? err.message : b.bookFailed);
     } finally {
       setBusy(false);
     }
@@ -45,10 +49,8 @@ function BookPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight">预约专家</h1>
-        <p className="mt-1 text-[14px] text-[#6F6558]">
-          提交预约后，专家席确认时间与备忘。
-        </p>
+        <h1 className="text-2xl font-semibold tracking-tight">{b.title}</h1>
+        <p className="mt-1 text-[14px] text-[#6F6558]">{b.subtitle}</p>
       </div>
 
       {error && (
@@ -60,14 +62,14 @@ function BookPage() {
       <form onSubmit={onSubmit} className="app-card grid gap-3 p-4 md:grid-cols-2">
         <input
           className="rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px] md:col-span-2"
-          placeholder="主题"
+          placeholder={b.topic}
           value={topic}
           onChange={(e) => setTopic(e.target.value)}
           required
         />
         <input
           className="rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
-          placeholder="作物"
+          placeholder={b.crop}
           value={crop}
           onChange={(e) => setCrop(e.target.value)}
         />
@@ -80,34 +82,40 @@ function BookPage() {
         />
         <textarea
           className="min-h-20 rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px] md:col-span-2"
-          placeholder="备忘（病情、地点、联系方式）"
+          placeholder={b.memo}
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
         />
         <div className="md:col-span-2">
           <button type="submit" className="btn-primary" disabled={busy}>
-            {busy ? "提交中…" : "提交预约"}
+            {busy ? c.submitting : b.submit}
           </button>
         </div>
       </form>
 
       <div className="space-y-3">
-        {data.books.map((b) => (
-          <article key={b.id} className="app-card flex flex-wrap items-start justify-between gap-3 p-4">
+        {data.books.map((item) => (
+          <article
+            key={item.id}
+            className="app-card flex flex-wrap items-start justify-between gap-3 p-4"
+          >
             <div>
               <div className="flex flex-wrap items-center gap-2">
-                <h2 className="text-[14px] font-semibold">{b.topic}</h2>
-                <span className="badge badge-neutral">{statusLabel(b.status)}</span>
+                <h2 className="text-[14px] font-semibold">{item.topic}</h2>
+                <span className="badge badge-neutral">{statusLabel(item.status, locale)}</span>
               </div>
               <div className="mt-1 text-[12px] text-[#6F6558]">
-                {new Date(b.preferredAt).toLocaleString()} · {b.durationMin} 分钟
-                {b.crop ? ` · ${b.crop}` : ""}
+                {new Date(item.preferredAt).toLocaleString()} · {item.durationMin}{" "}
+                {b.minutes}
+                {item.crop ? ` · ${item.crop}` : ""}
               </div>
-              {b.notes && <p className="mt-2 text-[13px] text-[#4A433A]">{b.notes}</p>}
+              {item.notes && (
+                <p className="mt-2 text-[13px] text-[#4A433A]">{item.notes}</p>
+              )}
             </div>
             <div className="text-[12px] text-[#6F6558]">
-              {b.requester}
-              {b.expert ? ` → ${b.expert}` : ""}
+              {item.requester}
+              {item.expert ? ` → ${item.expert}` : ""}
             </div>
           </article>
         ))}
