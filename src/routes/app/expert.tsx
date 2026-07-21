@@ -43,7 +43,7 @@ function ExpertPage() {
       await fn();
       await router.invalidate();
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Action failed");
+      setError(e instanceof Error ? e.message : "操作失败");
     } finally {
       setBusyId(null);
     }
@@ -52,13 +52,13 @@ function ExpertPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight">Expert uplink</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">专家席</h1>
         <p className="mt-1 text-[14px] text-[#6F6558]">
-          ManageKnowledge · QAProcess · BookProcess — same three D1 stores as grower flows.
+          知识管理 · 问答处理 · 预约确认——与农户下行共用三张表。
         </p>
         {defaultExpert && (
           <p className="mt-2 text-[12px] text-[#6F6558]">
-            Acting as {defaultExpert.name} · {defaultExpert.specialty}
+            当前身份：{defaultExpert.name} · {defaultExpert.specialty}
           </p>
         )}
         {error && (
@@ -69,22 +69,22 @@ function ExpertPage() {
       </div>
 
       <section className="space-y-3">
-        <h2 className="text-[15px] font-semibold">QAProcess ({openQa.length})</h2>
+        <h2 className="text-[15px] font-semibold">问答队列（{openQa.length}）</h2>
         {openQa.length === 0 && (
-          <div className="app-card p-4 text-[13px] text-[#6F6558]">Queue clear.</div>
+          <div className="app-card p-4 text-[13px] text-[#6F6558]">队列清空。</div>
         )}
         {openQa.map((q) => (
           <div key={q.id} className="app-card space-y-3 p-4">
             <div className="flex flex-wrap items-center gap-2">
               <span className="badge badge-neutral">{statusLabel(q.status)}</span>
-              <span className="badge badge-warn">{q.priority}</span>
+              <span className="badge badge-warn">{statusLabel(q.priority)}</span>
               {q.crop && <span className="text-[11px] text-[#6F6558]">{q.crop}</span>}
               {q.region && <span className="text-[11px] text-[#6F6558]">· {q.region}</span>}
             </div>
             <p className="text-[14px] font-medium">{q.question}</p>
             <div className="text-[12px] text-[#6F6558]">
               {q.asker}
-              {q.expert ? ` · assigned ${q.expert}` : ""}
+              {q.expert ? ` · 已指派 ${q.expert}` : ""}
             </div>
 
             {q.status === "open" && defaultExpert && (
@@ -104,13 +104,13 @@ function ExpertPage() {
                   })
                 }
               >
-                Assign to me
+                指派给我
               </button>
             )}
 
             <textarea
               className="min-h-20 w-full rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
-              placeholder="Write answer…"
+              placeholder="写下回答…"
               value={answers[q.id] || ""}
               onChange={(e) => setAnswers((prev) => ({ ...prev, [q.id]: e.target.value }))}
             />
@@ -122,7 +122,7 @@ function ExpertPage() {
                   setPromote((prev) => ({ ...prev, [q.id]: e.target.checked }))
                 }
               />
-              Promote answer into knowledge draft
+              回答后沉淀为知识草稿
             </label>
             <button
               type="button"
@@ -143,16 +143,16 @@ function ExpertPage() {
                 })
               }
             >
-              {busyId === q.id ? "Sending…" : "Post answer"}
+              {busyId === q.id ? "发送中…" : "提交回答"}
             </button>
           </div>
         ))}
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-[15px] font-semibold">BookProcess ({pendingBooks.length})</h2>
+        <h2 className="text-[15px] font-semibold">预约待确认（{pendingBooks.length}）</h2>
         {pendingBooks.length === 0 && (
-          <div className="app-card p-4 text-[13px] text-[#6F6558]">No pending requests.</div>
+          <div className="app-card p-4 text-[13px] text-[#6F6558]">暂无待确认预约。</div>
         )}
         {pendingBooks.map((b) => (
           <div
@@ -178,7 +178,7 @@ function ExpertPage() {
                   })
                 }
               >
-                Decline
+                婉拒
               </button>
               <button
                 type="button"
@@ -197,7 +197,7 @@ function ExpertPage() {
                   })
                 }
               >
-                Confirm
+                确认
               </button>
             </div>
           </div>
@@ -205,7 +205,7 @@ function ExpertPage() {
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-[15px] font-semibold">ManageKnowledge drafts ({drafts.length})</h2>
+        <h2 className="text-[15px] font-semibold">知识草稿（{drafts.length}）</h2>
         {drafts.map((k) => (
           <form
             key={k.id}
@@ -220,11 +220,12 @@ function ExpertPage() {
             <div>
               <div className="text-[14px] font-semibold">{k.title}</div>
               <div className="text-[12px] text-[#6F6558]">
-                {statusLabel(k.status)} · {k.confidence} · v{k.version} · {k.crop} · {k.region}
+                {statusLabel(k.status)} · {statusLabel(k.confidence)} · v{k.version} · {k.crop} ·{" "}
+                {k.region}
               </div>
             </div>
             <button type="submit" className="btn-secondary" disabled={busyId === k.id}>
-              Publish
+              发布
             </button>
           </form>
         ))}

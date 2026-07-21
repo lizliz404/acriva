@@ -8,6 +8,7 @@ const LABELS: Record<string, string> = {
   approved: "已批准",
   rejected: "已驳回",
   disbursed: "已放款",
+  withdrawn: "已撤回",
   // products / commerce
   listed: "在售",
   unlisted: "下架",
@@ -23,6 +24,7 @@ const LABELS: Record<string, string> = {
   completed: "已完成",
   pending: "待处理",
   contacted: "已联系",
+  sent: "已发送",
   // knowledge / QA / book
   published: "已发布",
   review: "待审",

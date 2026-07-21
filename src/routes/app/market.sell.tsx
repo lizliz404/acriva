@@ -2,7 +2,6 @@ import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { type FormEvent, useState } from "react";
 import {
   contactBuyerDemand,
-  createBuyerDemand,
   getCommerceSnapshot,
   upsertProduct,
 } from "#/server/commerce";
@@ -18,27 +17,18 @@ function MarketSellPage() {
   const router = useRouter();
   const [sellerId, setSellerId] = useState(data.farmers[0]?.id || "");
   const [title, setTitle] = useState("");
-  const [crop, setCrop] = useState("Tomato");
-  const [region, setRegion] = useState("East China");
+  const [crop, setCrop] = useState("番茄");
+  const [region, setRegion] = useState("华东");
   const [priceYuan, setPriceYuan] = useState(10);
   const [stock, setStock] = useState(100);
   const [description, setDescription] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // demand contact
   const [demandId, setDemandId] = useState(
     data.demands.find((d) => d.status === "open")?.id || data.demands[0]?.id || "",
   );
   const [message, setMessage] = useState("");
-
-  // buyer demand form (dual role demo)
-  const [buyerName, setBuyerName] = useState("New Buyer Co");
-  const [dCrop, setDCrop] = useState("Tomato");
-  const [dRegion, setDRegion] = useState("East China");
-  const [dQty, setDQty] = useState(500);
-  const [dBudget, setDBudget] = useState(11);
-  const [dDetail, setDDetail] = useState("");
 
   const onList = async (e: FormEvent) => {
     e.preventDefault();
@@ -61,7 +51,7 @@ function MarketSellPage() {
       setDescription("");
       await router.invalidate();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "List failed");
+      setError(err instanceof Error ? err.message : "上架失败");
     } finally {
       setBusy(false);
     }
@@ -78,31 +68,7 @@ function MarketSellPage() {
       setMessage("");
       await router.invalidate();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Contact failed");
-    } finally {
-      setBusy(false);
-    }
-  };
-
-  const onDemand = async (e: FormEvent) => {
-    e.preventDefault();
-    setBusy(true);
-    setError(null);
-    try {
-      await createBuyerDemand({
-        data: {
-          buyerName,
-          crop: dCrop,
-          region: dRegion,
-          qty: dQty,
-          budgetYuan: dBudget,
-          detail: dDetail,
-        },
-      });
-      setDDetail("");
-      await router.invalidate();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Demand failed");
+      setError(err instanceof Error ? err.message : "联系失败");
     } finally {
       setBusy(false);
     }
@@ -114,11 +80,11 @@ function MarketSellPage() {
     <div className="space-y-6">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Market · Sell & Demand</h1>
+          <h1 className="text-2xl font-semibold tracking-tight">农户席 · 上架</h1>
           <p className="mt-1 text-[14px] text-[#6F6558]">
-            ProdMgmt · ViewDemand · ContactBuyer · ManageDemand.{" "}
-            <Link to="/app/market" className="underline">
-              Browse
+            商品管理 · 对接买家需求。{" "}
+            <Link to="/app/market/buy" className="underline">
+              买家采购
             </Link>
           </p>
         </div>
@@ -143,10 +109,10 @@ function MarketSellPage() {
 
       <div className="grid gap-4 lg:grid-cols-2">
         <form onSubmit={onList} className="app-card space-y-3 p-4">
-          <h2 className="text-[14px] font-semibold">商品管理 ProdMgmt</h2>
+          <h2 className="text-[14px] font-semibold">上架货品</h2>
           <input
             className="w-full rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
-            placeholder="Title"
+            placeholder="标题"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
@@ -156,12 +122,14 @@ function MarketSellPage() {
               className="rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
               value={crop}
               onChange={(e) => setCrop(e.target.value)}
+              placeholder="作物"
               required
             />
             <input
               className="rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
               value={region}
               onChange={(e) => setRegion(e.target.value)}
+              placeholder="产区"
               required
             />
           </div>
@@ -173,6 +141,7 @@ function MarketSellPage() {
               className="rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
               value={priceYuan}
               onChange={(e) => setPriceYuan(Number(e.target.value))}
+              placeholder="单价（元）"
               required
             />
             <input
@@ -181,23 +150,24 @@ function MarketSellPage() {
               className="rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
               value={stock}
               onChange={(e) => setStock(Number(e.target.value))}
+              placeholder="库存"
               required
             />
           </div>
           <textarea
             className="min-h-20 w-full rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
-            placeholder="Description"
+            placeholder="描述（批次、规格、装运）"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
           />
           <button type="submit" className="btn-primary" disabled={busy}>
-            List product
+            {busy ? "提交中…" : "上架"}
           </button>
         </form>
 
         <form onSubmit={onContact} className="app-card space-y-3 p-4">
-          <h2 className="text-[14px] font-semibold">ContactBuyer</h2>
+          <h2 className="text-[14px] font-semibold">联系买家需求</h2>
           <select
             className="w-full rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
             value={demandId}
@@ -211,87 +181,41 @@ function MarketSellPage() {
           </select>
           <textarea
             className="min-h-24 w-full rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
-            placeholder="Message to buyer"
+            placeholder="给买家的留言"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             required
           />
           <button type="submit" className="btn-primary" disabled={busy}>
-            Send contact
+            发送联系
           </button>
         </form>
       </div>
 
-      <form onSubmit={onDemand} className="app-card space-y-3 p-4">
-        <h2 className="text-[14px] font-semibold">ManageDemand (buyer lens)</h2>
-        <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
-          <input
-            className="rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
-            value={buyerName}
-            onChange={(e) => setBuyerName(e.target.value)}
-            required
-          />
-          <input
-            className="rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
-            value={dCrop}
-            onChange={(e) => setDCrop(e.target.value)}
-            required
-          />
-          <input
-            className="rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
-            value={dRegion}
-            onChange={(e) => setDRegion(e.target.value)}
-            required
-          />
-          <input
-            type="number"
-            className="rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
-            value={dQty}
-            onChange={(e) => setDQty(Number(e.target.value))}
-            required
-          />
-        </div>
-        <input
-          type="number"
-          step={0.1}
-          className="w-full rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
-          placeholder="Budget yuan / unit"
-          value={dBudget}
-          onChange={(e) => setDBudget(Number(e.target.value))}
-        />
-        <textarea
-          className="min-h-20 w-full rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
-          placeholder="Demand detail"
-          value={dDetail}
-          onChange={(e) => setDDetail(e.target.value)}
-          required
-        />
-        <button type="submit" className="btn-secondary" disabled={busy}>
-          Post demand
-        </button>
-      </form>
-
       <section className="space-y-3">
-        <h2 className="text-[15px] font-semibold">My listings</h2>
+        <h2 className="text-[15px] font-semibold">我的货盘</h2>
         {mine.map((p) => (
           <div
             key={p.id}
             className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-[#E8DFD0] px-3 py-2 text-[13px]"
           >
             <span>
-              {p.title} · ¥{p.priceYuan}/{p.unit} · stock {p.stock}
+              {p.title} · ¥{p.priceYuan}/{p.unit} · 库存 {p.stock}
             </span>
             <span className="badge badge-neutral">{statusLabel(p.status)}</span>
           </div>
         ))}
+        {mine.length === 0 && (
+          <div className="app-card p-4 text-[13px] text-[#6F6558]">暂无上架货品。</div>
+        )}
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-[15px] font-semibold">Recent contacts</h2>
+        <h2 className="text-[15px] font-semibold">最近联系</h2>
         {data.contacts.slice(0, 8).map((c) => (
           <div key={c.id} className="rounded-xl border border-[#E8DFD0] px-3 py-2 text-[13px]">
             <div className="font-medium">
-              {c.farmerName} → demand {c.demandId} · {statusLabel(c.status)}
+              {c.farmerName} → 需求 {c.demandId} · {statusLabel(c.status)}
             </div>
             <div className="text-[#6F6558]">{c.message}</div>
           </div>

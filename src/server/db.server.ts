@@ -247,7 +247,7 @@ export async function insertKnowledge(
     )
     .run();
   const saved = await getKnowledge(item.id);
-  if (!saved) throw new Error("Failed to read knowledge after insert");
+  if (!saved) throw new Error("知识写入后读取失败");
   return saved;
 }
 
@@ -270,7 +270,7 @@ export async function updateKnowledge(
   >,
 ): Promise<KnowledgeItem> {
   const current = await getKnowledge(id);
-  if (!current) throw new Error("Knowledge not found");
+  if (!current) throw new Error("未找到知识条目");
   const next: KnowledgeItem = {
     ...current,
     ...patch,
@@ -302,7 +302,7 @@ export async function updateKnowledge(
     )
     .run();
   const saved = await getKnowledge(id);
-  if (!saved) throw new Error("Failed to read knowledge after update");
+  if (!saved) throw new Error("知识更新后读取失败");
   return saved;
 }
 
@@ -367,7 +367,7 @@ export async function insertQa(
     )
     .run();
   const saved = await getQa(item.id);
-  if (!saved) throw new Error("Failed to read QA after insert");
+  if (!saved) throw new Error("问答写入后读取失败");
   return saved;
 }
 
@@ -378,7 +378,7 @@ export async function updateQa(
   >,
 ): Promise<QAMessage> {
   const current = await getQa(id);
-  if (!current) throw new Error("Question not found");
+  if (!current) throw new Error("未找到问答");
   const next: QAMessage = {
     ...current,
     ...patch,
@@ -401,7 +401,7 @@ export async function updateQa(
     )
     .run();
   const saved = await getQa(id);
-  if (!saved) throw new Error("Failed to read QA after update");
+  if (!saved) throw new Error("问答更新后读取失败");
   return saved;
 }
 
@@ -463,7 +463,7 @@ export async function insertBook(
     )
     .run();
   const saved = await getBook(item.id);
-  if (!saved) throw new Error("Failed to read booking after insert");
+  if (!saved) throw new Error("预约写入后读取失败");
   return saved;
 }
 
@@ -485,7 +485,7 @@ export async function updateBook(
   >,
 ): Promise<BookInfo> {
   const current = await getBook(id);
-  if (!current) throw new Error("Booking not found");
+  if (!current) throw new Error("未找到预约");
   const next: BookInfo = { ...current, ...patch };
   if (patch.status === "confirmed" && !next.confirmedAt) {
     next.confirmedAt = nowIso();
@@ -514,7 +514,7 @@ export async function updateBook(
     )
     .run();
   const saved = await getBook(id);
-  if (!saved) throw new Error("Failed to read booking after update");
+  if (!saved) throw new Error("预约更新后读取失败");
   return saved;
 }
 

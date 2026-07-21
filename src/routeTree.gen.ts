@@ -19,6 +19,7 @@ import { Route as AppFinanceRouteImport } from './routes/app/finance'
 import { Route as AppKnowledgeRouteImport } from './routes/app/knowledge'
 import { Route as AppMarketRouteImport } from './routes/app/market'
 import { Route as AppFinanceBankRouteImport } from './routes/app/finance.bank'
+import { Route as AppMarketBuyRouteImport } from './routes/app/market.buy'
 import { Route as AppMarketSellRouteImport } from './routes/app/market.sell'
 
 const IndexRoute = IndexRouteImport.update({
@@ -71,6 +72,11 @@ const AppFinanceBankRoute = AppFinanceBankRouteImport.update({
   path: '/bank',
   getParentRoute: () => AppFinanceRoute,
 } as any)
+const AppMarketBuyRoute = AppMarketBuyRouteImport.update({
+  id: '/buy',
+  path: '/buy',
+  getParentRoute: () => AppMarketRoute,
+} as any)
 const AppMarketSellRoute = AppMarketSellRouteImport.update({
   id: '/sell',
   path: '/sell',
@@ -88,6 +94,7 @@ export interface FileRoutesByFullPath {
   '/app/market': typeof AppMarketRouteWithChildren
   '/app/': typeof AppIndexRoute
   '/app/finance/bank': typeof AppFinanceBankRoute
+  '/app/market/buy': typeof AppMarketBuyRoute
   '/app/market/sell': typeof AppMarketSellRoute
 }
 export interface FileRoutesByTo {
@@ -100,6 +107,7 @@ export interface FileRoutesByTo {
   '/app/market': typeof AppMarketRouteWithChildren
   '/app': typeof AppIndexRoute
   '/app/finance/bank': typeof AppFinanceBankRoute
+  '/app/market/buy': typeof AppMarketBuyRoute
   '/app/market/sell': typeof AppMarketSellRoute
 }
 export interface FileRoutesById {
@@ -114,6 +122,7 @@ export interface FileRoutesById {
   '/app/market': typeof AppMarketRouteWithChildren
   '/app/': typeof AppIndexRoute
   '/app/finance/bank': typeof AppFinanceBankRoute
+  '/app/market/buy': typeof AppMarketBuyRoute
   '/app/market/sell': typeof AppMarketSellRoute
 }
 export interface FileRouteTypes {
@@ -129,6 +138,7 @@ export interface FileRouteTypes {
     | '/app/market'
     | '/app/'
     | '/app/finance/bank'
+    | '/app/market/buy'
     | '/app/market/sell'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -141,6 +151,7 @@ export interface FileRouteTypes {
     | '/app/market'
     | '/app'
     | '/app/finance/bank'
+    | '/app/market/buy'
     | '/app/market/sell'
   id:
     | '__root__'
@@ -154,6 +165,7 @@ export interface FileRouteTypes {
     | '/app/market'
     | '/app/'
     | '/app/finance/bank'
+    | '/app/market/buy'
     | '/app/market/sell'
   fileRoutesById: FileRoutesById
 }
@@ -234,6 +246,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppFinanceBankRouteImport
       parentRoute: typeof AppFinanceRoute
     }
+    '/app/market/buy': {
+      id: '/app/market/buy'
+      path: '/buy'
+      fullPath: '/app/market/buy'
+      preLoaderRoute: typeof AppMarketBuyRouteImport
+      parentRoute: typeof AppMarketRoute
+    }
     '/app/market/sell': {
       id: '/app/market/sell'
       path: '/sell'
@@ -257,10 +276,12 @@ const AppFinanceRouteWithChildren = AppFinanceRoute._addFileChildren(
 )
 
 interface AppMarketRouteChildren {
+  AppMarketBuyRoute: typeof AppMarketBuyRoute
   AppMarketSellRoute: typeof AppMarketSellRoute
 }
 
 const AppMarketRouteChildren: AppMarketRouteChildren = {
+  AppMarketBuyRoute: AppMarketBuyRoute,
   AppMarketSellRoute: AppMarketSellRoute,
 }
 

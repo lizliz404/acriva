@@ -152,7 +152,7 @@ export const footerColumns = [
     title: "产品",
     links: [
       { label: "借得到", href: "#platform" },
-      { label: "卖得出", href: "/app/market" },
+      { label: "卖得出", href: "/app/market/buy" },
       { label: "问得着", href: "/app/knowledge" },
       { label: "行情参照", href: "#platform" },
     ],
@@ -162,7 +162,7 @@ export const footerColumns = [
     links: [
       { label: "农户", href: "/app" },
       { label: "银行", href: "/app/finance/bank" },
-      { label: "买家", href: "/app/market" },
+      { label: "买家", href: "/app/market/buy" },
       { label: "专家", href: "/app/expert" },
     ],
   },

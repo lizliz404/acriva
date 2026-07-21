@@ -131,6 +131,8 @@ function BookWindow() {
 }
 
 function FeedWindow() {
+  const reduceMotion = useReducedMotion();
+  const items = reduceMotion ? feed : [...feed, ...feed];
   return (
     <WindowChrome
       title="经营动态"
@@ -138,8 +140,8 @@ function FeedWindow() {
       trailing={<span className="text-[10px] font-medium text-[#0F4D35]">流动中</span>}
     >
       <div className="relative h-[170px] overflow-hidden">
-        <div className="flow-list space-y-2 p-3">
-          {[...feed, ...feed].map((item, i) => (
+        <div className={`space-y-2 p-3 ${reduceMotion ? "" : "flow-list"}`}>
+          {items.map((item, i) => (
             <div
               key={`${item.title}-${i}`}
               className="flex items-center gap-2 rounded-lg border border-[#E8DFD0] bg-[#FFFBF4] px-2.5 py-2"

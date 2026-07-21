@@ -1,13 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
+import type { FinApplicationStatus } from "#/lib/status-transitions";
 
-export type FinApplicationStatus =
-  | "draft"
-  | "submitted"
-  | "under_review"
-  | "approved"
-  | "rejected"
-  | "disbursed"
-  | "withdrawn";
+export type { FinApplicationStatus };
 
 export const getFinanceSnapshot = createServerFn({ method: "GET" }).handler(
   async () => {

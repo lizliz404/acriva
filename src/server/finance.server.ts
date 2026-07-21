@@ -1,5 +1,11 @@
+import {
+  assertFinTransition,
+  type FinApplicationStatus,
+} from "#/lib/status-transitions";
 import { getDb, newId, nowIso } from "./db.server";
 import { parseJsonArray, rankByContent, smaForecast } from "./ai.server";
+
+export type { FinApplicationStatus };
 
 export type FarmerProfile = {
   id: string;
@@ -25,15 +31,6 @@ export type FinProduct = {
   description: string;
   active: boolean;
 };
-
-export type FinApplicationStatus =
-  | "draft"
-  | "submitted"
-  | "under_review"
-  | "approved"
-  | "rejected"
-  | "disbursed"
-  | "withdrawn";
 
 export type FinApplication = {
   id: string;
@@ -221,18 +218,18 @@ export async function createApplication(input: {
   jointMode?: boolean;
 }): Promise<FinApplication> {
   const farmer = await getFarmer(input.farmerId);
-  if (!farmer) throw new Error("Farmer not found");
+  if (!farmer) throw new Error("未找到农户档案");
   const product = await getDb()
     .prepare("SELECT * FROM fin_products WHERE id = ? AND active = 1")
     .bind(input.productId)
     .first<ProductRow>();
-  if (!product) throw new Error("Product not found");
+  if (!product) throw new Error("未找到融资产品");
   if (
     input.amountWan < product.min_amount_wan ||
     input.amountWan > product.max_amount_wan
   ) {
     throw new Error(
-      `Amount must be between ${product.min_amount_wan}–${product.max_amount_wan} 万`,
+      `金额须在 ${product.min_amount_wan}–${product.max_amount_wan} 万之间`,
     );
   }
 
@@ -262,7 +259,7 @@ export async function createApplication(input: {
 
   const apps = await listApplications();
   const found = apps.find((a) => a.id === id);
-  if (!found) throw new Error("Failed to load application");
+  if (!found) throw new Error("申请写入后读取失败");
   return found;
 }
 
@@ -297,7 +294,7 @@ async function attachJointMatches(applicationId: string, farmer: FarmerProfile) 
 
 export async function matchJointFarmers(farmerId: string) {
   const farmer = await getFarmer(farmerId);
-  if (!farmer) throw new Error("Farmer not found");
+  if (!farmer) throw new Error("未找到农户档案");
   const peers = await listFarmers();
   return rankByContent({
     selfId: farmer.id,
@@ -321,7 +318,7 @@ export async function matchFarmersForProduct(productId: string) {
     .prepare("SELECT * FROM fin_products WHERE id = ?")
     .bind(productId)
     .first<ProductRow>();
-  if (!product) throw new Error("Product not found");
+  if (!product) throw new Error("未找到融资产品");
   const p = mapProduct(product);
   const farmers = await listFarmers();
   return farmers
@@ -365,16 +362,6 @@ function jaccardLocal(a: string[], b: string[]) {
   return union ? inter / union : 0;
 }
 
-const FIN_TRANSITIONS: Record<FinApplicationStatus, FinApplicationStatus[]> = {
-  draft: ["submitted", "withdrawn"],
-  submitted: ["under_review", "withdrawn", "rejected"],
-  under_review: ["approved", "rejected", "withdrawn"],
-  approved: ["disbursed", "withdrawn"],
-  rejected: [],
-  disbursed: [],
-  withdrawn: [],
-};
-
 export async function processApplication(input: {
   id: string;
   status: FinApplicationStatus;
@@ -384,11 +371,8 @@ export async function processApplication(input: {
     .prepare("SELECT * FROM fin_applications WHERE id = ?")
     .bind(input.id)
     .first<AppRow>();
-  if (!row) throw new Error("Application not found");
-  const current = row.status;
-  if (!FIN_TRANSITIONS[current].includes(input.status)) {
-    throw new Error(`Invalid transition ${current} → ${input.status}`);
-  }
+  if (!row) throw new Error("未找到融资申请");
+  assertFinTransition(row.status, input.status);
   const ts = nowIso();
   await getDb()
     .prepare(
@@ -398,7 +382,7 @@ export async function processApplication(input: {
     .run();
   const apps = await listApplications();
   const found = apps.find((a) => a.id === input.id);
-  if (!found) throw new Error("Failed to reload application");
+  if (!found) throw new Error("申请更新后读取失败");
   return found;
 }
 

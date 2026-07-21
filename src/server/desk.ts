@@ -1,4 +1,8 @@
 import { createServerFn } from "@tanstack/react-start";
+import {
+  assertBookTransition,
+  canAssignQa,
+} from "#/lib/status-transitions";
 import type {
   BookStatus,
   KnowledgeConfidence,
@@ -37,7 +41,7 @@ export const getKnowledgeById = createServerFn({ method: "GET" })
   .handler(async ({ data }) => {
     const db = await import("./db.server");
     const item = await db.getKnowledge(data.id);
-    if (!item) throw new Error("Knowledge not found");
+    if (!item) throw new Error("未找到知识条目");
     return item;
   });
 
@@ -55,7 +59,7 @@ export const createQuestion = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const db = await import("./db.server");
     const question = data.question.trim();
-    if (!question) throw new Error("Question is required");
+    if (!question) throw new Error("请填写问题");
     return db.insertQa({
       id: db.newId("q"),
       threadId: db.newId("t"),
@@ -63,7 +67,7 @@ export const createQuestion = createServerFn({ method: "POST" })
       crop: data.crop?.trim() || undefined,
       region: data.region?.trim() || undefined,
       status: "open",
-      asker: data.asker?.trim() || "Demo Grower",
+      asker: data.asker?.trim() || "演示农户",
       priority: data.priority || "normal",
     });
   });
@@ -74,9 +78,9 @@ export const assignQuestion = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const db = await import("./db.server");
     const current = await db.getQa(data.id);
-    if (!current) throw new Error("Question not found");
-    if (current.status === "answered" || current.status === "closed") {
-      throw new Error("Cannot assign a closed or answered question");
+    if (!current) throw new Error("未找到问答");
+    if (!canAssignQa(current.status)) {
+      throw new Error("已回答或已关闭的问题不能再指派");
     }
     return db.updateQa(data.id, {
       status: "assigned",
@@ -100,14 +104,14 @@ export const answerQuestion = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const db = await import("./db.server");
     const answer = data.answer.trim();
-    if (!answer) throw new Error("Answer is required");
+    if (!answer) throw new Error("请填写回答");
     const current = await db.getQa(data.id);
-    if (!current) throw new Error("Question not found");
+    if (!current) throw new Error("未找到问答");
 
     const qa = await db.updateQa(data.id, {
       answer,
       status: "answered",
-      expert: data.expert?.trim() || current.expert || "Demo Expert",
+      expert: data.expert?.trim() || current.expert || "演示专家",
       expertId: data.expertId || current.expertId,
     });
 
@@ -115,16 +119,16 @@ export const answerQuestion = createServerFn({ method: "POST" })
     if (data.promoteToKnowledge) {
       const title =
         data.knowledgeTitle?.trim() ||
-        `From Q&A: ${current.question.slice(0, 72)}`;
+        `来自问答：${current.question.slice(0, 72)}`;
       const k = await db.insertKnowledge({
         id: db.newId("k"),
         title,
-        crop: current.crop || "General",
-        region: current.region || "Unspecified",
+        crop: current.crop || "通用",
+        region: current.region || "未指定",
         tags: ["from-qa"],
         summary: answer.slice(0, 220),
-        body: `Source question:\n${current.question}\n\nExpert answer:\n${answer}`,
-        author: qa.expert || "Demo Expert",
+        body: `原问题：\n${current.question}\n\n专家回答：\n${answer}`,
+        author: qa.expert || "演示专家",
         expertId: qa.expertId,
         status: "draft",
         confidence: "medium",
@@ -151,8 +155,8 @@ export const createBooking = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const db = await import("./db.server");
     const topic = data.topic.trim();
-    if (!topic) throw new Error("Topic is required");
-    if (!data.preferredAt) throw new Error("preferredAt is required");
+    if (!topic) throw new Error("请填写预约主题");
+    if (!data.preferredAt) throw new Error("请选择预约时间");
     return db.insertBook({
       id: db.newId("b"),
       topic,
@@ -160,7 +164,7 @@ export const createBooking = createServerFn({ method: "POST" })
       preferredAt: data.preferredAt,
       durationMin: data.durationMin || 60,
       status: "requested",
-      requester: data.requester?.trim() || "Demo Grower",
+      requester: data.requester?.trim() || "演示农户",
       notes: data.notes?.trim() || undefined,
       prepNotes: data.prepNotes?.trim() || undefined,
     });
@@ -180,24 +184,16 @@ export const processBooking = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const db = await import("./db.server");
     const current = await db.getBook(data.id);
-    if (!current) throw new Error("Booking not found");
+    if (!current) throw new Error("未找到预约");
 
-    const allowed: Record<BookStatus, BookStatus[]> = {
-      requested: ["confirmed", "cancelled"],
-      confirmed: ["completed", "cancelled", "requested"],
-      completed: [],
-      cancelled: ["requested"],
-    };
-    if (!allowed[current.status].includes(data.status)) {
-      throw new Error(`Invalid transition ${current.status} → ${data.status}`);
-    }
+    assertBookTransition(current.status, data.status);
 
     return db.updateBook(data.id, {
       status: data.status,
       expert:
         data.expert?.trim() ||
         current.expert ||
-        (data.status === "confirmed" ? "Demo Expert" : current.expert),
+        (data.status === "confirmed" ? "演示专家" : current.expert),
       expertId: data.expertId || current.expertId,
       prepNotes: data.prepNotes?.trim() || current.prepNotes,
     });
@@ -227,7 +223,7 @@ export const upsertKnowledge = createServerFn({ method: "POST" })
     const region = data.region.trim();
     const summary = data.summary.trim();
     if (!title || !crop || !region || !summary) {
-      throw new Error("title, crop, region, summary are required");
+      throw new Error("标题、作物、产区、摘要均为必填");
     }
 
     if (data.id) {
@@ -253,7 +249,7 @@ export const upsertKnowledge = createServerFn({ method: "POST" })
       tags: data.tags ?? [],
       summary,
       body: data.body?.trim() || summary,
-      author: data.author?.trim() || "Demo Expert",
+      author: data.author?.trim() || "演示专家",
       expertId: data.expertId,
       status: data.status || "draft",
       confidence: data.confidence || "medium",
@@ -266,7 +262,7 @@ export const publishKnowledge = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const db = await import("./db.server");
     const current = await db.getKnowledge(data.id);
-    if (!current) throw new Error("Knowledge not found");
+    if (!current) throw new Error("未找到知识条目");
     if (current.status === "published") return current;
     return db.updateKnowledge(data.id, {
       status: "published",

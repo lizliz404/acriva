@@ -64,7 +64,7 @@ Remote:
 ```bash
 npx wrangler d1 create acriva   # paste database_id into wrangler.jsonc (do not rename existing id)
 npx wrangler d1 migrations apply acriva --remote
-npm run deploy
+# App release: git push origin master → Cloudflare Workers Builds (no local wrangler deploy)
 ```
 
 ## Not in MVP (on purpose)

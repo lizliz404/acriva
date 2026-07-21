@@ -80,14 +80,14 @@ export function rankByContent(args: {
         (cropScore * 0.5 + tagScore * 0.3 + regionScore * 0.2).toFixed(3),
       );
       const reasons: string[] = [];
-      if (cropScore > 0) reasons.push(`crops overlap ${Math.round(cropScore * 100)}%`);
-      if (regionScore > 0) reasons.push(regionScore === 1 ? "same region" : "nearby region");
-      if (tagScore > 0) reasons.push(`tags overlap ${Math.round(tagScore * 100)}%`);
+      if (cropScore > 0) reasons.push(`作物重叠 ${Math.round(cropScore * 100)}%`);
+      if (regionScore > 0) reasons.push(regionScore === 1 ? "同产区" : "邻近产区");
+      if (tagScore > 0) reasons.push(`标签重叠 ${Math.round(tagScore * 100)}%`);
       return {
         id: p.id,
         name: p.name,
         score,
-        reason: reasons.join(" · ") || "weak overlap",
+        reason: reasons.join(" · ") || "弱相关",
       };
     })
     .filter((x) => x.score > 0)

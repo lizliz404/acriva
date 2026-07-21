@@ -225,7 +225,7 @@ export async function upsertMarketProduct(input: {
       .run();
     const list = await listMarketProducts();
     const found = list.find((p) => p.id === input.id);
-    if (!found) throw new Error("Product not found after update");
+    if (!found) throw new Error("商品更新后读取失败");
     return found;
   }
 
@@ -253,7 +253,7 @@ export async function upsertMarketProduct(input: {
     .run();
   const list = await listMarketProducts();
   const found = list.find((p) => p.id === id);
-  if (!found) throw new Error("Product not found after insert");
+  if (!found) throw new Error("商品写入后读取失败");
   return found;
 }
 
@@ -263,14 +263,14 @@ export async function placeOrder(input: {
   qty: number;
   note?: string;
 }): Promise<MarketOrder> {
-  if (input.qty <= 0) throw new Error("qty must be > 0");
+  if (input.qty <= 0) throw new Error("数量须大于 0");
   const product = await getDb()
     .prepare("SELECT * FROM products WHERE id = ?")
     .bind(input.productId)
     .first<ProductRow>();
-  if (!product) throw new Error("Product not found");
-  if (product.status !== "listed") throw new Error("Product not available");
-  if (product.stock < input.qty) throw new Error("Insufficient stock");
+  if (!product) throw new Error("未找到商品");
+  if (product.status !== "listed") throw new Error("商品不可购买");
+  if (product.stock < input.qty) throw new Error("库存不足");
 
   const ts = nowIso();
   const id = newId("o");
@@ -304,7 +304,7 @@ export async function placeOrder(input: {
 
   const orders = await listOrders();
   const found = orders.find((o) => o.id === id);
-  if (!found) throw new Error("Order not found after place");
+  if (!found) throw new Error("订单写入后读取失败");
   return found;
 }
 
@@ -372,7 +372,7 @@ export async function createDemand(input: {
     .run();
   const list = await listDemands();
   const found = list.find((d) => d.id === id);
-  if (!found) throw new Error("Demand not found");
+  if (!found) throw new Error("未找到采购需求");
   return found;
 }
 
@@ -385,8 +385,8 @@ export async function contactDemand(input: {
     .prepare("SELECT * FROM buyer_demands WHERE id = ?")
     .bind(input.demandId)
     .first<DemandRow>();
-  if (!demand) throw new Error("Demand not found");
-  if (demand.status === "closed") throw new Error("Demand is closed");
+  if (!demand) throw new Error("未找到采购需求");
+  if (demand.status === "closed") throw new Error("该需求已关闭");
 
   const id = newId("dc");
   const ts = nowIso();

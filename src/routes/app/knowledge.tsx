@@ -14,8 +14,8 @@ function KnowledgePage() {
   const [q, setQ] = useState("");
   const [crop, setCrop] = useState("all");
   const [title, setTitle] = useState("");
-  const [newCrop, setNewCrop] = useState("Tomato");
-  const [region, setRegion] = useState("East China");
+  const [newCrop, setNewCrop] = useState("番茄");
+  const [region, setRegion] = useState("华东");
   const [summary, setSummary] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -51,7 +51,7 @@ function KnowledgePage() {
           region,
           summary,
           status: "draft",
-          author: data.experts[0]?.name || "Demo Expert",
+          author: data.experts[0]?.name || "演示专家",
           expertId: data.experts[0]?.id,
         },
       });
@@ -59,7 +59,7 @@ function KnowledgePage() {
       setSummary("");
       await router.invalidate();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Save failed");
+      setError(err instanceof Error ? err.message : "保存失败");
     } finally {
       setBusy(false);
     }
@@ -68,16 +68,16 @@ function KnowledgePage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight">Browse knowledge</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">知识库</h1>
         <p className="mt-1 text-[14px] text-[#6F6558]">
-          BrowseKnowledge → Knowledge (D1). Experts ManageKnowledge via the draft form.
+          浏览已发布条目；专家可在此起草知识稿。
         </p>
       </div>
 
       <div className="flex flex-wrap gap-2">
         <input
           className="min-w-[200px] flex-1 rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
-          placeholder="Search title, summary, tags…"
+          placeholder="搜标题、摘要、标签…"
           value={q}
           onChange={(e) => setQ(e.target.value)}
         />
@@ -88,7 +88,7 @@ function KnowledgePage() {
         >
           {crops.map((c) => (
             <option key={c} value={c}>
-              {c === "all" ? "All crops" : c}
+              {c === "all" ? "全部作物" : c}
             </option>
           ))}
         </select>
@@ -107,7 +107,7 @@ function KnowledgePage() {
               <div className="flex flex-wrap items-center gap-2">
                 <h2 className="text-[15px] font-semibold">{k.title}</h2>
                 <span className="badge badge-neutral">{statusLabel(k.status)}</span>
-                <span className="badge badge-success">{k.confidence}</span>
+                <span className="badge badge-success">{statusLabel(k.confidence)}</span>
               </div>
               <p className="mt-2 text-[13px] leading-relaxed text-[#4A433A]">{k.summary}</p>
               <div className="mt-3 flex flex-wrap gap-2 text-[11px] text-[#6F6558]">
@@ -118,8 +118,6 @@ function KnowledgePage() {
                 <span>{k.author}</span>
                 <span>·</span>
                 <span>v{k.version}</span>
-                <span>·</span>
-                <span>{k.updatedAt}</span>
               </div>
               {k.tags.length > 0 && (
                 <div className="mt-2 flex flex-wrap gap-1.5">
@@ -133,15 +131,15 @@ function KnowledgePage() {
             </article>
           ))}
           {filtered.length === 0 && (
-            <div className="app-card p-6 text-[13px] text-[#6F6558]">No matching articles.</div>
+            <div className="app-card p-6 text-[13px] text-[#6F6558]">没有匹配的知识条目。</div>
           )}
         </div>
 
         <form onSubmit={onSubmit} className="app-card h-fit space-y-3 p-4">
-          <h3 className="text-[14px] font-semibold">ManageKnowledge</h3>
+          <h3 className="text-[14px] font-semibold">起草知识稿</h3>
           <input
             className="w-full rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
-            placeholder="Title"
+            placeholder="标题"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
@@ -151,22 +149,24 @@ function KnowledgePage() {
               className="rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
               value={newCrop}
               onChange={(e) => setNewCrop(e.target.value)}
+              placeholder="作物"
             />
             <input
               className="rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
               value={region}
               onChange={(e) => setRegion(e.target.value)}
+              placeholder="产区"
             />
           </div>
           <textarea
             className="min-h-24 w-full rounded-lg border border-[#D4C7B0] px-3 py-2 text-[13px]"
-            placeholder="Summary"
+            placeholder="摘要"
             value={summary}
             onChange={(e) => setSummary(e.target.value)}
             required
           />
           <button type="submit" className="btn-primary w-full" disabled={busy}>
-            {busy ? "Saving…" : "Save draft"}
+            {busy ? "保存中…" : "保存草稿"}
           </button>
         </form>
       </div>
