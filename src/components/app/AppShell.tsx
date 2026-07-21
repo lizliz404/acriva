@@ -4,7 +4,8 @@ import { LogoMark, cn } from "../ui";
 /*
  * DESIGN.md §2.4 — anti–tea-gift-box (app shell):
  * Geometric sans nav, ledger actions, jade CTAs. Avoid calligraphy wordmarks,
- * vermilion static seals, gilt chrome, or sparse “gift packaging” layouts.
+ * gift-box gilt chrome / ribbon framing, or sparse “tea packaging” layouts.
+ * Seal red is allowed in the mark only — never as shell background or CTA fill.
  */
 
 const links = [

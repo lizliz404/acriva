@@ -1,7 +1,7 @@
 /**
  * DESIGN.md §6.4 — seal-press micro-feedback for confirm-class actions only.
- * Red (#B33A2B / --color-seal) must NEVER appear in static brand assets;
- * it lives only in this brief interaction moment.
+ * Uses --color-seal (#B33A2B), same token as the static mark ink.
+ * Motion flourish only — not the sole place seal red may appear (mark owns it too).
  */
 
 const COOLDOWN_MS = 800;

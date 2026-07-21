@@ -2,13 +2,13 @@ import type { ReactNode } from "react";
 import { product } from "#/lib/data";
 
 /*
- * DESIGN.md §2.4 — anti–tea-gift-box checklist (no visual change; keep us on「经营台」):
+ * DESIGN.md §2.4 — anti–tea-gift-box checklist (keep us on「经营台」):
  * - Fonts: geometric sans (Plex/Noto), horizontal — NEVER calligraphy / Song title / vertical type
- * - Seal/mark: abstract solid geometric A — NEVER realistic ink-rubbing or large vermilion blocks
+ * - Seal/mark: 田字格印 with contract-stamp vermilion in the mark only — NEVER gift-box gilt borders or large vermilion fills
  * - Density: ledger-grade (status, amount, time) — NEVER big zen whitespace + one poetic line
  * - Gold: single accent (apex / amount) — NEVER gold borders or large gilt fills
  * - Outcome: every screen ends on action/status — NEVER mood/atmosphere as the punchline
- * Acceptance: first reaction must be「能借钱卖货的台子」, not「送礼的茶叶罐」.
+ * Acceptance: first reaction must be「能借钱卖货的台子」, not「送礼的茶叶罐」— judged by whether red reads as stamp vs gift foil.
  */
 
 const toneMap = {
@@ -116,9 +116,9 @@ export function AuditTrailStrip({
 }
 
 /**
- * Seal A mark + Acriva (+ optional 融销通).
- * Static mark: soil / rice / gold only — never seal red (DESIGN §6.4 / §8.2).
- * §2.4: solid geometric A, not ink-stamp realism or vermilion fill.
+ * 田字格印 mark + Acriva (+ optional 融销通).
+ * Mark: soil tile + seal red (#B33A2B) field grid + gold apex (DESIGN V3 §8).
+ * Seal red belongs in the mark only — never as page background or button fill.
  */
 export function LogoMark({
   className = "",
@@ -131,12 +131,17 @@ export function LogoMark({
     <span className={`inline-flex items-center gap-2 ${className}`}>
       <svg width="22" height="22" viewBox="0 0 32 32" fill="none" aria-hidden>
         <rect width="32" height="32" rx="7" fill="#1C1712" />
+        <g opacity="0.28" transform="translate(0.35 0.45)">
+          <path
+            fill="#000000"
+            d="M7.2 6.9 L24.6 6.55 L25.05 10.15 L7.0 10.05 Z M6.95 21.85 L25.1 22.15 L24.75 25.35 L7.15 25.05 Z M6.85 6.95 L10.25 6.7 L10.05 25.15 L6.65 24.95 Z M21.75 6.85 L25.15 7.05 L24.95 25.1 L21.55 24.85 Z M7.05 14.15 L25.05 13.9 L24.95 17.55 L6.95 17.65 Z M14.15 6.85 L17.65 6.7 L17.5 25.1 L14.0 24.95 Z"
+          />
+        </g>
         <path
-          fill="#F7F0E4"
-          fillRule="evenodd"
-          d="M16 7.2 L25.2 24.8 H21.4 L19.55 20.6 H12.45 L10.6 24.8 H6.8 L16 7.2 Z M16 11.6 L18.35 17.2 H13.65 L16 11.6 Z"
+          fill="#B33A2B"
+          d="M7.15 6.75 L24.7 6.5 L25.1 10.1 L6.95 10.0 Z M6.9 21.75 L25.15 22.05 L24.8 25.3 L7.1 25.0 Z M6.8 6.9 L10.2 6.65 L10.0 25.1 L6.6 24.9 Z M21.7 6.8 L25.2 7.0 L24.95 25.05 L21.5 24.8 Z M7.0 14.1 L25.1 13.85 L25.0 17.5 L6.9 17.6 Z M14.1 6.8 L17.7 6.65 L17.55 25.05 L13.95 24.9 Z"
         />
-        <rect x="14.4" y="5.5" width="3.2" height="3.2" rx="0.5" fill="#C9892E" />
+        <rect x="14.4" y="5.9" width="3.2" height="3.2" rx="0.45" fill="#C9892E" />
       </svg>
       <span className="inline-flex flex-col leading-none">
         <span className="text-[15px] font-semibold tracking-tight text-[#1C1712]">
