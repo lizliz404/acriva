@@ -10,6 +10,8 @@
 | `architecture-rongxiaotong.mmd` | **完整业务架构 mermaid**（Finance / Ecommerce / Tech） |
 | `domain-rongxiaotong.md` | 三模块领域模型与路由目标 |
 | `domain-backend.md` | Tech 模块 D1/状态机细节 |
+| `backend-stack.md` | **栈 ADR**：非 Spring · Workers+D1 · auth ladder |
+| `market-backend-practice.md` | **面向市场**后端最佳实践摘要 + Workers 天花板 |
 | `prd-source.md` | 早期截断材料（仅 Tech 片段） |
 | `architecture.mmd` | 早期 Tech-only 图 |
 | `branding.md` | **命名短名单 + logo 策略 + image prompts（定稿 Acriva）** |

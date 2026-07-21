@@ -48,6 +48,10 @@ Heavy out-of-band only if needed:                        │
 
 **Split later only for:** bank SDK, payment core, long CPU jobs. UI/BFF can remain on the Worker.
 
+Market-facing ceilings, checklist, and “don’t whole-stack migrate” rationale:  
+[`market-backend-practice.md`](./market-backend-practice.md) · full research note in Liz Notes  
+`research/2026-07-21-acriva-market-backend-best-practice.md`.
+
 ## Explicit non-goals (still)
 
 - Full Spring Security / OAuth enterprise suite on day one  
