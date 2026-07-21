@@ -39,44 +39,37 @@ npm run db:migrate    # D1 local
 npm run dev           # http://localhost:3000
 ```
 
-## 部署（唯一路径）
+## 部署（和 lizliz.xyz 一样顺）
 
 **硬规则：禁止本机 `wrangler deploy` / Direct Upload。**
 
-目标体验 = 其它 `*.lizliz.xyz` 项目一样：
-
 ```text
-改代码 → commit → git push origin master → Cloudflare 自动 build + 部署 Worker
+改代码 → commit → git push origin master → Cloudflare Workers Builds 自动 build + 部署
 ```
 
-### 首选：Workers Builds（Git connected）
+产物是 **动态 Worker + D1**（不是静态 Pages），但日常动作与静态站相同：**只 push**。  
+平台替你 build/deploy，不经过 GHA runner，不碰 CF token IP。
 
-Dashboard → **Workers & Pages** → Worker **`acriva`** → **Settings → Builds** → Connect `lizliz404/acriva`  
-- Build: `npm ci && npm run build`  
-- Deploy: `npx wrangler deploy`  
-- Branch: `master`  
-- D1 binding `DB` 已在 `wrangler.jsonc`
+### 一次性接通（约 90 秒，Dashboard）
 
-这是动态 Worker 版的「Pages 连 Git」：构建跑在 **Cloudflare 侧**，不经过 GitHub Actions runner，也**不吃**本机 CF token 的 IP 白名单。
+1. [dash.cloudflare.com](https://dash.cloudflare.com) → **Workers & Pages** → Worker **`acriva`**（不是 Pages 列表里的壳）
+2. **Settings → Builds → Connect** → `lizliz404/acriva`
+3. Branch: `master`
+4. Build command: `npm ci && npm run build`
+5. Deploy command: `npx wrangler deploy`
+6. 保存 → **Retry deployment** / 再 push 一次
 
-### 备选：GitHub Actions（本仓库已有 workflow）
+D1 binding `DB` 已在 `wrangler.jsonc`；自定义域 `acriva.lizliz.xyz` 已挂在 Worker 上，**中途改部署管道不影响域名**。
 
-`.github/workflows/deploy.yml`：push `master` → `npm ci` → `npm run build` → `wrangler deploy`。
+### GitHub Actions
 
-需要 repo secrets：
+`.github/workflows/ci.yml` = **build 门禁 only**（对齐 lizliz/pep-words），**不上线**。
 
-- `CLOUDFLARE_API_TOKEN` — 需 **Workers Scripts:Edit**，且 **IP 限制 = Any IP**（GHA runner IP 不固定；白名单会 `code: 9109`）
-- `CLOUDFLARE_ACCOUNT_ID` = `afc4504f0abd4f4ac721eb73a6f04650`
-
-> 若 token 有 IP 白名单，GHA 会永远挂在 deploy 步。要么改 Any IP，要么改用上面的 **Workers Builds**，不要逐个加 runner IP。
-
-### 一次性 / 运维
+### 运维
 
 ```bash
-npm run db:migrate:prod   # 远程 D1 migration（本机 wrangler，改 schema 时用）
+npm run db:migrate:prod   # 远程 D1 migration（改 schema 时；≠ app 发布）
 ```
-
-自定义域：`acriva.lizliz.xyz`（Workers Domains）。Worker 名 / D1 名：`acriva`。
 
 ## 文档
 

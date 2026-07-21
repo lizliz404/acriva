@@ -2,57 +2,53 @@
 
 Project-specific guardrails for Acriva (融销通). Follow global AGENTS.md too.
 
-## Deploy: GitHub → Cloudflare ONLY — DIRECT UPLOAD BANNED
+## Deploy: platform builds — DIRECT UPLOAD BANNED
 
-**硬禁令：禁止本机 `wrangler deploy` / `wrangler versions upload` / `wrangler pages deploy` / CF Dashboard Direct Upload / `npm run deploy`。**
+**硬禁令：禁止本机 `wrangler deploy` / Direct Upload / `npm run deploy`。**
 
-日常路径只有：
+日常 = lizliz.xyz 同款心智：
 
 ```bash
 git add . && git commit -m "..." && git push origin master
-# → Cloudflare auto build + deploy Worker + D1 binding
+# → Cloudflare Workers Builds → Worker acriva + D1
 ```
 
 ### 为什么不是 Pages？
 
-Acriva 是 **TanStack Start SSR + server functions + D1**。  
-Pages Git 适合静态/适配器导出；**生产宿主是 Worker `acriva`**。  
-Pages 项目里即使「连了 Git」，也**不能**当成 Worker 部署真相源。
+TanStack Start SSR + server functions + D1 → 宿主是 **Worker `acriva`**。  
+Pages 列表里的 Git 壳（`dist/client`）是安慰剂，不是生产。
 
-### 首选：Workers Builds（CF 侧 Git connected）
+### 顺滑路径：Workers Builds Git（必选）
 
-和「Pages 连 Git」同一心智模型，构建跑在 Cloudflare，不经过 GitHub Actions IP：
+和 Pages 连 Git 同构；**平台替你 build/deploy**，不经 GHA、不碰 token IP。
 
-1. Dashboard → Workers & Pages → Worker **`acriva`** → Settings → Builds  
-2. Connect GitHub `lizliz404/acriva`，branch `master`  
-3. Build command: `npm ci && npm run build`  
-4. Deploy command: `npx wrangler deploy`  
-5. 确认 D1 binding `DB`（见 `wrangler.jsonc`）
+**一次性 Dashboard（~90s）：**
 
-API 配方：见全局 skill `web-app-deployment-operations` → `references/cf-workers-builds-git-integration.md`  
-（需要 user-scoped token 带 `Workers Builds Configuration: Edit`；GitHub App 授权是一次性 Dashboard OAuth。）
+1. Workers & Pages → Worker **`acriva`** → Settings → Builds → Connect  
+2. Repo `lizliz404/acriva` · branch `master`  
+3. Build: `npm ci && npm run build`  
+4. Deploy: `npx wrangler deploy`  
 
-### 备选：GitHub Actions
+中途切换管道：**不影响**自定义域 `acriva.lizliz.xyz`（已挂 Worker）。
 
-Workflow：`.github/workflows/deploy.yml`  
-Secrets：`CLOUDFLARE_API_TOKEN`、`CLOUDFLARE_ACCOUNT_ID=afc4504f0abd4f4ac721eb73a6f04650`
+API 连 Builds 需要 user-scoped token + `Workers Builds Configuration: Edit`。  
+现有 account token 对 `/builds/*` 返回 403 —— **token 找得到，是权限不够**，不是路径错。  
+Dashboard OAuth 一次即可，不必先改 Any IP。
 
-**CF token 给 GHA 用时必须 Any IP。**  
-GHA runner IP 池巨大且飘；白名单 → `Authentication error` / `code: 9109 Cannot use the access token from location`。  
-**不要**试图把每个 runner IP 加进白名单。要么 Any IP 的 CI 专用 token，要么改用 Workers Builds（推荐）。
+### GitHub Actions = CI only
+
+`.github/workflows/ci.yml`：install + build 门禁，**不上线**（对齐 lizliz/pep-words）。
 
 ### 失败时
 
-- 先看是 **Workers Builds** 失败还是 **GHA** 失败（两条路径别混查）
-- GHA：secrets、token 权限（Workers Scripts:Edit）、IP 限制
-- 本地只允许：`npm run build`、`npm run db:migrate(:prod)` 诊断
-- **禁止**用本机 wrangler 上传「先顶上线」
+- 先看 Workers Builds 部署记录，不是 GHA  
+- 本地只允许 `npm run build` / `db:migrate(:prod)` 诊断  
+- **禁止** wrangler 上传顶上线
 
 ## Stack
 
-- TanStack Start (React SSR) on Cloudflare Workers
-- D1 (`DB` → database `acriva`)
-- Tailwind CSS v4, Framer Motion, Lucide React
+- TanStack Start (React SSR) on Cloudflare Workers  
+- D1 (`DB` → `acriva`) · Tailwind v4 · Framer Motion · Lucide  
 
 ## Build / DB
 
@@ -60,5 +56,5 @@ GHA runner IP 池巨大且飘；白名单 → `Authentication error` / `code: 91
 npm ci && npm run build
 npm run dev
 npx wrangler d1 migrations apply acriva --local
-npx wrangler d1 migrations apply acriva --remote   # schema only; not a substitute for app deploy
+npx wrangler d1 migrations apply acriva --remote   # schema only ≠ app release
 ```

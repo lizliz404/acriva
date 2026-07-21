@@ -1,0 +1,41 @@
+# CI — build gate only (like lizliz.xyz / pep-words).
+# Production deploy is NOT this workflow.
+# Happy path: Cloudflare Workers Builds Git on Worker `acriva`
+#   Dashboard → Workers & Pages → acriva → Settings → Builds → Connect
+#   Build: npm ci && npm run build
+#   Deploy: npx wrangler deploy
+#   Branch: master
+# Fallback deploy (only if Builds unavailable): restore wrangler-action step + Any-IP CF token.
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-acriva-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Build
+        run: npm run build
