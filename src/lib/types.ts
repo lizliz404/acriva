@@ -1,4 +1,8 @@
+/** Legacy UI dual-lens; real seats live in AppRole (auth.server). */
 export type Role = "user" | "expert";
+
+/** Product seats — see docs/backend-stack.md + users.role */
+export type AppRole = "farmer" | "bank" | "buyer" | "expert" | "admin";
 
 export type KnowledgeStatus = "published" | "draft" | "review";
 export type KnowledgeConfidence = "low" | "medium" | "high" | "verified";

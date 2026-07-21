@@ -23,7 +23,7 @@ export function AppShell() {
         className="border-b border-[#E8DFD0] bg-[#F7F0E4] px-4 py-2 text-center text-[12px] leading-relaxed text-[#4A433A]"
       >
         <span className="font-medium text-[#1C1712]">开放演示台</span>
-        ——无登录鉴权，写入接口对访客开放；请勿录入真实农户/银行数据。
+        ——默认无强制登录（AUTH_ENFORCE 关闭）；会话/角色表已就绪。请勿录入真实农户/银行数据。
       </div>
       <header className="sticky top-0 z-40 border-b border-[#E8DFD0] bg-[#FFFBF4]/90 backdrop-blur">
         <div className="mx-auto flex h-14 max-w-6xl items-center gap-4 px-4">

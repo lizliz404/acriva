@@ -46,8 +46,20 @@ export const processFinApplication = createServerFn({ method: "POST" })
     }) => data,
   )
   .handler(async ({ data }) => {
+    // Guard sample: bank seat writes. Open demo until AUTH_ENFORCE=1.
+    const auth = await import("./auth.server");
+    const actor = await auth.requireRole(["bank", "admin"]);
     const fin = await import("./finance.server");
-    return fin.processApplication(data);
+    const result = await fin.processApplication(data);
+    await auth.writeAudit({
+      actorUserId: actor?.id,
+      action: "finance.process",
+      entityType: "fin_application",
+      entityId: data.id,
+      toStatus: data.status,
+      meta: { bankNote: data.bankNote ?? null },
+    });
+    return result;
   });
 
 export const matchJointLoanPeers = createServerFn({ method: "GET" })

@@ -49,6 +49,11 @@ API 连 Builds 需要 user-scoped token + `Workers Builds Configuration: Edit`�
 
 - TanStack Start (React SSR) on Cloudflare Workers  
 - D1 (`DB` → `acriva`) · Tailwind v4 · Framer Motion · Lucide  
+- **Not Spring Boot** — stay on Workers; see `docs/backend-stack.md`  
+- Auth foundation: `migrations/0005_auth.sql` + `src/server/auth*.ts`  
+  - Default open demo desk; set Worker var `AUTH_ENFORCE=1` to require roles  
+  - Demo login: `farmer@demo` / `bank@demo` / `buyer@demo` / `expert@demo` · pin `demo`  
+
 
 ## Build / DB
 
