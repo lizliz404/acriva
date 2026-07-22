@@ -7,10 +7,30 @@ import { AuditTrailStrip, WindowChrome, Avatar } from "../ui";
  * gilt frames, or zen-empty gift-box composition.
  */
 
+/** Soft crop texture above mock panels — warm overlay keeps earthy palette */
+function MockTexture({ src }: { src: string }) {
+  return (
+    <div className="relative h-24 overflow-hidden sm:h-28">
+      <img
+        src={src}
+        alt=""
+        className="h-full w-full object-cover opacity-90"
+        loading="lazy"
+        style={{ filter: "saturate(0.85) brightness(0.92)" }}
+      />
+      <div
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-[#FFFBF4]/25 to-[#FFFBF4]"
+        aria-hidden
+      />
+    </div>
+  );
+}
+
 export function PlatformMock({ tabId }: { tabId: string }) {
   if (tabId === "finance") {
     return (
       <WindowChrome title="融资申请" className="interactive-window">
+        <MockTexture src="/assets/images/rice-1.jpg" />
         <div className="space-y-3 p-4 pb-8">
           <div className="flex items-center justify-between">
             <div className="text-[13px] font-medium text-[#1C1712]">备耕贷 · 东棚合作社</div>
@@ -90,6 +110,7 @@ export function PlatformMock({ tabId }: { tabId: string }) {
   if (tabId === "price-signal") {
     return (
       <WindowChrome title="行情参照" className="interactive-window">
+        <MockTexture src="/assets/images/wheat-1.jpg" />
         <div className="p-4">
           <div className="mb-3 text-[12px] font-medium text-[#1C1712]">
             番茄产地价 · 近 30 日（启发式均线）
@@ -169,6 +190,7 @@ function AskMock() {
   const status = ["采集现场", "已匹配专家", "回答就绪"][tick % 3];
   return (
     <WindowChrome title="问专家" className="interactive-window">
+      <MockTexture src="/assets/images/greenhouse-1.jpg" />
       <div className="space-y-3 p-4 pb-8 text-[12.5px]">
         <div className="rounded-lg border border-[#E8DFD0] bg-[#F7F0E4] px-3 py-2 text-[#4A433A]">
           黄瓜 EC 2.9 后尖端焦枯——先扛还是降浓度？

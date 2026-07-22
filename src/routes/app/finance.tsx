@@ -26,6 +26,7 @@ function FinanceFarmerPage() {
   const { t, locale } = useI18n();
   const f = t.app.finance;
   const c = t.app.common;
+  const defaults = t.app.defaults;
   const stampBtnRef = useRef<HTMLButtonElement>(null);
   const defaultFarmer = data.farmers[0]?.id || "";
   const [farmerId, setFarmerId] = useState(defaultFarmer);
@@ -83,8 +84,8 @@ function FinanceFarmerPage() {
     setError(null);
     try {
       const farmer = data.farmers.find((f) => f.id === farmerId);
-      const crop = farmer?.crops[0] || "番茄";
-      const region = farmer?.region || "华东";
+      const crop = farmer?.crops[0] || defaults.crop;
+      const region = farmer?.region || defaults.region;
       const res = await getPriceForecast({ data: { crop, region } });
       setForecast(res);
     } catch (err) {

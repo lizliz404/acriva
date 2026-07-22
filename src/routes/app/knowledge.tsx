@@ -1,5 +1,5 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
-import { type FormEvent, useMemo, useState } from "react";
+import { type FormEvent, useEffect, useMemo, useState } from "react";
 import { getDeskSnapshot, upsertKnowledge } from "#/server/desk";
 import { statusLabel } from "#/lib/status-labels";
 import { useI18n } from "#/i18n";
@@ -15,14 +15,20 @@ function KnowledgePage() {
   const { t, locale } = useI18n();
   const kn = t.app.knowledge;
   const common = t.app.common;
+  const defaults = t.app.defaults;
   const [q, setQ] = useState("");
   const [crop, setCrop] = useState("all");
   const [title, setTitle] = useState("");
-  const [newCrop, setNewCrop] = useState("番茄");
-  const [region, setRegion] = useState("华东");
+  const [newCrop, setNewCrop] = useState(defaults.crop);
+  const [region, setRegion] = useState(defaults.region);
   const [summary, setSummary] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setNewCrop(defaults.crop);
+    setRegion(defaults.region);
+  }, [locale, defaults.crop, defaults.region]);
 
   const crops = useMemo(
     () => ["all", ...Array.from(new Set(data.knowledge.map((k) => k.crop))).sort()],
@@ -55,7 +61,7 @@ function KnowledgePage() {
           region,
           summary,
           status: "draft",
-          author: data.experts[0]?.name || "演示专家",
+          author: data.experts[0]?.name || defaults.demoExpert,
           expertId: data.experts[0]?.id,
         },
       });

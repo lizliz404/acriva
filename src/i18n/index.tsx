@@ -39,13 +39,7 @@ type I18nContextValue = {
 const I18nContext = createContext<I18nContextValue | null>(null);
 
 export function I18nProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>("zh");
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    setLocaleState(readInitialLocale());
-    setReady(true);
-  }, []);
+  const [locale, setLocaleState] = useState<Locale>(readInitialLocale);
 
   const setLocale = useCallback((next: Locale) => {
     setLocaleState(next);
@@ -66,9 +60,8 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   }, [locale, setLocale]);
 
   useEffect(() => {
-    if (!ready) return;
     document.documentElement.lang = locale === "zh" ? "zh-CN" : "en";
-  }, [locale, ready]);
+  }, [locale]);
 
   const value = useMemo(
     () => ({

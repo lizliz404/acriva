@@ -1,7 +1,7 @@
 import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
 import appCss from "../styles.css?url";
 import { product } from "#/lib/data";
-import { I18nProvider } from "#/i18n";
+import { I18nProvider, useI18n } from "#/i18n";
 
 const SITE_URL = `https://${product.domain}`;
 const OG_IMAGE = `${SITE_URL}/og-image.png`;
@@ -13,9 +13,23 @@ const OG_IMAGE = `${SITE_URL}/og-image.png`;
  * Image prompts are locked in DESIGN.md — do not regenerate here.
  */
 
-/** CTR-tight: 融销通 + result line, ≤60 display chars */
-const title = `${product.zhName} — ${product.taglineAlt.replace(/ · /g, "·")}｜${product.name}`;
+/** CTR-tight: 融销通 + result line; spaced middots for share readability; Acriva via site_name */
+const title = `${product.zhName} — ${product.taglineAlt}`;
 const description = product.description;
+
+const keywords = [
+  "融销通",
+  "Acriva",
+  "农产品融销",
+  "农贷",
+  "农业合作社",
+  "货盘",
+  "农产品销售",
+  "农业金融",
+  "农资贷",
+  "agtech",
+  "farm credit",
+].join(", ");
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -35,7 +49,8 @@ const jsonLd = {
       name: `${product.zhName}｜${product.name}`,
       url: SITE_URL,
       description,
-      inLanguage: "zh-CN",
+      inLanguage: ["zh-CN", "en"],
+      availableLanguage: ["zh-CN", "en"],
       publisher: { "@id": `${SITE_URL}/#organization` },
     },
     {
@@ -47,7 +62,8 @@ const jsonLd = {
       operatingSystem: "Web",
       url: SITE_URL,
       description,
-      inLanguage: "zh-CN",
+      inLanguage: ["zh-CN", "en"],
+      availableLanguage: ["zh-CN", "en"],
       offers: {
         "@type": "Offer",
         price: "0",
@@ -65,15 +81,20 @@ export const Route = createRootRoute({
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title },
       { name: "description", content: description },
+      { name: "keywords", content: keywords },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
       { property: "og:type", content: "website" },
       { property: "og:url", content: `${SITE_URL}/` },
       { property: "og:image", content: OG_IMAGE },
+      { property: "og:image:secure_url", content: OG_IMAGE },
+      { property: "og:image:type", content: "image/png" },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: title },
       { property: "og:site_name", content: product.name },
       { property: "og:locale", content: "zh_CN" },
+      { property: "og:locale:alternate", content: "en_US" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: title },
       { name: "twitter:description", content: description },
@@ -96,12 +117,21 @@ export const Route = createRootRoute({
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="zh-CN">
+    <I18nProvider>
+      <RootHtml>{children}</RootHtml>
+    </I18nProvider>
+  );
+}
+
+function RootHtml({ children }: { children: React.ReactNode }) {
+  const { locale } = useI18n();
+  return (
+    <html lang={locale === "zh" ? "zh-CN" : "en"} suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>
       <body className="antialiased">
-        <I18nProvider>{children}</I18nProvider>
+        {children}
         <Scripts />
       </body>
     </html>

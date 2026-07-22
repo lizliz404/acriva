@@ -1,5 +1,5 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
-import { type FormEvent, useRef, useState } from "react";
+import { type FormEvent, useEffect, useRef, useState } from "react";
 import {
   contactBuyerDemand,
   getCommerceSnapshot,
@@ -20,11 +20,12 @@ function MarketSellPage() {
   const { t, locale } = useI18n();
   const s = t.app.sell;
   const c = t.app.common;
+  const defaults = t.app.defaults;
   const listBtnRef = useRef<HTMLButtonElement>(null);
   const [sellerId, setSellerId] = useState(data.farmers[0]?.id || "");
   const [title, setTitle] = useState("");
-  const [crop, setCrop] = useState("番茄");
-  const [region, setRegion] = useState("华东");
+  const [crop, setCrop] = useState(defaults.crop);
+  const [region, setRegion] = useState(defaults.region);
   const [priceYuan, setPriceYuan] = useState(10);
   const [stock, setStock] = useState(100);
   const [description, setDescription] = useState("");
@@ -35,6 +36,11 @@ function MarketSellPage() {
     data.demands.find((d) => d.status === "open")?.id || data.demands[0]?.id || "",
   );
   const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    setCrop(defaults.crop);
+    setRegion(defaults.region);
+  }, [locale, defaults.crop, defaults.region]);
 
   const onList = async (e: FormEvent) => {
     e.preventDefault();

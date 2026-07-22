@@ -1,5 +1,5 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
-import { type FormEvent, useMemo, useState } from "react";
+import { type FormEvent, useEffect, useMemo, useState } from "react";
 import {
   buyProduct,
   createBuyerDemand,
@@ -19,17 +19,24 @@ function MarketBuyPage() {
   const { t, locale } = useI18n();
   const b = t.app.buy;
   const c = t.app.common;
+  const defaults = t.app.defaults;
   const [q, setQ] = useState("");
-  const [buyerName, setBuyerName] = useState("城鲜采购");
+  const [buyerName, setBuyerName] = useState(defaults.buyerName);
   const [qty, setQty] = useState<Record<string, number>>({});
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const [dCrop, setDCrop] = useState("番茄");
-  const [dRegion, setDRegion] = useState("华东");
+  const [dCrop, setDCrop] = useState(defaults.crop);
+  const [dRegion, setDRegion] = useState(defaults.region);
   const [dQty, setDQty] = useState(500);
   const [dBudget, setDBudget] = useState(11);
   const [dDetail, setDDetail] = useState("");
+
+  useEffect(() => {
+    setBuyerName(defaults.buyerName);
+    setDCrop(defaults.crop);
+    setDRegion(defaults.region);
+  }, [locale, defaults.buyerName, defaults.crop, defaults.region]);
 
   const listed = useMemo(() => {
     const base = data.products.filter((p) => p.status === "listed");

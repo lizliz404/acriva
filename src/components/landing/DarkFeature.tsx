@@ -37,6 +37,18 @@ export function DarkFeature() {
               dark
               className="interactive-window"
             >
+              <div className="relative h-28 overflow-hidden sm:h-32">
+                <img
+                  src="/assets/images/greenhouse-2.jpg"
+                  alt=""
+                  className="h-full w-full object-cover opacity-70 mix-blend-luminosity"
+                  loading="lazy"
+                />
+                <div
+                  className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#1C1712]/20 via-[#1C1712]/55 to-[#1C1712]"
+                  aria-hidden
+                />
+              </div>
               <div className="space-y-2 p-3 text-[12.5px]">
                 {t.darkFeature.rows.map((row) => (
                   <div

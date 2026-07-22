@@ -18,7 +18,7 @@ export const en: Dictionary = {
     closeMenu: "Close menu",
   },
   hero: {
-    badge: "融销通 · Acriva",
+    badge: "Acriva · 融销通",
     titleLine1: "Credit, inventory,",
     titleLine2: "and counsel — one desk.",
     body: "Fund the season. Move the crop. Get an expert on the line. Built for growers and co-ops who need results, not another orphaned app.",
@@ -41,6 +41,17 @@ export const en: Dictionary = {
     listing: "Listing batch…",
     browsing: "Buyer browsing…",
     contacted: "Contacted",
+    sampleLoan: "Season loan · East Shed Co-op",
+    samplePurpose: "Inputs + film",
+    sampleRegion: "East China · tomato",
+    marketBatch: "Cucumber · batch C-0721 · 2.4 t · ¥3.2/jin",
+    bookTopic: "Greenhouse disease walkthrough",
+    bookTime1: "Tue · 09:00",
+    bookTime2: "60 min · remote",
+    expertName: "Prof. Lin Wei",
+    expertTitle: "Plant pathology",
+    auditFarmer: "Co-op Chen",
+    auditExpert: "Expert Lin",
   },
   logoCloud: {
     intro: "Four desks, one ledger — shared state you can see",
@@ -167,21 +178,21 @@ export const en: Dictionary = {
   ],
   customerStories: [
     {
-      name: "东棚合作社",
+      name: "East Shed Co-op",
       category: "Grower co-op",
       headline:
         "Season planning puts credit and inventory on one desk — loans and buyers no longer live in two WeChat threads.",
       metric: "Three threads → one desk",
     },
     {
-      name: "绿收农商行",
+      name: "Green Harvest Rural Bank",
       category: "Ag lending",
       headline:
         "The match queue filters by crop, region, and credit band before opening the file — first-pass review moves faster.",
       metric: "Faster first pass",
     },
     {
-      name: "城鲜采购",
+      name: "CityFresh Procurement",
       category: "Origin buying",
       headline:
         "Demand goes out and comes back with real stock — not an empty RFQ floating in a group chat.",
@@ -305,6 +316,12 @@ export const en: Dictionary = {
       stock: "Stock",
       wan: "×¥10k",
       monthsAbbr: "mo",
+    },
+    defaults: {
+      crop: "Tomato",
+      region: "East China",
+      buyerName: "CityFresh Procurement",
+      demoExpert: "Demo Expert",
     },
     overview: {
       title: "Acriva operating desk",
